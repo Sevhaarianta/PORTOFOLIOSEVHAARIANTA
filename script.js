@@ -1,104 +1,81 @@
-/* =====================================================
-   SEVHA PORTFOLIO
-   FIREBASE PUBLIC DATA
-===================================================== */
-
 import {
     database,
     ref,
-    onValue
+    get
 } from "./firebase-config.js";
 
 
-/* =====================================================
+/* ==================================================
    HELPER
-===================================================== */
+================================================== */
 
-function setText(selector, value) {
-
-    const element =
-        document.querySelector(selector);
-
-    if (
-        element &&
-        value !== undefined &&
-        value !== null
-    ) {
-        element.textContent = value;
-    }
-
-}
-
-
-function setHref(id, value, type = "link") {
+function setText(
+    id,
+    value
+) {
 
     const element =
         document.getElementById(id);
 
-    if (!element) return;
+    if (element && value !== undefined) {
 
-    if (!value) {
-        element.style.display = "none";
-        return;
-    }
-
-    let url = value;
-
-    if (type === "email") {
-
-        url = `mailto:${value}`;
+        element.textContent =
+            value || "";
 
     }
-
-    if (type === "whatsapp") {
-
-        let number =
-            String(value).replace(/\D/g, "");
-
-        if (number.startsWith("0")) {
-            number = "62" + number.substring(1);
-        }
-
-        url = `https://wa.me/${number}`;
-
-    }
-
-    element.href = url;
-
-    element.style.display = "flex";
 
 }
 
 
-/* =====================================================
-   LOAD FIREBASE
-===================================================== */
+function setImage(
+    selector,
+    url,
+    alt
+) {
 
-const portfolioRef =
-    ref(
-        database,
-        "portfolio"
-    );
+    const image =
+        document.querySelector(selector);
 
-
-onValue(
-
-    portfolioRef,
-
-    (snapshot) => {
-
-        console.log("Firebase connected.");
-
-        const data =
-            snapshot.val();
-
-        console.log("Portfolio:", data);
+    if (!image) return;
 
 
-        if (!data) {
+    if (url) {
 
-            console.warn(
-                "Node portfolio belum memiliki data."
+        image.src = url;
+
+    }
+
+
+    if (alt) {
+
+        image.alt = alt;
+
+    }
+
+}
+
+
+/* ==================================================
+   LOAD PORTFOLIO
+================================================== */
+
+async function loadPortfolio() {
+
+    try {
+
+        const snapshot =
+            await get(
+                ref(
+                    database,
+                    "portfolio"
+                )
+            );
+
+
+        if (!snapshot.exists()) {
+
+            console.log(
+                "Belum ada data portfolio."
             );
 
             return;
@@ -106,9 +83,20 @@ onValue(
         }
 
 
-        /* =================================================
+        const data =
+            snapshot.val();
+
+
+        console.log(
+            "Portfolio:",
+            data
+        );
+
+
+
+        /* ==================================================
            HERO
-        ================================================= */
+        ================================================== */
 
         if (data.hero) {
 
@@ -116,54 +104,71 @@ onValue(
                 data.hero;
 
 
-            const status =
-                document.querySelector(".status");
-
-            if (status && hero.status) {
-
-                status.innerHTML = `
-                    <span class="status-dot"></span>
-                    ${hero.status}
-                `;
-
-            }
-
-
-            setText(
-                ".hero-desc",
-                hero.description
-            );
-
-
-            const meta =
-                document.querySelectorAll(
-                    ".hero-meta > div strong"
+            const heroDescription =
+                document.querySelector(
+                    ".hero-desc"
                 );
 
 
-            if (meta[0] && hero.location) {
-                meta[0].textContent =
-                    hero.location;
+            if (heroDescription) {
+
+                heroDescription.textContent =
+                    hero.description || "";
+
             }
 
 
-            if (meta[1] && hero.focus) {
-                meta[1].textContent =
-                    hero.focus;
+            const heroMeta =
+                document.querySelectorAll(
+                    ".hero-meta strong"
+                );
+
+
+            if (heroMeta[0]) {
+
+                heroMeta[0].textContent =
+                    hero.location || "";
+
             }
 
 
-            if (meta[2] && hero.experience) {
-                meta[2].textContent =
-                    hero.experience;
+            if (heroMeta[1]) {
+
+                heroMeta[1].textContent =
+                    hero.focus || "";
+
+            }
+
+
+            if (heroMeta[2]) {
+
+                heroMeta[2].textContent =
+                    hero.experience || "";
+
+            }
+
+
+            const status =
+                document.querySelector(
+                    ".status"
+                );
+
+
+            if (status && hero.status) {
+
+                status.innerHTML =
+                    `<span class="status-dot"></span>
+                     ${hero.status}`;
+
             }
 
         }
 
 
-        /* =================================================
+
+        /* ==================================================
            ABOUT
-        ================================================= */
+        ================================================== */
 
         if (data.about) {
 
@@ -171,123 +176,94 @@ onValue(
                 data.about;
 
 
-            const paragraphs =
+            const aboutParagraphs =
                 document.querySelectorAll(
                     ".about-content > p"
                 );
 
 
-            if (
-                paragraphs[0] &&
-                about.paragraph1
-            ) {
+            if (aboutParagraphs[0]) {
 
-                paragraphs[0].textContent =
-                    about.paragraph1;
+                aboutParagraphs[0].textContent =
+                    about.paragraph1 || "";
 
             }
 
 
-            if (
-                paragraphs[1] &&
-                about.paragraph2
-            ) {
+            if (aboutParagraphs[1]) {
 
-                paragraphs[1].textContent =
-                    about.paragraph2;
+                aboutParagraphs[1].textContent =
+                    about.paragraph2 || "";
 
             }
 
 
-            const info =
+            const aboutInfo =
                 document.querySelectorAll(
-                    ".about-info > div strong"
+                    ".about-info strong"
                 );
 
 
-            if (
-                info[0] &&
-                about.field
-            ) {
+            if (aboutInfo[0]) {
 
-                info[0].textContent =
-                    about.field;
+                aboutInfo[0].textContent =
+                    about.field || "";
 
             }
 
 
-            if (
-                info[1] &&
-                about.tools
-            ) {
+            if (aboutInfo[1]) {
 
-                info[1].textContent =
-                    about.tools;
+                aboutInfo[1].textContent =
+                    about.tools || "";
 
             }
 
 
-            if (
-                info[2] &&
-                about.location
-            ) {
+            if (aboutInfo[2]) {
 
-                info[2].textContent =
-                    about.location;
+                aboutInfo[2].textContent =
+                    about.location || "";
 
             }
 
         }
 
 
-        /* =================================================
-           PROJECT
-        ================================================= */
+
+        /* ==================================================
+           PROJECTS
+        ================================================== */
 
         if (data.projects) {
 
-            const projectElements =
-                document.querySelectorAll(
-                    ".project"
-                );
+            const projects =
+                data.projects;
 
 
-            let projects =
-                Array.isArray(data.projects)
-                    ? data.projects
-                    : Object.values(data.projects);
+            /* ==============================================
+               PROJECT 01
+            ============================================== */
+
+            if (projects.project1) {
+
+                const project =
+                    projects.project1;
 
 
-            projects.forEach(
-                (project, index) => {
+                const projectElement =
+                    document.querySelectorAll(
+                        ".project"
+                    )[0];
 
-                    const element =
-                        projectElements[index];
 
-                    if (!element) return;
+                if (projectElement) {
 
+                    /* IMAGE */
 
                     const image =
-                        element.querySelector(
+                        projectElement.querySelector(
                             ".project-image img"
-                        );
-
-
-                    const category =
-                        element.querySelector(
-                            ".project-overlay span"
-                        );
-
-
-                    const title =
-                        element.querySelector(
-                            ".project-overlay h3"
-                        );
-
-
-                    const description =
-                        element.querySelector(
-                            ".project-overlay p"
                         );
 
 
@@ -301,62 +277,320 @@ onValue(
 
                         image.alt =
                             project.title ||
-                            `Project ${index + 1}`;
+                            "Project 01";
 
                     }
 
 
-                    if (
-                        category &&
-                        project.category
-                    ) {
+                    /* CATEGORY */
+
+                    const category =
+                        projectElement.querySelector(
+                            ".project-overlay > span"
+                        );
+
+
+                    if (category) {
 
                         category.textContent =
-                            `${String(index + 1).padStart(2, "0")} / ${project.category}`;
+                            `01 / ${(
+                                project.category ||
+                                ""
+                            ).toUpperCase()}`;
 
                     }
 
 
-                    if (
-                        title &&
-                        project.title
-                    ) {
+                    /* TITLE */
+
+                    const title =
+                        projectElement.querySelector(
+                            ".project-overlay h3"
+                        );
+
+
+                    if (title) {
 
                         title.textContent =
-                            project.title;
+                            project.title || "";
 
                     }
 
 
-                    if (
-                        description &&
-                        project.description
-                    ) {
+                    /* DESCRIPTION */
+
+                    const description =
+                        projectElement.querySelector(
+                            ".project-overlay p"
+                        );
+
+
+                    if (description) {
 
                         description.textContent =
-                            project.description;
+                            project.description || "";
 
                     }
 
+
+                    /* LINK */
 
                     if (project.link) {
 
-                        element.href =
+                        projectElement.href =
                             project.link;
+
+                        projectElement.target =
+                            "_blank";
+
+                        projectElement.rel =
+                            "noopener noreferrer";
 
                     }
 
                 }
-            );
+
+            }
+
+
+
+            /* ==============================================
+               PROJECT 02
+            ============================================== */
+
+            if (projects.project2) {
+
+                const project =
+                    projects.project2;
+
+
+                const projectElement =
+                    document.querySelectorAll(
+                        ".project"
+                    )[1];
+
+
+                if (projectElement) {
+
+                    /* IMAGE */
+
+                    const image =
+                        projectElement.querySelector(
+                            ".project-image img"
+                        );
+
+
+                    if (
+                        image &&
+                        project.image
+                    ) {
+
+                        image.src =
+                            project.image;
+
+                        image.alt =
+                            project.title ||
+                            "Project 02";
+
+                    }
+
+
+                    /* CATEGORY */
+
+                    const category =
+                        projectElement.querySelector(
+                            ".project-overlay > span"
+                        );
+
+
+                    if (category) {
+
+                        category.textContent =
+                            `02 / ${(
+                                project.category ||
+                                ""
+                            ).toUpperCase()}`;
+
+                    }
+
+
+                    /* TITLE */
+
+                    const title =
+                        projectElement.querySelector(
+                            ".project-overlay h3"
+                        );
+
+
+                    if (title) {
+
+                        title.textContent =
+                            project.title || "";
+
+                    }
+
+
+                    /* DESCRIPTION */
+
+                    const description =
+                        projectElement.querySelector(
+                            ".project-overlay p"
+                        );
+
+
+                    if (description) {
+
+                        description.textContent =
+                            project.description || "";
+
+                    }
+
+
+                    /* LINK */
+
+                    if (project.link) {
+
+                        projectElement.href =
+                            project.link;
+
+                        projectElement.target =
+                            "_blank";
+
+                        projectElement.rel =
+                            "noopener noreferrer";
+
+                    }
+
+                }
+
+            }
+
+
+
+            /* ==============================================
+               PROJECT 03
+            ============================================== */
+
+            if (projects.project3) {
+
+                const project =
+                    projects.project3;
+
+
+                const projectElement =
+                    document.querySelectorAll(
+                        ".project"
+                    )[2];
+
+
+                if (projectElement) {
+
+                    /* IMAGE */
+
+                    const image =
+                        projectElement.querySelector(
+                            ".project-image img"
+                        );
+
+
+                    if (
+                        image &&
+                        project.image
+                    ) {
+
+                        image.src =
+                            project.image;
+
+                        image.alt =
+                            project.title ||
+                            "Project 03";
+
+                    }
+
+
+                    /* CATEGORY */
+
+                    const category =
+                        projectElement.querySelector(
+                            ".project-overlay > span"
+                        );
+
+
+                    if (category) {
+
+                        category.textContent =
+                            `03 / ${(
+                                project.category ||
+                                ""
+                            ).toUpperCase()}`;
+
+                    }
+
+
+                    /* TITLE */
+
+                    const title =
+                        projectElement.querySelector(
+                            ".project-overlay h3"
+                        );
+
+
+                    if (title) {
+
+                        title.textContent =
+                            project.title || "";
+
+                    }
+
+
+                    /* DESCRIPTION */
+
+                    const description =
+                        projectElement.querySelector(
+                            ".project-overlay p"
+                        );
+
+
+                    if (description) {
+
+                        description.textContent =
+                            project.description || "";
+
+                    }
+
+
+                    /* LINK */
+
+                    if (project.link) {
+
+                        projectElement.href =
+                            project.link;
+
+                        projectElement.target =
+                            "_blank";
+
+                        projectElement.rel =
+                            "noopener noreferrer";
+
+                    }
+
+                }
+
+            }
 
         }
 
 
-        /* =================================================
+
+        /* ==================================================
            EXPERIENCE
-        ================================================= */
+        ================================================== */
 
         if (data.experience) {
+
+            const experiences =
+                data.experience;
+
 
             const experienceElements =
                 document.querySelectorAll(
@@ -364,142 +598,243 @@ onValue(
                 );
 
 
-            let experiences =
-                Array.isArray(data.experience)
-                    ? data.experience
-                    : Object.values(data.experience);
+            /* ==============================================
+               EXPERIENCE 01
+            ============================================== */
+
+            if (
+                experiences.experience1 &&
+                experienceElements[0]
+            ) {
+
+                const experience =
+                    experiences.experience1;
 
 
-            experiences.forEach(
-                (experience, index) => {
-
-                    const element =
-                        experienceElements[index];
-
-                    if (!element) return;
+                const element =
+                    experienceElements[0];
 
 
-                    const year =
-                        element.querySelector(
-                            ".experience-year"
-                        );
+                const year =
+                    element.querySelector(
+                        ".experience-year"
+                    );
 
 
-                    const company =
-                        element.querySelector(
-                            ".experience-content > span"
-                        );
+                const company =
+                    element.querySelector(
+                        ".experience-content > span"
+                    );
 
 
-                    const title =
-                        element.querySelector(
-                            ".experience-content h3"
-                        );
+                const title =
+                    element.querySelector(
+                        ".experience-content h3"
+                    );
 
 
-                    const description =
-                        element.querySelector(
-                            ".experience-content p"
-                        );
+                const description =
+                    element.querySelector(
+                        ".experience-content p"
+                    );
 
 
-                    const tags =
-                        element.querySelector(
-                            ".experience-tags"
-                        );
+                const tags =
+                    element.querySelectorAll(
+                        ".experience-tags span"
+                    );
 
 
-                    if (
-                        year &&
-                        experience.year
-                    ) {
+                if (year) {
 
-                        year.textContent =
-                            experience.year;
-
-                    }
-
-
-                    if (
-                        company &&
-                        experience.company
-                    ) {
-
-                        company.textContent =
-                            experience.company;
-
-                    }
-
-
-                    if (
-                        title &&
-                        experience.title
-                    ) {
-
-                        title.textContent =
-                            experience.title;
-
-                    }
-
-
-                    if (
-                        description &&
-                        experience.description
-                    ) {
-
-                        description.textContent =
-                            experience.description;
-
-                    }
-
-
-                    if (
-                        tags &&
-                        experience.tags
-                    ) {
-
-                        tags.innerHTML = "";
-
-
-                        let tagList =
-                            Array.isArray(
-                                experience.tags
-                            )
-                                ? experience.tags
-                                : String(
-                                    experience.tags
-                                ).split(",");
-
-
-                        tagList.forEach(
-                            (tag) => {
-
-                                const span =
-                                    document.createElement(
-                                        "span"
-                                    );
-
-                                span.textContent =
-                                    tag.trim();
-
-                                tags.appendChild(
-                                    span
-                                );
-
-                            }
-                        );
-
-                    }
+                    year.innerHTML =
+                        `${experience.year || ""}
+                        <span>SEKARANG</span>`;
 
                 }
-            );
+
+
+                if (company) {
+
+                    company.textContent =
+                        experience.company || "";
+
+                }
+
+
+                if (title) {
+
+                    title.textContent =
+                        experience.title || "";
+
+                }
+
+
+                if (description) {
+
+                    description.textContent =
+                        experience.description || "";
+
+                }
+
+
+                if (experience.tags) {
+
+                    const tagArray =
+                        experience.tags
+                            .split(",")
+                            .map(
+                                tag =>
+                                    tag.trim()
+                            )
+                            .filter(Boolean);
+
+
+                    tags.forEach(
+                        (
+                            tagElement,
+                            index
+                        ) => {
+
+                            if (
+                                tagArray[index]
+                            ) {
+
+                                tagElement.textContent =
+                                    tagArray[index];
+
+                            }
+
+                        }
+                    );
+
+                }
+
+            }
+
+
+
+            /* ==============================================
+               EXPERIENCE 02
+            ============================================== */
+
+            if (
+                experiences.experience2 &&
+                experienceElements[1]
+            ) {
+
+                const experience =
+                    experiences.experience2;
+
+
+                const element =
+                    experienceElements[1];
+
+
+                const year =
+                    element.querySelector(
+                        ".experience-year"
+                    );
+
+
+                const company =
+                    element.querySelector(
+                        ".experience-content > span"
+                    );
+
+
+                const title =
+                    element.querySelector(
+                        ".experience-content h3"
+                    );
+
+
+                const description =
+                    element.querySelector(
+                        ".experience-content p"
+                    );
+
+
+                const tags =
+                    element.querySelectorAll(
+                        ".experience-tags span"
+                    );
+
+
+                if (year) {
+
+                    year.innerHTML =
+                        `${experience.year || ""}
+                        <span>SEKARANG</span>`;
+
+                }
+
+
+                if (company) {
+
+                    company.textContent =
+                        experience.company || "";
+
+                }
+
+
+                if (title) {
+
+                    title.textContent =
+                        experience.title || "";
+
+                }
+
+
+                if (description) {
+
+                    description.textContent =
+                        experience.description || "";
+
+                }
+
+
+                if (experience.tags) {
+
+                    const tagArray =
+                        experience.tags
+                            .split(",")
+                            .map(
+                                tag =>
+                                    tag.trim()
+                            )
+                            .filter(Boolean);
+
+
+                    tags.forEach(
+                        (
+                            tagElement,
+                            index
+                        ) => {
+
+                            if (
+                                tagArray[index]
+                            ) {
+
+                                tagElement.textContent =
+                                    tagArray[index];
+
+                            }
+
+                        }
+                    );
+
+                }
+
+            }
 
         }
 
 
-        /* =================================================
+
+        /* ==================================================
            CONTACT
-        ================================================= */
+        ================================================== */
 
         if (data.contact) {
 
@@ -507,181 +842,220 @@ onValue(
                 data.contact;
 
 
-            setHref(
-                "contactEmail",
-                contact.email,
-                "email"
-            );
+            /* EMAIL */
 
-
-            setHref(
-                "contactWhatsapp",
-                contact.whatsapp,
-                "whatsapp"
-            );
-
-
-            setHref(
-                "contactInstagram",
-                contact.instagram
-            );
-
-
-            setHref(
-                "contactLinkedin",
-                contact.linkedin
-            );
-
-
-            setHref(
-                "contactYoutube",
-                contact.youtube
-            );
-
-
-            setHref(
-                "contactTiktok",
-                contact.tiktok
-            );
-
-        }
-
-
-        console.log(
-            "✓ Portfolio berhasil dimuat."
-        );
-
-    },
-
-    (error) => {
-
-        console.error(
-            "Firebase Error:",
-            error
-        );
-
-    }
-
-);
-
-
-/* =====================================================
-   ANIMATION
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        document.body.classList.add(
-            "loaded"
-        );
-
-
-        const elements =
-            document.querySelectorAll(
-                ".section, .project, .experience-item, .skill-card, .about-photo, .about-content"
-            );
-
-
-        elements.forEach(
-            (element) => {
-
-                element.classList.add(
-                    "reveal"
+            const email =
+                document.getElementById(
+                    "contactEmail"
                 );
+
+
+            if (
+                email &&
+                contact.email
+            ) {
+
+                email.href =
+                    `mailto:${contact.email}`;
 
             }
-        );
 
 
-        if (
-            "IntersectionObserver"
-            in window
-        ) {
 
-            const observer =
-                new IntersectionObserver(
-                    (entries) => {
+            /* WHATSAPP */
 
-                        entries.forEach(
-                            (entry) => {
-
-                                if (
-                                    entry.isIntersecting
-                                ) {
-
-                                    entry.target.classList.add(
-                                        "show"
-                                    );
-
-                                    observer.unobserve(
-                                        entry.target
-                                    );
-
-                                }
-
-                            }
-                        );
-
-                    },
-                    {
-                        threshold: 0.05
-                    }
+            const whatsapp =
+                document.getElementById(
+                    "contactWhatsapp"
                 );
 
 
-            elements.forEach(
-                (element) => {
+            if (
+                whatsapp &&
+                contact.whatsapp
+            ) {
 
-                    observer.observe(
-                        element
-                    );
+                let number =
+                    contact.whatsapp
+                        .replace(
+                            /\D/g,
+                            ""
+                        );
+
+
+                if (
+                    number.startsWith("0")
+                ) {
+
+                    number =
+                        "62" +
+                        number.substring(1);
 
                 }
-            );
+
+
+                whatsapp.href =
+                    `https://wa.me/${number}`;
+
+            }
+
+
+
+            /* INSTAGRAM */
+
+            const instagram =
+                document.getElementById(
+                    "contactInstagram"
+                );
+
+
+            if (
+                instagram &&
+                contact.instagram
+            ) {
+
+                instagram.href =
+                    contact.instagram;
+
+            }
+
+
+
+            /* LINKEDIN */
+
+            const linkedin =
+                document.getElementById(
+                    "contactLinkedin"
+                );
+
+
+            if (
+                linkedin &&
+                contact.linkedin
+            ) {
+
+                linkedin.href =
+                    contact.linkedin;
+
+            }
+
+
+
+            /* YOUTUBE */
+
+            const youtube =
+                document.getElementById(
+                    "contactYoutube"
+                );
+
+
+            if (
+                youtube &&
+                contact.youtube
+            ) {
+
+                youtube.href =
+                    contact.youtube;
+
+            }
+
+
+
+            /* TIKTOK */
+
+            const tiktok =
+                document.getElementById(
+                    "contactTiktok"
+                );
+
+
+            if (
+                tiktok &&
+                contact.tiktok
+            ) {
+
+                tiktok.href =
+                    contact.tiktok;
+
+            }
 
         }
-        else {
-
-            elements.forEach(
-                (element) => {
-
-                    element.classList.add(
-                        "show"
-                    );
-
-                }
-            );
-
-        }
-
-    }
-);
 
 
-/* =====================================================
-   CURRENT YEAR
-===================================================== */
+    } catch (error) {
 
-const footer =
-    document.querySelector("footer");
-
-if (footer) {
-
-    const first =
-        footer.querySelector("div");
-
-    if (first) {
-
-        first.textContent =
-            `© ${new Date().getFullYear()} SEVHA`;
+        console.error(
+            "Gagal mengambil portfolio:",
+            error
+        );
 
     }
 
 }
 
 
-console.log(
-    "✓ SEVHA Portfolio Script aktif."
+
+/* ==================================================
+   START
+================================================== */
+
+loadPortfolio();
+
+
+
+/* ==================================================
+   REVEAL ANIMATION
+================================================== */
+
+const revealElements =
+    document.querySelectorAll(
+        ".section, .project, .experience-item, .skill-card, .about-photo, .about-content"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+        (
+            entries
+        ) => {
+
+            entries.forEach(
+                entry => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target.classList.add(
+                            "show"
+                        );
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: .1
+        }
+    );
+
+
+revealElements.forEach(
+    element => {
+
+        element.classList.add(
+            "reveal"
+        );
+
+        observer.observe(
+            element
+        );
+
+    }
 );
