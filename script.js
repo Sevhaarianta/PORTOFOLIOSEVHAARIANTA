@@ -724,7 +724,7 @@ if (isTouchDevice) {
 
 
 /* =====================================================
-   15. LOAD CONTACT DARI FIREBASE
+   15. UPDATE CONTACT
 ===================================================== */
 
 function updateContact(
@@ -752,6 +752,8 @@ function updateContact(
     }
 
 
+    /* EMAIL */
+
     if (type === "email") {
 
         element.href =
@@ -759,6 +761,8 @@ function updateContact(
 
     }
 
+
+    /* WHATSAPP */
 
     else if (type === "whatsapp") {
 
@@ -785,6 +789,8 @@ function updateContact(
 
     }
 
+
+    /* LINK */
 
     else {
 
@@ -819,10 +825,14 @@ onValue(
             snapshot.val();
 
 
+        /* =============================================
+           CEK DATA
+        ============================================= */
+
         if (!data) {
 
             console.log(
-                "Belum ada data portfolio di Firebase."
+                "❌ Belum ada data portfolio di Firebase."
             );
 
             return;
@@ -831,7 +841,7 @@ onValue(
 
 
         console.log(
-            "Data portfolio:",
+            "✅ DATA PORTFOLIO DARI FIREBASE:",
             data
         );
 
@@ -845,6 +855,54 @@ onValue(
             const hero =
                 data.hero;
 
+
+            /* -----------------------------------------
+               STATUS
+            ----------------------------------------- */
+
+            const statusElement =
+                document.querySelector(
+                    ".status"
+                );
+
+
+            if (
+                statusElement &&
+                hero.status
+            ) {
+
+                const statusDot =
+                    statusElement.querySelector(
+                        ".status-dot"
+                    );
+
+
+                statusElement.innerHTML =
+                    "";
+
+
+                if (statusDot) {
+
+                    statusElement.appendChild(
+                        statusDot
+                    );
+
+                }
+
+
+                statusElement.appendChild(
+                    document.createTextNode(
+                        " " +
+                        hero.status
+                    )
+                );
+
+            }
+
+
+            /* -----------------------------------------
+               DESKRIPSI HERO
+            ----------------------------------------- */
 
             const heroDescription =
                 document.querySelector(
@@ -863,47 +921,81 @@ onValue(
             }
 
 
+            /* -----------------------------------------
+               HERO META
+            ----------------------------------------- */
+
             const heroMeta =
                 document.querySelectorAll(
                     ".hero-meta > div"
                 );
 
 
+            /* LOCATION */
+
             if (
                 heroMeta[0] &&
                 hero.location
             ) {
 
-                heroMeta[0]
-                    .querySelector("strong")
-                    .textContent =
-                    hero.location;
+                const element =
+                    heroMeta[0].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        hero.location;
+
+                }
 
             }
 
+
+            /* FOCUS */
 
             if (
                 heroMeta[1] &&
                 hero.focus
             ) {
 
-                heroMeta[1]
-                    .querySelector("strong")
-                    .textContent =
-                    hero.focus;
+                const element =
+                    heroMeta[1].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        hero.focus;
+
+                }
 
             }
 
+
+            /* EXPERIENCE */
 
             if (
                 heroMeta[2] &&
                 hero.experience
             ) {
 
-                heroMeta[2]
-                    .querySelector("strong")
-                    .textContent =
-                    hero.experience;
+                const element =
+                    heroMeta[2].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        hero.experience;
+
+                }
 
             }
 
@@ -926,6 +1018,8 @@ onValue(
                 );
 
 
+            /* PARAGRAPH 1 */
+
             if (
                 paragraphs[0] &&
                 about.paragraph1
@@ -936,6 +1030,8 @@ onValue(
 
             }
 
+
+            /* PARAGRAPH 2 */
 
             if (
                 paragraphs[1] &&
@@ -948,47 +1044,79 @@ onValue(
             }
 
 
+            /* ABOUT INFO */
+
             const aboutInfo =
                 document.querySelectorAll(
                     ".about-info > div"
                 );
 
 
+            /* FIELD */
+
             if (
                 aboutInfo[0] &&
                 about.field
             ) {
 
-                aboutInfo[0]
-                    .querySelector("strong")
-                    .textContent =
-                    about.field;
+                const element =
+                    aboutInfo[0].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        about.field;
+
+                }
 
             }
 
+
+            /* TOOLS */
 
             if (
                 aboutInfo[1] &&
                 about.tools
             ) {
 
-                aboutInfo[1]
-                    .querySelector("strong")
-                    .textContent =
-                    about.tools;
+                const element =
+                    aboutInfo[1].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        about.tools;
+
+                }
 
             }
 
+
+            /* LOCATION */
 
             if (
                 aboutInfo[2] &&
                 about.location
             ) {
 
-                aboutInfo[2]
-                    .querySelector("strong")
-                    .textContent =
-                    about.location;
+                const element =
+                    aboutInfo[2].querySelector(
+                        "strong"
+                    );
+
+
+                if (element) {
+
+                    element.textContent =
+                        about.location;
+
+                }
 
             }
 
@@ -1005,12 +1133,16 @@ onValue(
                 data.contact;
 
 
+            /* EMAIL */
+
             updateContact(
                 "contactEmail",
                 contact.email,
                 "email"
             );
 
+
+            /* WHATSAPP */
 
             updateContact(
                 "contactWhatsapp",
@@ -1019,12 +1151,16 @@ onValue(
             );
 
 
+            /* INSTAGRAM */
+
             updateContact(
                 "contactInstagram",
                 contact.instagram,
                 "link"
             );
 
+
+            /* LINKEDIN */
 
             updateContact(
                 "contactLinkedin",
@@ -1033,12 +1169,16 @@ onValue(
             );
 
 
+            /* YOUTUBE */
+
             updateContact(
                 "contactYoutube",
                 contact.youtube,
                 "link"
             );
 
+
+            /* TIKTOK */
 
             updateContact(
                 "contactTiktok",
@@ -1048,13 +1188,26 @@ onValue(
 
         }
 
+
+        /* =============================================
+           SELESAI UPDATE
+        ============================================= */
+
+        console.log(
+            "✅ Website publik berhasil diperbarui dari Firebase."
+        );
+
     },
 
+
+    /* =============================================
+       FIREBASE ERROR
+    ============================================= */
 
     (error) => {
 
         console.error(
-            "Firebase Database Error:",
+            "❌ FIREBASE DATABASE ERROR:",
             error
         );
 
@@ -1064,102 +1217,9 @@ onValue(
 
 
 /* =====================================================
-   17. DEFAULT CONTACT DARI LOCALSTORAGE
-   JIKA MASIH ADA DATA LAMA
-===================================================== */
-
-function loadLocalStorageContacts() {
-
-    const STORAGE_KEY =
-        "sevhaPortfolioData";
-
-
-    const savedData =
-        localStorage.getItem(
-            STORAGE_KEY
-        );
-
-
-    if (!savedData) return;
-
-
-    let portfolioData;
-
-
-    try {
-
-        portfolioData =
-            JSON.parse(
-                savedData
-            );
-
-    } catch (error) {
-
-        console.error(
-            "Gagal membaca LocalStorage:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    const contact =
-        portfolioData.contact || {};
-
-
-    updateContact(
-        "contactEmail",
-        contact.email,
-        "email"
-    );
-
-
-    updateContact(
-        "contactWhatsapp",
-        contact.whatsapp,
-        "whatsapp"
-    );
-
-
-    updateContact(
-        "contactInstagram",
-        contact.instagram,
-        "link"
-    );
-
-
-    updateContact(
-        "contactLinkedin",
-        contact.linkedin,
-        "link"
-    );
-
-
-    updateContact(
-        "contactYoutube",
-        contact.youtube,
-        "link"
-    );
-
-
-    updateContact(
-        "contactTiktok",
-        contact.tiktok,
-        "link"
-    );
-
-}
-
-
-loadLocalStorageContacts();
-
-
-/* =====================================================
-   SELESAI
+   17. SELESAI
 ===================================================== */
 
 console.log(
-    "SEVHA Portfolio berhasil dijalankan."
+    "✅ SEVHA Portfolio berhasil dijalankan."
 );
