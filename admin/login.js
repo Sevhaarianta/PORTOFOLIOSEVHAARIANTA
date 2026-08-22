@@ -18,20 +18,28 @@ const loginError = document.getElementById("loginError");
 
 
 // ================================
+// URL DASHBOARD
+// ================================
+
+const dashboardURL =
+    "/PORTOFOLIOSEVHAARIANTA/admin/dashboard.html";
+
+
+// ================================
 // CEK STATUS LOGIN
 // ================================
 
 onAuthStateChanged(auth, (user) => {
 
     if (user) {
-        window.location.href = "./dashboard.html";
+        window.location.href = dashboardURL;
     }
 
 });
 
 
 // ================================
-// PROSES LOGIN
+// LOGIN
 // ================================
 
 loginForm.addEventListener("submit", async (event) => {
@@ -41,17 +49,14 @@ loginForm.addEventListener("submit", async (event) => {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
 
-    // Reset pesan error
     loginError.textContent = "";
 
-    // Disable tombol
     loginButton.disabled = true;
     loginButton.textContent = "Memproses...";
 
 
     try {
 
-        // Login Firebase
         await signInWithEmailAndPassword(
             auth,
             email,
@@ -59,7 +64,7 @@ loginForm.addEventListener("submit", async (event) => {
         );
 
         // Login berhasil
-        window.location.href = "./dashboard.html";
+        window.location.href = dashboardURL;
 
 
     } catch (error) {
@@ -74,24 +79,20 @@ loginForm.addEventListener("submit", async (event) => {
                     "Email atau password salah.";
                 break;
 
-
             case "auth/invalid-email":
                 loginError.textContent =
                     "Format email tidak valid.";
                 break;
-
 
             case "auth/too-many-requests":
                 loginError.textContent =
                     "Terlalu banyak percobaan. Coba lagi nanti.";
                 break;
 
-
             case "auth/user-disabled":
                 loginError.textContent =
                     "Akun ini telah dinonaktifkan.";
                 break;
-
 
             default:
                 loginError.textContent =
@@ -99,9 +100,9 @@ loginForm.addEventListener("submit", async (event) => {
         }
 
 
-        // Aktifkan tombol kembali
         loginButton.disabled = false;
-        loginButton.textContent = "Masuk ke Dashboard";
+        loginButton.textContent =
+            "Masuk ke Dashboard";
 
     }
 
