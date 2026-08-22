@@ -1,6 +1,7 @@
 /* =====================================================
    SEVHA PORTFOLIO
    MAIN JAVASCRIPT
+   FIREBASE PUBLIC WEBSITE
 ===================================================== */
 
 
@@ -23,13 +24,9 @@ const revealElements = document.querySelectorAll(
     ".section, .project, .experience-item, .skill-card, .about-photo, .about-content"
 );
 
-
 revealElements.forEach((element) => {
-
     element.classList.add("reveal");
-
 });
-
 
 const revealObserver = new IntersectionObserver(
     (entries) => {
@@ -40,9 +37,7 @@ const revealObserver = new IntersectionObserver(
 
                 entry.target.classList.add("show");
 
-                revealObserver.unobserve(
-                    entry.target
-                );
+                revealObserver.unobserve(entry.target);
 
             }
 
@@ -54,11 +49,8 @@ const revealObserver = new IntersectionObserver(
     }
 );
 
-
 revealElements.forEach((element) => {
-
     revealObserver.observe(element);
-
 });
 
 
@@ -66,110 +58,82 @@ revealElements.forEach((element) => {
    3. NAVBAR SCROLL EFFECT
 ===================================================== */
 
-const navbar =
-    document.querySelector(".nav");
+const navbar = document.querySelector(".nav");
 
+window.addEventListener("scroll", () => {
 
-window.addEventListener(
-    "scroll",
-    () => {
+    const currentScroll = window.scrollY;
 
-        const currentScroll =
-            window.scrollY;
+    if (!navbar) return;
 
+    if (currentScroll > 50) {
 
-        if (!navbar) return;
+        navbar.style.background =
+            "rgba(255,255,255,.72)";
 
+        navbar.style.boxShadow =
+            "0 20px 60px rgba(42,52,72,.13)";
 
-        if (currentScroll > 50) {
+    } else {
 
-            navbar.style.background =
-                "rgba(255,255,255,.72)";
+        navbar.style.background =
+            "linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.28))";
 
-            navbar.style.boxShadow =
-                "0 20px 60px rgba(42,52,72,.13)";
-
-        } else {
-
-            navbar.style.background =
-                "linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.28))";
-
-            navbar.style.boxShadow =
-                "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(255,255,255,.25), 0 25px 70px rgba(42,52,72,.10)";
-
-        }
+        navbar.style.boxShadow =
+            "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(255,255,255,.25), 0 25px 70px rgba(42,52,72,.10)";
 
     }
-);
+
+});
 
 
 /* =====================================================
    4. SMOOTH ANCHOR SCROLL
 ===================================================== */
 
-const anchorLinks =
-    document.querySelectorAll(
-        'a[href^="#"]'
-    );
-
+const anchorLinks = document.querySelectorAll(
+    'a[href^="#"]'
+);
 
 anchorLinks.forEach((link) => {
 
-    link.addEventListener(
-        "click",
-        function (event) {
+    link.addEventListener("click", function (event) {
 
-            const targetId =
-                this.getAttribute("href");
+        const targetId = this.getAttribute("href");
 
-
-            if (
-                !targetId ||
-                targetId === "#"
-            ) {
-
-                return;
-
-            }
-
-
-            const target =
-                document.querySelector(
-                    targetId
-                );
-
-
-            if (!target) return;
-
-
-            event.preventDefault();
-
-
-            const navbarHeight =
-                navbar
-                    ? navbar.offsetHeight
-                    : 0;
-
-
-            const targetPosition =
-                target.getBoundingClientRect().top +
-                window.scrollY -
-                navbarHeight -
-                25;
-
-
-            window.scrollTo({
-
-                top:
-                    targetPosition,
-
-                behavior:
-                    "smooth"
-
-            });
-
+        if (
+            !targetId ||
+            targetId === "#"
+        ) {
+            return;
         }
-    );
+
+        const target = document.querySelector(targetId);
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        const navbarHeight =
+            navbar
+                ? navbar.offsetHeight
+                : 0;
+
+        const targetPosition =
+            target.getBoundingClientRect().top +
+            window.scrollY -
+            navbarHeight -
+            25;
+
+        window.scrollTo({
+
+            top: targetPosition,
+
+            behavior: "smooth"
+
+        });
+
+    });
 
 });
 
@@ -179,70 +143,49 @@ anchorLinks.forEach((link) => {
 ===================================================== */
 
 const projects =
-    document.querySelectorAll(
-        ".project"
-    );
-
+    document.querySelectorAll(".project");
 
 projects.forEach((project) => {
 
     const image =
         project.querySelector("img");
 
-
     if (!image) return;
 
+    project.addEventListener("mousemove", (event) => {
 
-    project.addEventListener(
-        "mousemove",
-        (event) => {
+        const rect =
+            project.getBoundingClientRect();
 
-            const rect =
-                project.getBoundingClientRect();
+        const x =
+            event.clientX - rect.left;
 
+        const y =
+            event.clientY - rect.top;
 
-            const x =
-                event.clientX -
-                rect.left;
+        const centerX =
+            rect.width / 2;
 
+        const centerY =
+            rect.height / 2;
 
-            const y =
-                event.clientY -
-                rect.top;
+        const moveX =
+            ((x - centerX) / centerX) * 8;
 
+        const moveY =
+            ((y - centerY) / centerY) * 8;
 
-            const centerX =
-                rect.width / 2;
+        image.style.transform =
+            `scale(1.06) translate(${moveX}px, ${moveY}px)`;
 
+    });
 
-            const centerY =
-                rect.height / 2;
+    project.addEventListener("mouseleave", () => {
 
+        image.style.transform =
+            "scale(1) translate(0, 0)";
 
-            const moveX =
-                ((x - centerX) / centerX) * 8;
-
-
-            const moveY =
-                ((y - centerY) / centerY) * 8;
-
-
-            image.style.transform =
-                `scale(1.06) translate(${moveX}px, ${moveY}px)`;
-
-        }
-    );
-
-
-    project.addEventListener(
-        "mouseleave",
-        () => {
-
-            image.style.transform =
-                "scale(1) translate(0, 0)";
-
-        }
-    );
+    });
 
 });
 
@@ -252,55 +195,38 @@ projects.forEach((project) => {
 ===================================================== */
 
 const heroImage =
-    document.querySelector(
-        ".hero-image"
-    );
-
+    document.querySelector(".hero-image");
 
 if (heroImage) {
 
-    heroImage.addEventListener(
-        "mousemove",
-        (event) => {
+    heroImage.addEventListener("mousemove", (event) => {
 
-            const rect =
-                heroImage.getBoundingClientRect();
+        const rect =
+            heroImage.getBoundingClientRect();
 
+        const x =
+            event.clientX - rect.left;
 
-            const x =
-                event.clientX -
-                rect.left;
+        const y =
+            event.clientY - rect.top;
 
+        const rotateX =
+            ((y / rect.height) - 0.5) * -5;
 
-            const y =
-                event.clientY -
-                rect.top;
+        const rotateY =
+            ((x / rect.width) - 0.5) * 5;
 
+        heroImage.style.transform =
+            `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-            const rotateX =
-                ((y / rect.height) - 0.5) * -5;
+    });
 
+    heroImage.addEventListener("mouseleave", () => {
 
-            const rotateY =
-                ((x / rect.width) - 0.5) * 5;
+        heroImage.style.transform =
+            "perspective(1000px) rotateX(0deg) rotateY(0deg)";
 
-
-            heroImage.style.transform =
-                `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-        }
-    );
-
-
-    heroImage.addEventListener(
-        "mouseleave",
-        () => {
-
-            heroImage.style.transform =
-                "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-
-        }
-    );
+    });
 
 }
 
@@ -310,59 +236,41 @@ if (heroImage) {
 ===================================================== */
 
 const skillCards =
-    document.querySelectorAll(
-        ".skill-card"
-    );
-
+    document.querySelectorAll(".skill-card");
 
 skillCards.forEach((card) => {
 
-    card.addEventListener(
-        "mousemove",
-        (event) => {
+    card.addEventListener("mousemove", (event) => {
 
-            const rect =
-                card.getBoundingClientRect();
+        const rect =
+            card.getBoundingClientRect();
 
+        const x =
+            event.clientX - rect.left;
 
-            const x =
-                event.clientX -
-                rect.left;
+        const y =
+            event.clientY - rect.top;
 
+        const percentX =
+            x / rect.width * 100;
 
-            const y =
-                event.clientY -
-                rect.top;
+        const percentY =
+            y / rect.height * 100;
 
+        card.style.background =
+            `radial-gradient(
+                circle at ${percentX}% ${percentY}%,
+                rgba(255,255,255,.88),
+                rgba(255,255,255,.38)
+            )`;
 
-            const percentX =
-                x / rect.width * 100;
+    });
 
+    card.addEventListener("mouseleave", () => {
 
-            const percentY =
-                y / rect.height * 100;
+        card.style.background = "";
 
-
-            card.style.background =
-                `radial-gradient(
-                    circle at ${percentX}% ${percentY}%,
-                    rgba(255,255,255,.88),
-                    rgba(255,255,255,.38)
-                )`;
-
-        }
-    );
-
-
-    card.addEventListener(
-        "mouseleave",
-        () => {
-
-            card.style.background =
-                "";
-
-        }
-    );
+    });
 
 });
 
@@ -372,32 +280,22 @@ skillCards.forEach((card) => {
 ===================================================== */
 
 const cursorGlow =
-    document.createElement(
-        "div"
-    );
-
+    document.createElement("div");
 
 cursorGlow.className =
     "cursor-glow";
 
+document.body.appendChild(cursorGlow);
 
-document.body.appendChild(
-    cursorGlow
-);
+document.addEventListener("mousemove", (event) => {
 
+    cursorGlow.style.left =
+        `${event.clientX}px`;
 
-document.addEventListener(
-    "mousemove",
-    (event) => {
+    cursorGlow.style.top =
+        `${event.clientY}px`;
 
-        cursorGlow.style.left =
-            `${event.clientX}px`;
-
-        cursorGlow.style.top =
-            `${event.clientY}px`;
-
-    }
-);
+});
 
 
 /* =====================================================
@@ -405,10 +303,7 @@ document.addEventListener(
 ===================================================== */
 
 const cursorStyle =
-    document.createElement(
-        "style"
-    );
-
+    document.createElement("style");
 
 cursorStyle.innerHTML = `
 
@@ -445,14 +340,12 @@ cursorStyle.innerHTML = `
 
     }
 
-
     .hero-image {
 
         transition:
             transform .25s ease-out;
 
     }
-
 
     .project-image img {
 
@@ -463,10 +356,7 @@ cursorStyle.innerHTML = `
 
 `;
 
-
-document.head.appendChild(
-    cursorStyle
-);
+document.head.appendChild(cursorStyle);
 
 
 /* =====================================================
@@ -474,18 +364,12 @@ document.head.appendChild(
 ===================================================== */
 
 const footer =
-    document.querySelector(
-        "footer"
-    );
-
+    document.querySelector("footer");
 
 if (footer) {
 
     const footerItems =
-        footer.querySelectorAll(
-            "div"
-        );
-
+        footer.querySelectorAll("div");
 
     if (footerItems.length > 0) {
 
@@ -506,53 +390,43 @@ const sections =
         "main section[id], header[id]"
     );
 
-
 const navItems =
     document.querySelectorAll(
         ".nav-links a"
     );
 
-
 const sectionObserver =
     new IntersectionObserver(
         (entries) => {
 
-            entries.forEach(
-                (entry) => {
+            entries.forEach((entry) => {
 
-                    if (
-                        entry.isIntersecting
-                    ) {
+                if (entry.isIntersecting) {
 
-                        navItems.forEach(
-                            (link) => {
+                    navItems.forEach((link) => {
 
-                                link.classList.remove(
-                                    "active"
-                                );
-
-                            }
+                        link.classList.remove(
+                            "active"
                         );
 
+                    });
 
-                        const activeLink =
-                            document.querySelector(
-                                `.nav-links a[href="#${entry.target.id}"]`
-                            );
+                    const activeLink =
+                        document.querySelector(
+                            `.nav-links a[href="#${entry.target.id}"]`
+                        );
 
+                    if (activeLink) {
 
-                        if (activeLink) {
-
-                            activeLink.classList.add(
-                                "active"
-                            );
-
-                        }
+                        activeLink.classList.add(
+                            "active"
+                        );
 
                     }
 
                 }
-            );
+
+            });
 
         },
         {
@@ -560,16 +434,11 @@ const sectionObserver =
         }
     );
 
+sections.forEach((section) => {
 
-sections.forEach(
-    (section) => {
+    sectionObserver.observe(section);
 
-        sectionObserver.observe(
-            section
-        );
-
-    }
-);
+});
 
 
 /* =====================================================
@@ -577,10 +446,7 @@ sections.forEach(
 ===================================================== */
 
 const activeNavStyle =
-    document.createElement(
-        "style"
-    );
-
+    document.createElement("style");
 
 activeNavStyle.innerHTML = `
 
@@ -589,7 +455,6 @@ activeNavStyle.innerHTML = `
         position: relative;
 
     }
-
 
     .nav-links a::after {
 
@@ -607,21 +472,18 @@ activeNavStyle.innerHTML = `
 
         border-radius: 10px;
 
-        background:
-            #8ba6ff;
+        background: #8ba6ff;
 
         transition:
             width .3s ease;
 
     }
 
-
     .nav-links a.active {
 
         color: #202328;
 
     }
-
 
     .nav-links a.active::after {
 
@@ -631,40 +493,26 @@ activeNavStyle.innerHTML = `
 
 `;
 
-
-document.head.appendChild(
-    activeNavStyle
-);
+document.head.appendChild(activeNavStyle);
 
 
 /* =====================================================
    13. PAGE LOAD
 ===================================================== */
 
-window.addEventListener(
-    "load",
-    () => {
+window.addEventListener("load", () => {
 
-        document.body.classList.add(
-            "loaded"
-        );
+    document.body.classList.add("loaded");
 
+    setTimeout(() => {
 
-        setTimeout(
-            () => {
+        document
+            .querySelector(".hero")
+            ?.classList.add("hero-loaded");
 
-                document
-                    .querySelector(".hero")
-                    ?.classList.add(
-                        "hero-loaded"
-                    );
+    }, 200);
 
-            },
-            200
-        );
-
-    }
-);
+});
 
 
 /* =====================================================
@@ -675,19 +523,14 @@ const isTouchDevice =
     "ontouchstart" in window ||
     navigator.maxTouchPoints > 0;
 
-
 if (isTouchDevice) {
 
     document.body.classList.add(
         "touch-device"
     );
 
-
     const touchStyle =
-        document.createElement(
-            "style"
-        );
-
+        document.createElement("style");
 
     touchStyle.innerHTML = `
 
@@ -697,14 +540,12 @@ if (isTouchDevice) {
 
         }
 
-
         .hero-image {
 
             transform:
                 none !important;
 
         }
-
 
         .project-image img {
 
@@ -715,10 +556,7 @@ if (isTouchDevice) {
 
     `;
 
-
-    document.head.appendChild(
-        touchStyle
-    );
+    document.head.appendChild(touchStyle);
 
 }
 
@@ -734,13 +572,9 @@ function updateContact(
 ) {
 
     const element =
-        document.getElementById(
-            elementId
-        );
-
+        document.getElementById(elementId);
 
     if (!element) return;
-
 
     if (!value) {
 
@@ -751,9 +585,6 @@ function updateContact(
 
     }
 
-
-    /* EMAIL */
-
     if (type === "email") {
 
         element.href =
@@ -761,21 +592,15 @@ function updateContact(
 
     }
 
-
-    /* WHATSAPP */
-
     else if (type === "whatsapp") {
 
         let number =
-            value.replace(
+            String(value).replace(
                 /\D/g,
                 ""
             );
 
-
-        if (
-            number.startsWith("0")
-        ) {
+        if (number.startsWith("0")) {
 
             number =
                 "62" +
@@ -783,14 +608,10 @@ function updateContact(
 
         }
 
-
         element.href =
             `https://wa.me/${number}`;
 
     }
-
-
-    /* LINK */
 
     else {
 
@@ -799,7 +620,6 @@ function updateContact(
 
     }
 
-
     element.style.display =
         "flex";
 
@@ -807,7 +627,7 @@ function updateContact(
 
 
 /* =====================================================
-   16. LOAD DATA PORTFOLIO DARI FIREBASE
+   16. LOAD PORTFOLIO FROM FIREBASE
 ===================================================== */
 
 const portfolioRef =
@@ -819,36 +639,31 @@ const portfolioRef =
 
 onValue(
     portfolioRef,
+
     (snapshot) => {
 
         const data =
             snapshot.val();
 
-
-        /* =============================================
-           CEK DATA
-        ============================================= */
-
         if (!data) {
 
             console.log(
-                "❌ Belum ada data portfolio di Firebase."
+                "Belum ada data portfolio di Firebase."
             );
 
             return;
 
         }
 
-
         console.log(
-            "✅ DATA PORTFOLIO DARI FIREBASE:",
+            "✅ DATA FIREBASE TERBACA:",
             data
         );
 
 
-        /* =============================================
+        /* =================================================
            HERO
-        ============================================= */
+        ================================================= */
 
         if (data.hero) {
 
@@ -856,63 +671,32 @@ onValue(
                 data.hero;
 
 
-            /* -----------------------------------------
-               STATUS
-            ----------------------------------------- */
+            /* STATUS */
 
             const statusElement =
-                document.querySelector(
-                    ".status"
-                );
-
+                document.querySelector(".status");
 
             if (
                 statusElement &&
                 hero.status
             ) {
 
-                const statusDot =
-                    statusElement.querySelector(
-                        ".status-dot"
-                    );
-
-
-                statusElement.innerHTML =
-                    "";
-
-
-                if (statusDot) {
-
-                    statusElement.appendChild(
-                        statusDot
-                    );
-
-                }
-
-
-                statusElement.appendChild(
-                    document.createTextNode(
-                        " " +
-                        hero.status
-                    )
-                );
+                statusElement.innerHTML = `
+                    <span class="status-dot"></span>
+                    ${hero.status}
+                `;
 
             }
 
 
-            /* -----------------------------------------
-               DESKRIPSI HERO
-            ----------------------------------------- */
+            /* DESKRIPSI */
 
             const heroDescription =
-                document.querySelector(
-                    ".hero-desc"
-                );
-
+                document.querySelector(".hero-desc");
 
             if (
                 heroDescription &&
-                hero.description
+                hero.description !== undefined
             ) {
 
                 heroDescription.textContent =
@@ -921,9 +705,7 @@ onValue(
             }
 
 
-            /* -----------------------------------------
-               HERO META
-            ----------------------------------------- */
+            /* LOCATION / FOCUS / EXPERIENCE */
 
             const heroMeta =
                 document.querySelectorAll(
@@ -931,22 +713,17 @@ onValue(
                 );
 
 
-            /* LOCATION */
-
             if (
                 heroMeta[0] &&
-                hero.location
+                hero.location !== undefined
             ) {
 
-                const element =
-                    heroMeta[0].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    heroMeta[0].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         hero.location;
 
                 }
@@ -954,22 +731,17 @@ onValue(
             }
 
 
-            /* FOCUS */
-
             if (
                 heroMeta[1] &&
-                hero.focus
+                hero.focus !== undefined
             ) {
 
-                const element =
-                    heroMeta[1].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    heroMeta[1].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         hero.focus;
 
                 }
@@ -977,22 +749,17 @@ onValue(
             }
 
 
-            /* EXPERIENCE */
-
             if (
                 heroMeta[2] &&
-                hero.experience
+                hero.experience !== undefined
             ) {
 
-                const element =
-                    heroMeta[2].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    heroMeta[2].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         hero.experience;
 
                 }
@@ -1002,9 +769,9 @@ onValue(
         }
 
 
-        /* =============================================
+        /* =================================================
            ABOUT
-        ============================================= */
+        ================================================= */
 
         if (data.about) {
 
@@ -1018,11 +785,9 @@ onValue(
                 );
 
 
-            /* PARAGRAPH 1 */
-
             if (
                 paragraphs[0] &&
-                about.paragraph1
+                about.paragraph1 !== undefined
             ) {
 
                 paragraphs[0].textContent =
@@ -1031,11 +796,9 @@ onValue(
             }
 
 
-            /* PARAGRAPH 2 */
-
             if (
                 paragraphs[1] &&
-                about.paragraph2
+                about.paragraph2 !== undefined
             ) {
 
                 paragraphs[1].textContent =
@@ -1044,30 +807,23 @@ onValue(
             }
 
 
-            /* ABOUT INFO */
-
             const aboutInfo =
                 document.querySelectorAll(
                     ".about-info > div"
                 );
 
 
-            /* FIELD */
-
             if (
                 aboutInfo[0] &&
-                about.field
+                about.field !== undefined
             ) {
 
-                const element =
-                    aboutInfo[0].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    aboutInfo[0].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         about.field;
 
                 }
@@ -1075,22 +831,17 @@ onValue(
             }
 
 
-            /* TOOLS */
-
             if (
                 aboutInfo[1] &&
-                about.tools
+                about.tools !== undefined
             ) {
 
-                const element =
-                    aboutInfo[1].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    aboutInfo[1].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         about.tools;
 
                 }
@@ -1098,22 +849,17 @@ onValue(
             }
 
 
-            /* LOCATION */
-
             if (
                 aboutInfo[2] &&
-                about.location
+                about.location !== undefined
             ) {
 
-                const element =
-                    aboutInfo[2].querySelector(
-                        "strong"
-                    );
+                const strong =
+                    aboutInfo[2].querySelector("strong");
 
+                if (strong) {
 
-                if (element) {
-
-                    element.textContent =
+                    strong.textContent =
                         about.location;
 
                 }
@@ -1123,17 +869,15 @@ onValue(
         }
 
 
-        /* =============================================
+        /* =================================================
            CONTACT
-        ============================================= */
+        ================================================= */
 
         if (data.contact) {
 
             const contact =
                 data.contact;
 
-
-            /* EMAIL */
 
             updateContact(
                 "contactEmail",
@@ -1142,16 +886,12 @@ onValue(
             );
 
 
-            /* WHATSAPP */
-
             updateContact(
                 "contactWhatsapp",
                 contact.whatsapp,
                 "whatsapp"
             );
 
-
-            /* INSTAGRAM */
 
             updateContact(
                 "contactInstagram",
@@ -1160,8 +900,6 @@ onValue(
             );
 
 
-            /* LINKEDIN */
-
             updateContact(
                 "contactLinkedin",
                 contact.linkedin,
@@ -1169,16 +907,12 @@ onValue(
             );
 
 
-            /* YOUTUBE */
-
             updateContact(
                 "contactYoutube",
                 contact.youtube,
                 "link"
             );
 
-
-            /* TIKTOK */
 
             updateContact(
                 "contactTiktok",
@@ -1189,25 +923,20 @@ onValue(
         }
 
 
-        /* =============================================
-           SELESAI UPDATE
-        ============================================= */
+        /* =================================================
+           SELESAI
+        ================================================= */
 
         console.log(
-            "✅ Website publik berhasil diperbarui dari Firebase."
+            "✅ Portfolio publik berhasil diperbarui dari Firebase."
         );
 
     },
 
-
-    /* =============================================
-       FIREBASE ERROR
-    ============================================= */
-
     (error) => {
 
         console.error(
-            "❌ FIREBASE DATABASE ERROR:",
+            "❌ Firebase Database Error:",
             error
         );
 
@@ -1221,5 +950,5 @@ onValue(
 ===================================================== */
 
 console.log(
-    "✅ SEVHA Portfolio berhasil dijalankan."
+    "🚀 SEVHA Portfolio berhasil dijalankan."
 );
