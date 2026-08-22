@@ -33,14 +33,14 @@
 
             background:
                 radial-gradient(
-                    circle at 20% 20%,
-                    #d9e6ff,
-                    transparent 35%
+                    circle at 15% 10%,
+                    #dce8ff,
+                    transparent 32%
                 ),
                 radial-gradient(
-                    circle at 80% 80%,
-                    #e4dcff,
-                    transparent 35%
+                    circle at 85% 80%,
+                    #e8e0ff,
+                    transparent 32%
                 ),
                 #eef1f6;
 
@@ -56,18 +56,14 @@
         .navbar {
 
             position: sticky;
-
             top: 0;
-
             z-index: 100;
 
-            padding: 18px 30px;
-
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
+
+            padding: 18px 30px;
 
             background:
                 rgba(255,255,255,.72);
@@ -88,7 +84,6 @@
         .logo {
 
             font-size: 23px;
-
             font-weight: 800;
 
         }
@@ -104,9 +99,7 @@
         .user-area {
 
             display: flex;
-
             align-items: center;
-
             gap: 15px;
 
         }
@@ -115,7 +108,6 @@
         #userEmail {
 
             color: #737b8a;
-
             font-size: 13px;
 
         }
@@ -147,7 +139,6 @@
         .container {
 
             width: 100%;
-
             max-width: 1100px;
 
             margin: auto;
@@ -236,7 +227,6 @@
         .card h2 {
 
             font-size: 21px;
-
             margin-bottom: 8px;
 
         }
@@ -301,7 +291,8 @@
 
 
         input,
-        textarea {
+        textarea,
+        select {
 
             width: 100%;
 
@@ -336,7 +327,8 @@
 
 
         input:focus,
-        textarea:focus {
+        textarea:focus,
+        select:focus {
 
             border-color: #789cff;
 
@@ -355,7 +347,7 @@
 
             border: none;
 
-            padding: 13px 18px;
+            padding: 13px 19px;
 
             border-radius: 13px;
 
@@ -386,46 +378,81 @@
         }
 
 
-        .button-danger {
-
-            background:
-                #ff5c5c;
-
-        }
-
-
-        .button-dark {
+        .button-secondary {
 
             background: #111;
 
         }
 
 
-        .section-top {
+        .button-danger {
 
-            display: flex;
+            background: #e74c3c;
 
-            justify-content:
-                space-between;
+        }
 
-            align-items: center;
 
-            gap: 15px;
+        .button-small {
 
-            margin-bottom: 20px;
+            padding: 9px 13px;
+
+            font-size: 12px;
 
         }
 
 
         /* =========================================
-           ITEM CARD
+           SAVE STATUS
+        ========================================= */
+
+        #saveStatus {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            font-size: 13px;
+
+        }
+
+
+        #saveStatus.success {
+
+            display: block;
+
+            background:
+                rgba(80,200,120,.1);
+
+            color: #328451;
+
+        }
+
+
+        #saveStatus.error {
+
+            display: block;
+
+            background:
+                rgba(220,70,70,.1);
+
+            color: #a33;
+
+        }
+
+
+        /* =========================================
+           PROJECT / EXPERIENCE ITEMS
         ========================================= */
 
         .item-card {
 
             padding: 22px;
 
-            margin-bottom: 15px;
+            margin-bottom: 18px;
 
             border-radius: 18px;
 
@@ -448,25 +475,57 @@
 
             align-items: center;
 
-            margin-bottom: 18px;
-
             gap: 15px;
+
+            margin-bottom: 20px;
 
         }
 
 
         .item-number {
 
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(115,152,255,.12);
+
+            color: #6489ec;
+
             font-size: 12px;
 
-            font-weight: 800;
-
-            color: #779aff;
+            font-weight: 700;
 
         }
 
 
-        .item-buttons {
+        .item-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .item-title h3 {
+
+            font-size: 16px;
+
+        }
+
+
+        .item-actions {
 
             display: flex;
 
@@ -475,52 +534,53 @@
         }
 
 
-        .item-buttons button {
+        /* =========================================
+           ADD BUTTON
+        ========================================= */
 
-            border: none;
+        .add-button {
 
-            padding: 8px 12px;
+            width: 100%;
 
-            border-radius: 9px;
+            padding: 15px;
 
-            cursor: pointer;
+            border: 2px dashed
+                #cbd4e5;
 
-            font-size: 11px;
+            border-radius: 15px;
+
+            background:
+                rgba(255,255,255,.35);
+
+            color: #6489ec;
 
             font-weight: 700;
+
+            cursor: pointer;
 
         }
 
 
-        .delete-button {
+        .add-button:hover {
 
-            background: #ffe4e4;
-
-            color: #d33;
+            background:
+                rgba(255,255,255,.7);
 
         }
 
 
         /* =========================================
-           STATUS
+           DIVIDER
         ========================================= */
 
-        #saveStatus {
+        .divider {
 
-            display: none;
-
-            margin-top: 15px;
-
-            padding: 13px;
-
-            border-radius: 12px;
+            height: 1px;
 
             background:
-                rgba(80,200,120,.1);
+                #e4e7ed;
 
-            color: #328451;
-
-            font-size: 13px;
+            margin: 25px 0;
 
         }
 
@@ -529,7 +589,7 @@
            MOBILE
         ========================================= */
 
-        @media (max-width:700px) {
+        @media (max-width: 700px) {
 
             .navbar {
 
@@ -573,7 +633,7 @@
             }
 
 
-            .section-top {
+            .item-header {
 
                 align-items: flex-start;
 
@@ -582,11 +642,16 @@
             }
 
 
-            .item-header {
+            .item-actions {
 
-                align-items: flex-start;
+                width: 100%;
 
-                flex-direction: column;
+            }
+
+
+            .item-actions button {
+
+                flex: 1;
 
             }
 
@@ -599,6 +664,10 @@
 
 <body>
 
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
 
 <header class="navbar">
 
@@ -640,8 +709,8 @@
 
 
     <p class="subtitle">
-        Semua perubahan akan disimpan ke Firebase
-        dan ditampilkan otomatis di website publik.
+        Semua perubahan akan tersimpan ke Firebase
+        dan ditampilkan pada website publik.
     </p>
 
 
@@ -653,12 +722,12 @@
     <section class="card">
 
         <h2>
-            Hero Section
+            01 — Hero
         </h2>
 
         <p class="card-description">
-            Informasi yang muncul pada bagian paling
-            atas website.
+            Atur informasi utama yang tampil di
+            bagian paling atas website.
         </p>
 
 
@@ -667,7 +736,9 @@
 
             <div class="form-group">
 
-                <label>Status</label>
+                <label>
+                    Status
+                </label>
 
                 <input
                     id="heroStatus"
@@ -680,7 +751,9 @@
 
             <div class="form-group">
 
-                <label>Berbasis di</label>
+                <label>
+                    Berbasis di
+                </label>
 
                 <input
                     id="heroLocation"
@@ -693,7 +766,9 @@
 
             <div class="form-group">
 
-                <label>Fokus</label>
+                <label>
+                    Fokus
+                </label>
 
                 <input
                     id="heroFocus"
@@ -706,7 +781,9 @@
 
             <div class="form-group">
 
-                <label>Pengalaman</label>
+                <label>
+                    Pengalaman
+                </label>
 
                 <input
                     id="heroExperience"
@@ -719,11 +796,13 @@
 
             <div class="form-group full">
 
-                <label>Deskripsi Hero</label>
+                <label>
+                    Deskripsi Hero
+                </label>
 
                 <textarea
                     id="heroDescription"
-                    placeholder="Tulis deskripsi..."
+                    placeholder="Tulis deskripsi hero..."
                 ></textarea>
 
             </div>
@@ -742,11 +821,12 @@
     <section class="card">
 
         <h2>
-            Tentang Saya
+            02 — Tentang Saya
         </h2>
 
         <p class="card-description">
-            Atur informasi mengenai diri kamu.
+            Informasi yang tampil pada bagian
+            Tentang Saya.
         </p>
 
 
@@ -755,11 +835,14 @@
 
             <div class="form-group">
 
-                <label>Bidang</label>
+                <label>
+                    Bidang
+                </label>
 
                 <input
                     id="aboutField"
                     type="text"
+                    placeholder="Visual & Content"
                 >
 
             </div>
@@ -767,11 +850,14 @@
 
             <div class="form-group">
 
-                <label>Tools</label>
+                <label>
+                    Tools
+                </label>
 
                 <input
                     id="aboutTools"
                     type="text"
+                    placeholder="CapCut · Canva"
                 >
 
             </div>
@@ -779,11 +865,14 @@
 
             <div class="form-group">
 
-                <label>Domisili</label>
+                <label>
+                    Domisili
+                </label>
 
                 <input
                     id="aboutLocation"
                     type="text"
+                    placeholder="Indonesia"
                 >
 
             </div>
@@ -791,7 +880,9 @@
 
             <div class="form-group full">
 
-                <label>Paragraf 1</label>
+                <label>
+                    Paragraf 1
+                </label>
 
                 <textarea
                     id="aboutParagraph1"
@@ -802,7 +893,9 @@
 
             <div class="form-group full">
 
-                <label>Paragraf 2</label>
+                <label>
+                    Paragraf 2
+                </label>
 
                 <textarea
                     id="aboutParagraph2"
@@ -823,32 +916,27 @@
 
     <section class="card">
 
-        <div class="section-top">
+        <h2>
+            03 — Project
+        </h2>
 
-            <div>
-
-                <h2>
-                    Project
-                </h2>
-
-                <p class="card-description">
-                    Project yang pernah kamu kerjakan.
-                </p>
-
-            </div>
-
-
-            <button
-                class="button"
-                id="addProjectButton"
-            >
-                + Tambah Project
-            </button>
-
-        </div>
+        <p class="card-description">
+            Tambahkan atau ubah project yang pernah
+            kamu kerjakan. Project akan muncul
+            otomatis di website publik.
+        </p>
 
 
         <div id="projectsContainer"></div>
+
+
+        <button
+            type="button"
+            class="add-button"
+            id="addProjectButton"
+        >
+            + Tambah Project
+        </button>
 
     </section>
 
@@ -860,69 +948,26 @@
 
     <section class="card">
 
-        <div class="section-top">
+        <h2>
+            04 — Pengalaman
+        </h2>
 
-            <div>
-
-                <h2>
-                    Pengalaman Kerja
-                </h2>
-
-                <p class="card-description">
-                    Riwayat pekerjaan dan pengalaman profesional.
-                </p>
-
-            </div>
+        <p class="card-description">
+            Kelola pengalaman kerja, freelance,
+            organisasi, atau project profesional.
+        </p>
 
 
-            <button
-                class="button"
-                id="addExperienceButton"
-            >
-                + Tambah Pengalaman
-            </button>
-
-        </div>
+        <div id="experienceContainer"></div>
 
 
-        <div id="experiencesContainer"></div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         SKILLS
-    ========================================= -->
-
-    <section class="card">
-
-        <div class="section-top">
-
-            <div>
-
-                <h2>
-                    Keahlian
-                </h2>
-
-                <p class="card-description">
-                    Atur skill yang tampil di website.
-                </p>
-
-            </div>
-
-
-            <button
-                class="button"
-                id="addSkillButton"
-            >
-                + Tambah Skill
-            </button>
-
-        </div>
-
-
-        <div id="skillsContainer"></div>
+        <button
+            type="button"
+            class="add-button"
+            id="addExperienceButton"
+        >
+            + Tambah Pengalaman
+        </button>
 
     </section>
 
@@ -935,11 +980,11 @@
     <section class="card">
 
         <h2>
-            Kontak
+            05 — Contact
         </h2>
 
         <p class="card-description">
-            Link kontak dan media sosial.
+            Atur semua link kontak dan sosial media.
         </p>
 
 
@@ -948,11 +993,14 @@
 
             <div class="form-group">
 
-                <label>Email</label>
+                <label>
+                    Email
+                </label>
 
                 <input
                     id="contactEmail"
                     type="email"
+                    placeholder="email@gmail.com"
                 >
 
             </div>
@@ -960,11 +1008,14 @@
 
             <div class="form-group">
 
-                <label>WhatsApp</label>
+                <label>
+                    WhatsApp
+                </label>
 
                 <input
                     id="contactWhatsapp"
                     type="text"
+                    placeholder="08123456789"
                 >
 
             </div>
@@ -972,11 +1023,14 @@
 
             <div class="form-group">
 
-                <label>Instagram</label>
+                <label>
+                    Instagram
+                </label>
 
                 <input
                     id="contactInstagram"
                     type="url"
+                    placeholder="https://instagram.com/username"
                 >
 
             </div>
@@ -984,11 +1038,14 @@
 
             <div class="form-group">
 
-                <label>LinkedIn</label>
+                <label>
+                    LinkedIn
+                </label>
 
                 <input
                     id="contactLinkedin"
                     type="url"
+                    placeholder="https://linkedin.com/in/username"
                 >
 
             </div>
@@ -996,11 +1053,14 @@
 
             <div class="form-group">
 
-                <label>YouTube</label>
+                <label>
+                    YouTube
+                </label>
 
                 <input
                     id="contactYoutube"
                     type="url"
+                    placeholder="https://youtube.com/@username"
                 >
 
             </div>
@@ -1008,11 +1068,14 @@
 
             <div class="form-group">
 
-                <label>TikTok</label>
+                <label>
+                    TikTok
+                </label>
 
                 <input
                     id="contactTiktok"
                     type="url"
+                    placeholder="https://tiktok.com/@username"
                 >
 
             </div>
@@ -1035,8 +1098,9 @@
         </h2>
 
         <p class="card-description">
-            Setelah selesai mengedit, klik tombol
-            berikut untuk memperbarui website publik.
+            Setelah selesai mengedit Hero, About,
+            Project, Pengalaman, dan Contact,
+            klik tombol ini.
         </p>
 
 
@@ -1044,7 +1108,7 @@
             class="button"
             id="saveButton"
         >
-            Simpan Perubahan
+            Simpan Semua Perubahan
         </button>
 
 
@@ -1065,27 +1129,21 @@
 ===================================================== */
 
 import {
-
     database,
     ref,
     get,
     update
-
-} from "../firebase-config.js";
+} from "./firebase-config.js";
 
 
 import {
-
     auth
-
-} from "../firebase-config.js";
+} from "./firebase-config.js";
 
 
 import {
-
     onAuthStateChanged,
     signOut
-
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 
@@ -1095,50 +1153,37 @@ import {
 ===================================================== */
 
 const userEmail =
-    document.getElementById(
-        "userEmail"
-    );
+    document.getElementById("userEmail");
 
 
 const logoutButton =
-    document.getElementById(
-        "logoutButton"
-    );
+    document.getElementById("logoutButton");
 
 
 const saveButton =
-    document.getElementById(
-        "saveButton"
-    );
+    document.getElementById("saveButton");
 
 
 const saveStatus =
-    document.getElementById(
-        "saveStatus"
-    );
+    document.getElementById("saveStatus");
 
 
 const projectsContainer =
-    document.getElementById(
-        "projectsContainer"
-    );
+    document.getElementById("projectsContainer");
 
 
-const experiencesContainer =
-    document.getElementById(
-        "experiencesContainer"
-    );
+const experienceContainer =
+    document.getElementById("experienceContainer");
 
 
-const skillsContainer =
-    document.getElementById(
-        "skillsContainer"
-    );
+let projects = [];
+
+let experiences = [];
 
 
 
 /* =====================================================
-   LOGIN
+   AUTH
 ===================================================== */
 
 onAuthStateChanged(
@@ -1164,64 +1209,34 @@ onAuthStateChanged(
 
 
 /* =====================================================
-   RANDOM ID
+   CREATE PROJECT FORM
 ===================================================== */
 
-function createId(prefix) {
-
-    return (
-        prefix +
-        "_" +
-        Date.now() +
-        "_" +
-        Math.random()
-            .toString(36)
-            .substring(2,8)
-    );
-
-}
-
-
-
-/* =====================================================
-   PROJECT TEMPLATE
-===================================================== */
-
-function createProjectCard(
-    id,
-    data = {}
+function createProjectForm(
+    project = {}
 ) {
 
     const card =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     card.className =
         "item-card";
 
 
-    card.dataset.id =
-        id;
-
-
     card.innerHTML = `
 
         <div class="item-header">
 
-            <div class="item-number">
-                PROJECT
-            </div>
+            <div class="item-title">
 
-            <div class="item-buttons">
+                <div class="item-number">
+                    PROJECT
+                </div>
 
-                <button
-                    class="delete-button"
-                    type="button"
-                >
-                    Hapus
-                </button>
+                <h3>
+                    ${project.title || "Project Baru"}
+                </h3>
 
             </div>
 
@@ -1229,6 +1244,21 @@ function createProjectCard(
 
 
         <div class="form-grid">
+
+            <div class="form-group">
+
+                <label>
+                    Judul Project
+                </label>
+
+                <input
+                    class="project-title"
+                    type="text"
+                    value="${escapeHtml(project.title || "")}"
+                    placeholder="Contoh: Konten Konstruksi"
+                >
+
+            </div>
 
 
             <div class="form-group">
@@ -1240,24 +1270,8 @@ function createProjectCard(
                 <input
                     class="project-category"
                     type="text"
-                    value="${escapeHTML(data.category || "")}"
+                    value="${escapeHtml(project.category || "")}"
                     placeholder="VIDEO EDITING"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Judul Project
-                </label>
-
-                <input
-                    class="project-title"
-                    type="text"
-                    value="${escapeHTML(data.title || "")}"
-                    placeholder="Konten Konstruksi"
                 >
 
             </div>
@@ -1272,28 +1286,12 @@ function createProjectCard(
                 <textarea
                     class="project-description"
                     placeholder="Deskripsi project..."
-                >${escapeHTML(data.description || "")}</textarea>
+                >${escapeHtml(project.description || "")}</textarea>
 
             </div>
 
 
-            <div class="form-group full">
-
-                <label>
-                    URL Gambar
-                </label>
-
-                <input
-                    class="project-image"
-                    type="text"
-                    value="${escapeHTML(data.image || "")}"
-                    placeholder="assets/project-01.jpg"
-                >
-
-            </div>
-
-
-            <div class="form-group full">
+            <div class="form-group">
 
                 <label>
                     Link Project
@@ -1301,9 +1299,25 @@ function createProjectCard(
 
                 <input
                     class="project-link"
-                    type="text"
-                    value="${escapeHTML(data.link || "")}"
+                    type="url"
+                    value="${escapeHtml(project.link || "#")}"
                     placeholder="https://..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Nama File Gambar
+                </label>
+
+                <input
+                    class="project-image"
+                    type="text"
+                    value="${escapeHtml(project.image || "")}"
+                    placeholder="assets/project-01.jpg"
                 >
 
             </div>
@@ -1311,68 +1325,76 @@ function createProjectCard(
 
         </div>
 
+
+        <div class="item-actions" style="margin-top:18px;">
+
+            <button
+                type="button"
+                class="button button-danger button-small delete-project"
+            >
+                Hapus Project
+            </button>
+
+        </div>
+
     `;
 
 
-    card
-        .querySelector(".delete-button")
-        .addEventListener(
-            "click",
-            () => {
+    card.querySelector(
+        ".delete-project"
+    ).addEventListener(
+        "click",
+        () => {
+
+            if (
+                confirm(
+                    "Yakin ingin menghapus project ini?"
+                )
+            ) {
 
                 card.remove();
 
             }
-        );
 
-
-    projectsContainer.appendChild(
-        card
+        }
     );
+
+
+    return card;
 
 }
 
 
 
 /* =====================================================
-   EXPERIENCE TEMPLATE
+   CREATE EXPERIENCE FORM
 ===================================================== */
 
-function createExperienceCard(
-    id,
-    data = {}
+function createExperienceForm(
+    experience = {}
 ) {
 
     const card =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     card.className =
         "item-card";
 
 
-    card.dataset.id =
-        id;
-
-
     card.innerHTML = `
 
         <div class="item-header">
 
-            <div class="item-number">
-                PENGALAMAN
-            </div>
+            <div class="item-title">
 
-            <div class="item-buttons">
+                <div class="item-number">
+                    JOB
+                </div>
 
-                <button
-                    class="delete-button"
-                    type="button"
-                >
-                    Hapus
-                </button>
+                <h3>
+                    ${experience.position || "Pengalaman Baru"}
+                </h3>
 
             </div>
 
@@ -1385,14 +1407,14 @@ function createExperienceCard(
             <div class="form-group">
 
                 <label>
-                    Tahun
+                    Perusahaan / Brand
                 </label>
 
                 <input
-                    class="experience-year"
+                    class="experience-company"
                     type="text"
-                    value="${escapeHTML(data.year || "")}"
-                    placeholder="2025 — SEKARANG"
+                    value="${escapeHtml(experience.company || "")}"
+                    placeholder="DIBIKININ INTERIOR"
                 >
 
             </div>
@@ -1401,30 +1423,46 @@ function createExperienceCard(
             <div class="form-group">
 
                 <label>
-                    Perusahaan
-                </label>
-
-                <input
-                    class="experience-company"
-                    type="text"
-                    value="${escapeHTML(data.company || "")}"
-                    placeholder="DIBIKININ INTERIOR"
-                >
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>
                     Posisi
                 </label>
 
                 <input
                     class="experience-position"
                     type="text"
-                    value="${escapeHTML(data.position || "")}"
+                    value="${escapeHtml(experience.position || "")}"
                     placeholder="Video Editor"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Tahun Mulai
+                </label>
+
+                <input
+                    class="experience-start"
+                    type="text"
+                    value="${escapeHtml(experience.start || "")}"
+                    placeholder="2025"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Tahun Selesai
+                </label>
+
+                <input
+                    class="experience-end"
+                    type="text"
+                    value="${escapeHtml(experience.end || "")}"
+                    placeholder="SEKARANG"
                 >
 
             </div>
@@ -1439,7 +1477,7 @@ function createExperienceCard(
                 <textarea
                     class="experience-description"
                     placeholder="Deskripsi pekerjaan..."
-                >${escapeHTML(data.description || "")}</textarea>
+                >${escapeHtml(experience.description || "")}</textarea>
 
             </div>
 
@@ -1453,7 +1491,11 @@ function createExperienceCard(
                 <input
                     class="experience-tags"
                     type="text"
-                    value="${escapeHTML(data.tags || "")}"
+                    value="${escapeHtml(
+                        Array.isArray(experience.tags)
+                            ? experience.tags.join(", ")
+                            : experience.tags || ""
+                    )}"
                     placeholder="Video Editing, Content, Social Media"
                 >
 
@@ -1462,143 +1504,42 @@ function createExperienceCard(
 
         </div>
 
-    `;
 
+        <div class="item-actions" style="margin-top:18px;">
 
-    card
-        .querySelector(".delete-button")
-        .addEventListener(
-            "click",
-            () => {
-
-                card.remove();
-
-            }
-        );
-
-
-    experiencesContainer.appendChild(
-        card
-    );
-
-}
-
-
-
-/* =====================================================
-   SKILL TEMPLATE
-===================================================== */
-
-function createSkillCard(
-    id,
-    data = {}
-) {
-
-    const card =
-        document.createElement(
-            "div"
-        );
-
-
-    card.className =
-        "item-card";
-
-
-    card.dataset.id =
-        id;
-
-
-    card.innerHTML = `
-
-        <div class="item-header">
-
-            <div class="item-number">
-                SKILL
-            </div>
-
-            <div class="item-buttons">
-
-                <button
-                    class="delete-button"
-                    type="button"
-                >
-                    Hapus
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div class="form-grid">
-
-
-            <div class="form-group">
-
-                <label>
-                    Nomor
-                </label>
-
-                <input
-                    class="skill-number"
-                    type="text"
-                    value="${escapeHTML(data.number || "")}"
-                    placeholder="01"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Nama Skill
-                </label>
-
-                <input
-                    class="skill-title"
-                    type="text"
-                    value="${escapeHTML(data.title || "")}"
-                    placeholder="Video Editing"
-                >
-
-            </div>
-
-
-            <div class="form-group full">
-
-                <label>
-                    Deskripsi
-                </label>
-
-                <textarea
-                    class="skill-description"
-                    placeholder="Deskripsi skill..."
-                >${escapeHTML(data.description || "")}</textarea>
-
-            </div>
-
+            <button
+                type="button"
+                class="button button-danger button-small delete-experience"
+            >
+                Hapus Pengalaman
+            </button>
 
         </div>
 
     `;
 
 
-    card
-        .querySelector(".delete-button")
-        .addEventListener(
-            "click",
-            () => {
+    card.querySelector(
+        ".delete-experience"
+    ).addEventListener(
+        "click",
+        () => {
+
+            if (
+                confirm(
+                    "Yakin ingin menghapus pengalaman ini?"
+                )
+            ) {
 
                 card.remove();
 
             }
-        );
 
-
-    skillsContainer.appendChild(
-        card
+        }
     );
+
+
+    return card;
 
 }
 
@@ -1608,36 +1549,23 @@ function createSkillCard(
    ESCAPE HTML
 ===================================================== */
 
-function escapeHTML(value) {
+function escapeHtml(
+    value
+) {
 
     return String(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }
 
 
 
 /* =====================================================
-   LOAD FIREBASE
+   LOAD PORTFOLIO
 ===================================================== */
 
 async function loadPortfolio() {
@@ -1655,17 +1583,13 @@ async function loadPortfolio() {
 
         if (!snapshot.exists()) {
 
-            createProjectCard(
-                createId("project")
+            console.log(
+                "Belum ada data portfolio."
             );
 
-            createExperienceCard(
-                createId("experience")
-            );
+            addEmptyProject();
 
-            createSkillCard(
-                createId("skill")
-            );
+            addEmptyExperience();
 
             return;
 
@@ -1756,78 +1680,70 @@ async function loadPortfolio() {
 
 
         /* =============================================
-           PROJECTS
+           PROJECT
         ============================================= */
 
         projectsContainer.innerHTML = "";
 
 
-        if (data.projects) {
+        projects =
+            Array.isArray(data.projects)
+                ? data.projects
+                : [];
 
-            Object.entries(
-                data.projects
-            ).forEach(
-                ([id, project]) => {
 
-                    createProjectCard(
-                        id,
-                        project
-                    );
+        projects.forEach(
+            (project) => {
 
-                }
-            );
+                projectsContainer.appendChild(
+                    createProjectForm(project)
+                );
+
+            }
+        );
+
+
+        if (
+            projects.length === 0
+        ) {
+
+            addEmptyProject();
 
         }
 
 
 
         /* =============================================
-           EXPERIENCES
+           EXPERIENCE
         ============================================= */
 
-        experiencesContainer.innerHTML = "";
+        experienceContainer.innerHTML = "";
 
 
-        if (data.experiences) {
+        experiences =
+            Array.isArray(data.experience)
+                ? data.experience
+                : [];
 
-            Object.entries(
-                data.experiences
-            ).forEach(
-                ([id, experience]) => {
 
-                    createExperienceCard(
-                        id,
+        experiences.forEach(
+            (experience) => {
+
+                experienceContainer.appendChild(
+                    createExperienceForm(
                         experience
-                    );
+                    )
+                );
 
-                }
-            );
-
-        }
-
+            }
+        );
 
 
-        /* =============================================
-           SKILLS
-        ============================================= */
+        if (
+            experiences.length === 0
+        ) {
 
-        skillsContainer.innerHTML = "";
-
-
-        if (data.skills) {
-
-            Object.entries(
-                data.skills
-            ).forEach(
-                ([id, skill]) => {
-
-                    createSkillCard(
-                        id,
-                        skill
-                    );
-
-                }
-            );
+            addEmptyExperience();
 
         }
 
@@ -1884,8 +1800,9 @@ async function loadPortfolio() {
             error
         );
 
-        alert(
-            "Gagal mengambil data Firebase. Cek Console."
+        showStatus(
+            "Gagal mengambil data dari Firebase.",
+            "error"
         );
 
     }
@@ -1893,70 +1810,273 @@ async function loadPortfolio() {
 }
 
 
-loadPortfolio();
+
+/* =====================================================
+   EMPTY PROJECT
+===================================================== */
+
+function addEmptyProject() {
+
+    projectsContainer.appendChild(
+        createProjectForm({})
+    );
+
+}
 
 
 
 /* =====================================================
-   TAMBAH PROJECT
+   EMPTY EXPERIENCE
 ===================================================== */
 
-document
-    .getElementById(
-        "addProjectButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
+function addEmptyExperience() {
 
-            createProjectCard(
-                createId("project")
-            );
+    experienceContainer.appendChild(
+        createExperienceForm({})
+    );
+
+}
+
+
+
+/* =====================================================
+   ADD PROJECT
+===================================================== */
+
+document.getElementById(
+    "addProjectButton"
+).addEventListener(
+    "click",
+    () => {
+
+        projectsContainer.appendChild(
+            createProjectForm({})
+        );
+
+        projectsContainer.lastElementChild
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+    }
+);
+
+
+
+/* =====================================================
+   ADD EXPERIENCE
+===================================================== */
+
+document.getElementById(
+    "addExperienceButton"
+).addEventListener(
+    "click",
+    () => {
+
+        experienceContainer.appendChild(
+            createExperienceForm({})
+        );
+
+        experienceContainer.lastElementChild
+            .scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+    }
+);
+
+
+
+/* =====================================================
+   GET PROJECT DATA
+===================================================== */
+
+function getProjectsFromForm() {
+
+    const cards =
+        projectsContainer.querySelectorAll(
+            ".item-card"
+        );
+
+
+    const result = [];
+
+
+    cards.forEach(
+        (card) => {
+
+            const title =
+                card.querySelector(
+                    ".project-title"
+                ).value.trim();
+
+
+            const category =
+                card.querySelector(
+                    ".project-category"
+                ).value.trim();
+
+
+            const description =
+                card.querySelector(
+                    ".project-description"
+                ).value.trim();
+
+
+            const link =
+                card.querySelector(
+                    ".project-link"
+                ).value.trim();
+
+
+            const image =
+                card.querySelector(
+                    ".project-image"
+                ).value.trim();
+
+
+            if (
+                title ||
+                category ||
+                description
+            ) {
+
+                result.push({
+
+                    title:
+                        title,
+
+                    category:
+                        category,
+
+                    description:
+                        description,
+
+                    link:
+                        link || "#",
+
+                    image:
+                        image
+
+                });
+
+            }
 
         }
     );
 
 
+    return result;
+
+}
+
+
 
 /* =====================================================
-   TAMBAH EXPERIENCE
+   GET EXPERIENCE DATA
 ===================================================== */
 
-document
-    .getElementById(
-        "addExperienceButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
+function getExperienceFromForm() {
 
-            createExperienceCard(
-                createId("experience")
-            );
+    const cards =
+        experienceContainer.querySelectorAll(
+            ".item-card"
+        );
+
+
+    const result = [];
+
+
+    cards.forEach(
+        (card) => {
+
+            const company =
+                card.querySelector(
+                    ".experience-company"
+                ).value.trim();
+
+
+            const position =
+                card.querySelector(
+                    ".experience-position"
+                ).value.trim();
+
+
+            const start =
+                card.querySelector(
+                    ".experience-start"
+                ).value.trim();
+
+
+            const end =
+                card.querySelector(
+                    ".experience-end"
+                ).value.trim();
+
+
+            const description =
+                card.querySelector(
+                    ".experience-description"
+                ).value.trim();
+
+
+            const tagsText =
+                card.querySelector(
+                    ".experience-tags"
+                ).value.trim();
+
+
+            const tags =
+                tagsText
+                    ? tagsText
+                        .split(",")
+                        .map(
+                            tag =>
+                                tag.trim()
+                        )
+                        .filter(Boolean)
+                    : [];
+
+
+            if (
+                company ||
+                position ||
+                description
+            ) {
+
+                result.push({
+
+                    company:
+                        company,
+
+                    position:
+                        position,
+
+                    start:
+                        start,
+
+                    end:
+                        end,
+
+                    description:
+                        description,
+
+                    tags:
+                        tags
+
+                });
+
+            }
 
         }
     );
 
 
+    return result;
 
-/* =====================================================
-   TAMBAH SKILL
-===================================================== */
-
-document
-    .getElementById(
-        "addSkillButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            createSkillCard(
-                createId("skill")
-            );
-
-        }
-    );
+}
 
 
 
@@ -1971,10 +2091,11 @@ saveButton.addEventListener(
         saveButton.disabled =
             true;
 
-
         saveButton.textContent =
             "Menyimpan...";
 
+
+        saveStatus.className = "";
 
         saveStatus.style.display =
             "none";
@@ -1982,359 +2103,135 @@ saveButton.addEventListener(
 
         try {
 
+            const portfolioData = {
 
-            /* =========================================
-               HERO
-            ========================================= */
+                hero: {
 
-            const hero = {
+                    status:
+                        document.getElementById(
+                            "heroStatus"
+                        ).value.trim(),
 
-                status:
-                    document.getElementById(
-                        "heroStatus"
-                    ).value.trim(),
+                    location:
+                        document.getElementById(
+                            "heroLocation"
+                        ).value.trim(),
 
-                location:
-                    document.getElementById(
-                        "heroLocation"
-                    ).value.trim(),
+                    focus:
+                        document.getElementById(
+                            "heroFocus"
+                        ).value.trim(),
 
-                focus:
-                    document.getElementById(
-                        "heroFocus"
-                    ).value.trim(),
+                    experience:
+                        document.getElementById(
+                            "heroExperience"
+                        ).value.trim(),
+
+                    description:
+                        document.getElementById(
+                            "heroDescription"
+                        ).value.trim()
+
+                },
+
+
+                about: {
+
+                    field:
+                        document.getElementById(
+                            "aboutField"
+                        ).value.trim(),
+
+                    tools:
+                        document.getElementById(
+                            "aboutTools"
+                        ).value.trim(),
+
+                    location:
+                        document.getElementById(
+                            "aboutLocation"
+                        ).value.trim(),
+
+                    paragraph1:
+                        document.getElementById(
+                            "aboutParagraph1"
+                        ).value.trim(),
+
+                    paragraph2:
+                        document.getElementById(
+                            "aboutParagraph2"
+                        ).value.trim()
+
+                },
+
+
+                projects:
+                    getProjectsFromForm(),
+
 
                 experience:
-                    document.getElementById(
-                        "heroExperience"
-                    ).value.trim(),
-
-                description:
-                    document.getElementById(
-                        "heroDescription"
-                    ).value.trim()
-
-            };
+                    getExperienceFromForm(),
 
 
+                contact: {
 
-            /* =========================================
-               ABOUT
-            ========================================= */
+                    email:
+                        document.getElementById(
+                            "contactEmail"
+                        ).value.trim(),
 
-            const about = {
+                    whatsapp:
+                        document.getElementById(
+                            "contactWhatsapp"
+                        ).value.trim(),
 
-                field:
-                    document.getElementById(
-                        "aboutField"
-                    ).value.trim(),
+                    instagram:
+                        document.getElementById(
+                            "contactInstagram"
+                        ).value.trim(),
 
-                tools:
-                    document.getElementById(
-                        "aboutTools"
-                    ).value.trim(),
+                    linkedin:
+                        document.getElementById(
+                            "contactLinkedin"
+                        ).value.trim(),
 
-                location:
-                    document.getElementById(
-                        "aboutLocation"
-                    ).value.trim(),
+                    youtube:
+                        document.getElementById(
+                            "contactYoutube"
+                        ).value.trim(),
 
-                paragraph1:
-                    document.getElementById(
-                        "aboutParagraph1"
-                    ).value.trim(),
+                    tiktok:
+                        document.getElementById(
+                            "contactTiktok"
+                        ).value.trim()
 
-                paragraph2:
-                    document.getElementById(
-                        "aboutParagraph2"
-                    ).value.trim()
+                }
 
             };
 
-
-
-            /* =========================================
-               PROJECTS
-            ========================================= */
-
-            const projects = {};
-
-
-            document
-                .querySelectorAll(
-                    "#projectsContainer .item-card"
-                )
-                .forEach(
-                    (card, index) => {
-
-                        const id =
-                            card.dataset.id ||
-                            createId("project");
-
-
-                        projects[id] = {
-
-                            order:
-                                index,
-
-                            category:
-                                card
-                                    .querySelector(
-                                        ".project-category"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            title:
-                                card
-                                    .querySelector(
-                                        ".project-title"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            description:
-                                card
-                                    .querySelector(
-                                        ".project-description"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            image:
-                                card
-                                    .querySelector(
-                                        ".project-image"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            link:
-                                card
-                                    .querySelector(
-                                        ".project-link"
-                                    )
-                                    .value
-                                    .trim()
-
-                        };
-
-                    }
-                );
-
-
-
-            /* =========================================
-               EXPERIENCES
-            ========================================= */
-
-            const experiences = {};
-
-
-            document
-                .querySelectorAll(
-                    "#experiencesContainer .item-card"
-                )
-                .forEach(
-                    (card, index) => {
-
-                        const id =
-                            card.dataset.id ||
-                            createId("experience");
-
-
-                        experiences[id] = {
-
-                            order:
-                                index,
-
-                            year:
-                                card
-                                    .querySelector(
-                                        ".experience-year"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            company:
-                                card
-                                    .querySelector(
-                                        ".experience-company"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            position:
-                                card
-                                    .querySelector(
-                                        ".experience-position"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            description:
-                                card
-                                    .querySelector(
-                                        ".experience-description"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            tags:
-                                card
-                                    .querySelector(
-                                        ".experience-tags"
-                                    )
-                                    .value
-                                    .trim()
-
-                        };
-
-                    }
-                );
-
-
-
-            /* =========================================
-               SKILLS
-            ========================================= */
-
-            const skills = {};
-
-
-            document
-                .querySelectorAll(
-                    "#skillsContainer .item-card"
-                )
-                .forEach(
-                    (card, index) => {
-
-                        const id =
-                            card.dataset.id ||
-                            createId("skill");
-
-
-                        skills[id] = {
-
-                            order:
-                                index,
-
-                            number:
-                                card
-                                    .querySelector(
-                                        ".skill-number"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            title:
-                                card
-                                    .querySelector(
-                                        ".skill-title"
-                                    )
-                                    .value
-                                    .trim(),
-
-                            description:
-                                card
-                                    .querySelector(
-                                        ".skill-description"
-                                    )
-                                    .value
-                                    .trim()
-
-                        };
-
-                    }
-                );
-
-
-
-            /* =========================================
-               CONTACT
-            ========================================= */
-
-            const contact = {
-
-                email:
-                    document.getElementById(
-                        "contactEmail"
-                    ).value.trim(),
-
-                whatsapp:
-                    document.getElementById(
-                        "contactWhatsapp"
-                    ).value.trim(),
-
-                instagram:
-                    document.getElementById(
-                        "contactInstagram"
-                    ).value.trim(),
-
-                linkedin:
-                    document.getElementById(
-                        "contactLinkedin"
-                    ).value.trim(),
-
-                youtube:
-                    document.getElementById(
-                        "contactYoutube"
-                    ).value.trim(),
-
-                tiktok:
-                    document.getElementById(
-                        "contactTiktok"
-                    ).value.trim()
-
-            };
-
-
-
-            /* =========================================
-               SIMPAN FIREBASE
-            ========================================= */
 
             await update(
+
                 ref(
                     database,
                     "portfolio"
                 ),
-                {
 
-                    hero,
+                portfolioData
 
-                    about,
-
-                    projects,
-
-                    experiences,
-
-                    skills,
-
-                    contact
-
-                }
             );
 
 
-
-            saveStatus.textContent =
-                "✓ Semua perubahan berhasil disimpan ke Firebase.";
-
-
-            saveStatus.style.display =
-                "block";
+            showStatus(
+                "✓ Semua perubahan berhasil disimpan ke Firebase.",
+                "success"
+            );
 
 
-            window.scrollTo({
-
-                top:
-                    document.body.scrollHeight,
-
-                behavior:
-                    "smooth"
-
-            });
+            console.log(
+                "Portfolio berhasil disimpan:",
+                portfolioData
+            );
 
 
         } catch (error) {
@@ -2345,12 +2242,10 @@ saveButton.addEventListener(
             );
 
 
-            saveStatus.textContent =
-                "✕ Gagal menyimpan. Cek Console browser.";
-
-
-            saveStatus.style.display =
-                "block";
+            showStatus(
+                "✕ Gagal menyimpan. Cek Console untuk detail error.",
+                "error"
+            );
 
         }
 
@@ -2358,12 +2253,33 @@ saveButton.addEventListener(
         saveButton.disabled =
             false;
 
-
         saveButton.textContent =
-            "Simpan Perubahan";
+            "Simpan Semua Perubahan";
 
     }
 );
+
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function showStatus(
+    message,
+    type
+) {
+
+    saveStatus.textContent =
+        message;
+
+    saveStatus.className =
+        type;
+
+    saveStatus.style.display =
+        "block";
+
+}
 
 
 
@@ -2398,6 +2314,18 @@ logoutButton.addEventListener(
     }
 );
 
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadPortfolio();
+
+
+console.log(
+    "SEVHA Admin Dashboard berhasil dijalankan."
+);
 
 </script>
 
