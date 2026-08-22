@@ -1,7 +1,7 @@
 /* =====================================================
    SEVHA PORTFOLIO
-   PUBLIC WEBSITE JAVASCRIPT
-   FIREBASE SYNC VERSION
+   PUBLIC MAIN JAVASCRIPT
+   FIREBASE DATA LOADER
 ===================================================== */
 
 
@@ -37,9 +37,7 @@ const revealObserver = new IntersectionObserver(
 
                 entry.target.classList.add("show");
 
-                revealObserver.unobserve(
-                    entry.target
-                );
+                revealObserver.unobserve(entry.target);
 
             }
 
@@ -57,281 +55,222 @@ revealElements.forEach((element) => {
 
 
 /* =====================================================
-   3. NAVBAR
+   3. NAVBAR SCROLL EFFECT
 ===================================================== */
 
-const navbar =
-    document.querySelector(".nav");
+const navbar = document.querySelector(".nav");
 
-window.addEventListener(
-    "scroll",
-    () => {
+window.addEventListener("scroll", () => {
 
-        if (!navbar) return;
+    const currentScroll = window.scrollY;
 
-        const currentScroll =
-            window.scrollY;
+    if (!navbar) return;
 
-        if (currentScroll > 50) {
+    if (currentScroll > 50) {
 
-            navbar.style.background =
-                "rgba(255,255,255,.72)";
+        navbar.style.background =
+            "rgba(255,255,255,.72)";
 
-            navbar.style.boxShadow =
-                "0 20px 60px rgba(42,52,72,.13)";
+        navbar.style.boxShadow =
+            "0 20px 60px rgba(42,52,72,.13)";
 
-        } else {
+    } else {
 
-            navbar.style.background =
-                "linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.28))";
+        navbar.style.background =
+            "linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.28))";
 
-            navbar.style.boxShadow =
-                "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(255,255,255,.25), 0 25px 70px rgba(42,52,72,.10)";
-
-        }
+        navbar.style.boxShadow =
+            "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(255,255,255,.25), 0 25px 70px rgba(42,52,72,.10)";
 
     }
-);
+
+});
 
 
 /* =====================================================
-   4. SMOOTH SCROLL
+   4. SMOOTH ANCHOR SCROLL
 ===================================================== */
 
-function setupSmoothScroll() {
+const anchorLinks =
+    document.querySelectorAll('a[href^="#"]');
 
-    const anchorLinks =
-        document.querySelectorAll(
-            'a[href^="#"]'
-        );
+anchorLinks.forEach((link) => {
 
-    anchorLinks.forEach((link) => {
+    link.addEventListener("click", function (event) {
 
-        link.addEventListener(
-            "click",
-            function (event) {
+        const targetId =
+            this.getAttribute("href");
 
-                const targetId =
-                    this.getAttribute("href");
+        if (!targetId || targetId === "#") {
+            return;
+        }
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
+        const target =
+            document.querySelector(targetId);
 
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
+        if (!target) return;
 
-                if (!target) return;
+        event.preventDefault();
 
-                event.preventDefault();
+        const navbarHeight =
+            navbar
+                ? navbar.offsetHeight
+                : 0;
 
-                const navbarHeight =
-                    navbar
-                        ? navbar.offsetHeight
-                        : 0;
+        const targetPosition =
+            target.getBoundingClientRect().top +
+            window.scrollY -
+            navbarHeight -
+            25;
 
-                const targetPosition =
-                    target.getBoundingClientRect().top +
-                    window.scrollY -
-                    navbarHeight -
-                    25;
+        window.scrollTo({
 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: "smooth"
-                });
+            top: targetPosition,
 
-            }
-        );
+            behavior: "smooth"
+
+        });
 
     });
 
-}
-
-setupSmoothScroll();
+});
 
 
 /* =====================================================
    5. PROJECT IMAGE PARALLAX
 ===================================================== */
 
-function setupProjectEffects() {
+const projects =
+    document.querySelectorAll(".project");
 
-    const projects =
-        document.querySelectorAll(
-            ".project"
-        );
+projects.forEach((project) => {
 
-    projects.forEach((project) => {
+    const image =
+        project.querySelector("img");
 
-        const image =
-            project.querySelector("img");
+    if (!image) return;
 
-        if (!image) return;
+    project.addEventListener("mousemove", (event) => {
 
-        project.addEventListener(
-            "mousemove",
-            (event) => {
+        const rect =
+            project.getBoundingClientRect();
 
-                const rect =
-                    project.getBoundingClientRect();
+        const x =
+            event.clientX - rect.left;
 
-                const x =
-                    event.clientX -
-                    rect.left;
+        const y =
+            event.clientY - rect.top;
 
-                const y =
-                    event.clientY -
-                    rect.top;
+        const centerX =
+            rect.width / 2;
 
-                const centerX =
-                    rect.width / 2;
+        const centerY =
+            rect.height / 2;
 
-                const centerY =
-                    rect.height / 2;
+        const moveX =
+            ((x - centerX) / centerX) * 8;
 
-                const moveX =
-                    ((x - centerX) / centerX) * 8;
+        const moveY =
+            ((y - centerY) / centerY) * 8;
 
-                const moveY =
-                    ((y - centerY) / centerY) * 8;
-
-                image.style.transform =
-                    `scale(1.06) translate(${moveX}px, ${moveY}px)`;
-
-            }
-        );
-
-        project.addEventListener(
-            "mouseleave",
-            () => {
-
-                image.style.transform =
-                    "scale(1) translate(0, 0)";
-
-            }
-        );
+        image.style.transform =
+            `scale(1.06) translate(${moveX}px, ${moveY}px)`;
 
     });
 
-}
+    project.addEventListener("mouseleave", () => {
+
+        image.style.transform =
+            "scale(1) translate(0, 0)";
+
+    });
+
+});
 
 
 /* =====================================================
    6. HERO IMAGE TILT
 ===================================================== */
 
-function setupHeroEffect() {
+const heroImage =
+    document.querySelector(".hero-image");
 
-    const heroImage =
-        document.querySelector(
-            ".hero-image"
-        );
+if (heroImage) {
 
-    if (!heroImage) return;
+    heroImage.addEventListener("mousemove", (event) => {
 
-    heroImage.addEventListener(
-        "mousemove",
-        (event) => {
+        const rect =
+            heroImage.getBoundingClientRect();
 
-            const rect =
-                heroImage.getBoundingClientRect();
+        const x =
+            event.clientX - rect.left;
 
-            const x =
-                event.clientX -
-                rect.left;
+        const y =
+            event.clientY - rect.top;
 
-            const y =
-                event.clientY -
-                rect.top;
+        const rotateX =
+            ((y / rect.height) - 0.5) * -5;
 
-            const rotateX =
-                ((y / rect.height) - 0.5) * -5;
+        const rotateY =
+            ((x / rect.width) - 0.5) * 5;
 
-            const rotateY =
-                ((x / rect.width) - 0.5) * 5;
+        heroImage.style.transform =
+            `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-            heroImage.style.transform =
-                `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
 
-        }
-    );
+    heroImage.addEventListener("mouseleave", () => {
 
-    heroImage.addEventListener(
-        "mouseleave",
-        () => {
+        heroImage.style.transform =
+            "perspective(1000px) rotateX(0deg) rotateY(0deg)";
 
-            heroImage.style.transform =
-                "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-
-        }
-    );
+    });
 
 }
 
 
 /* =====================================================
-   7. SKILL CARD EFFECT
+   7. SKILL CARD MOUSE EFFECT
 ===================================================== */
 
-function setupSkillEffects() {
+const skillCards =
+    document.querySelectorAll(".skill-card");
 
-    const skillCards =
-        document.querySelectorAll(
-            ".skill-card"
-        );
+skillCards.forEach((card) => {
 
-    skillCards.forEach((card) => {
+    card.addEventListener("mousemove", (event) => {
 
-        card.addEventListener(
-            "mousemove",
-            (event) => {
+        const rect =
+            card.getBoundingClientRect();
 
-                const rect =
-                    card.getBoundingClientRect();
+        const x =
+            event.clientX - rect.left;
 
-                const x =
-                    event.clientX -
-                    rect.left;
+        const y =
+            event.clientY - rect.top;
 
-                const y =
-                    event.clientY -
-                    rect.top;
+        const percentX =
+            x / rect.width * 100;
 
-                const percentX =
-                    x / rect.width * 100;
+        const percentY =
+            y / rect.height * 100;
 
-                const percentY =
-                    y / rect.height * 100;
-
-                card.style.background =
-                    `radial-gradient(
-                        circle at ${percentX}% ${percentY}%,
-                        rgba(255,255,255,.88),
-                        rgba(255,255,255,.38)
-                    )`;
-
-            }
-        );
-
-        card.addEventListener(
-            "mouseleave",
-            () => {
-
-                card.style.background =
-                    "";
-
-            }
-        );
+        card.style.background =
+            `radial-gradient(
+                circle at ${percentX}% ${percentY}%,
+                rgba(255,255,255,.88),
+                rgba(255,255,255,.38)
+            )`;
 
     });
 
-}
+    card.addEventListener("mouseleave", () => {
+
+        card.style.background = "";
+
+    });
+
+});
 
 
 /* =====================================================
@@ -339,29 +278,22 @@ function setupSkillEffects() {
 ===================================================== */
 
 const cursorGlow =
-    document.createElement(
-        "div"
-    );
+    document.createElement("div");
 
 cursorGlow.className =
     "cursor-glow";
 
-document.body.appendChild(
-    cursorGlow
-);
+document.body.appendChild(cursorGlow);
 
-document.addEventListener(
-    "mousemove",
-    (event) => {
+document.addEventListener("mousemove", (event) => {
 
-        cursorGlow.style.left =
-            `${event.clientX}px`;
+    cursorGlow.style.left =
+        `${event.clientX}px`;
 
-        cursorGlow.style.top =
-            `${event.clientY}px`;
+    cursorGlow.style.top =
+        `${event.clientY}px`;
 
-    }
-);
+});
 
 
 /* =====================================================
@@ -369,9 +301,7 @@ document.addEventListener(
 ===================================================== */
 
 const cursorStyle =
-    document.createElement(
-        "style"
-    );
+    document.createElement("style");
 
 cursorStyle.innerHTML = `
 
@@ -426,13 +356,33 @@ cursorStyle.innerHTML = `
 
 `;
 
-document.head.appendChild(
-    cursorStyle
-);
+document.head.appendChild(cursorStyle);
 
 
 /* =====================================================
-   10. ACTIVE NAVIGATION
+   10. CURRENT YEAR
+===================================================== */
+
+const footer =
+    document.querySelector("footer");
+
+if (footer) {
+
+    const footerItems =
+        footer.querySelectorAll("div");
+
+    if (footerItems.length > 0) {
+
+        footerItems[0].innerHTML =
+            `© ${new Date().getFullYear()} SEVHA`;
+
+    }
+
+}
+
+
+/* =====================================================
+   11. ACTIVE NAVIGATION
 ===================================================== */
 
 const sections =
@@ -449,40 +399,30 @@ const sectionObserver =
     new IntersectionObserver(
         (entries) => {
 
-            entries.forEach(
-                (entry) => {
+            entries.forEach((entry) => {
 
-                    if (
-                        entry.isIntersecting
-                    ) {
+                if (entry.isIntersecting) {
 
-                        navItems.forEach(
-                            (link) => {
+                    navItems.forEach((link) => {
 
-                                link.classList.remove(
-                                    "active"
-                                );
+                        link.classList.remove("active");
 
-                            }
+                    });
+
+                    const activeLink =
+                        document.querySelector(
+                            `.nav-links a[href="#${entry.target.id}"]`
                         );
 
-                        const activeLink =
-                            document.querySelector(
-                                `.nav-links a[href="#${entry.target.id}"]`
-                            );
+                    if (activeLink) {
 
-                        if (activeLink) {
-
-                            activeLink.classList.add(
-                                "active"
-                            );
-
-                        }
+                        activeLink.classList.add("active");
 
                     }
 
                 }
-            );
+
+            });
 
         },
         {
@@ -490,25 +430,19 @@ const sectionObserver =
         }
     );
 
-sections.forEach(
-    (section) => {
+sections.forEach((section) => {
 
-        sectionObserver.observe(
-            section
-        );
+    sectionObserver.observe(section);
 
-    }
-);
+});
 
 
 /* =====================================================
-   11. ACTIVE NAV STYLE
+   12. ACTIVE NAV STYLE
 ===================================================== */
 
 const activeNavStyle =
-    document.createElement(
-        "style"
-    );
+    document.createElement("style");
 
 activeNavStyle.innerHTML = `
 
@@ -535,8 +469,7 @@ activeNavStyle.innerHTML = `
 
         border-radius: 10px;
 
-        background:
-            #8ba6ff;
+        background: #8ba6ff;
 
         transition:
             width .3s ease;
@@ -559,39 +492,30 @@ activeNavStyle.innerHTML = `
 
 `;
 
-document.head.appendChild(
-    activeNavStyle
-);
+document.head.appendChild(activeNavStyle);
 
 
 /* =====================================================
-   12. CURRENT YEAR
+   13. PAGE LOAD
 ===================================================== */
 
-const footer =
-    document.querySelector(
-        "footer"
-    );
+window.addEventListener("load", () => {
 
-if (footer) {
+    document.body.classList.add("loaded");
 
-    const footerItems =
-        footer.querySelectorAll(
-            "div"
-        );
+    setTimeout(() => {
 
-    if (footerItems.length > 0) {
+        document
+            .querySelector(".hero")
+            ?.classList.add("hero-loaded");
 
-        footerItems[0].innerHTML =
-            `© ${new Date().getFullYear()} SEVHA`;
+    }, 200);
 
-    }
-
-}
+});
 
 
 /* =====================================================
-   13. TOUCH DEVICE
+   14. TOUCH DEVICE
 ===================================================== */
 
 const isTouchDevice =
@@ -605,9 +529,7 @@ if (isTouchDevice) {
     );
 
     const touchStyle =
-        document.createElement(
-            "style"
-        );
+        document.createElement("style");
 
     touchStyle.innerHTML = `
 
@@ -625,15 +547,13 @@ if (isTouchDevice) {
 
     `;
 
-    document.head.appendChild(
-        touchStyle
-    );
+    document.head.appendChild(touchStyle);
 
 }
 
 
 /* =====================================================
-   14. CONTACT
+   15. CONTACT HELPER
 ===================================================== */
 
 function updateContact(
@@ -643,11 +563,10 @@ function updateContact(
 ) {
 
     const element =
-        document.getElementById(
-            elementId
-        );
+        document.getElementById(elementId);
 
     if (!element) return;
+
 
     if (!value) {
 
@@ -657,6 +576,7 @@ function updateContact(
         return;
 
     }
+
 
     if (type === "email") {
 
@@ -668,14 +588,9 @@ function updateContact(
     else if (type === "whatsapp") {
 
         let number =
-            String(value).replace(
-                /\D/g,
-                ""
-            );
+            String(value).replace(/\D/g, "");
 
-        if (
-            number.startsWith("0")
-        ) {
+        if (number.startsWith("0")) {
 
             number =
                 "62" +
@@ -695,6 +610,7 @@ function updateContact(
 
     }
 
+
     element.style.display =
         "flex";
 
@@ -702,110 +618,90 @@ function updateContact(
 
 
 /* =====================================================
-   15. RENDER HERO
+   16. HELPER PROJECT
 ===================================================== */
 
-function renderHero(hero) {
+function updateProject(
+    projectElement,
+    projectData,
+    index
+) {
 
-    if (!hero) return;
+    if (!projectElement || !projectData) {
+        return;
+    }
+
+
+    const image =
+        projectElement.querySelector(
+            ".project-image img"
+        );
+
+
+    const overlay =
+        projectElement.querySelector(
+            ".project-overlay"
+        );
+
+
+    if (!overlay) return;
+
+
+    const category =
+        overlay.querySelector("span");
+
+
+    const title =
+        overlay.querySelector("h3");
 
 
     const description =
-        document.querySelector(
-            ".hero-desc"
-        );
+        overlay.querySelector("p");
+
+
+    if (image && projectData.image) {
+
+        image.src =
+            projectData.image;
+
+        image.alt =
+            projectData.title ||
+            `Project ${index}`;
+
+    }
+
+
+    if (category && projectData.category) {
+
+        category.textContent =
+            `${String(index).padStart(2, "0")} / ${projectData.category}`;
+
+    }
+
+
+    if (title && projectData.title) {
+
+        title.textContent =
+            projectData.title;
+
+    }
+
 
     if (
         description &&
-        hero.description !== undefined
+        projectData.description
     ) {
 
         description.textContent =
-            hero.description;
+            projectData.description;
 
     }
 
 
-    const status =
-        document.querySelector(
-            ".status"
-        );
+    if (projectData.link) {
 
-    if (
-        status &&
-        hero.status !== undefined
-    ) {
-
-        status.innerHTML = `
-            <span class="status-dot"></span>
-            ${escapeHTML(hero.status)}
-        `;
-
-    }
-
-
-    const meta =
-        document.querySelectorAll(
-            ".hero-meta > div"
-        );
-
-
-    if (
-        meta[0] &&
-        hero.location !== undefined
-    ) {
-
-        const strong =
-            meta[0].querySelector(
-                "strong"
-            );
-
-        if (strong) {
-
-            strong.textContent =
-                hero.location;
-
-        }
-
-    }
-
-
-    if (
-        meta[1] &&
-        hero.focus !== undefined
-    ) {
-
-        const strong =
-            meta[1].querySelector(
-                "strong"
-            );
-
-        if (strong) {
-
-            strong.textContent =
-                hero.focus;
-
-        }
-
-    }
-
-
-    if (
-        meta[2] &&
-        hero.experience !== undefined
-    ) {
-
-        const strong =
-            meta[2].querySelector(
-                "strong"
-            );
-
-        if (strong) {
-
-            strong.textContent =
-                hero.experience;
-
-        }
+        projectElement.href =
+            projectData.link;
 
     }
 
@@ -813,456 +709,134 @@ function renderHero(hero) {
 
 
 /* =====================================================
-   16. RENDER ABOUT
+   17. HELPER EXPERIENCE
 ===================================================== */
 
-function renderAbout(about) {
-
-    if (!about) return;
-
-
-    const paragraphs =
-        document.querySelectorAll(
-            ".about-content > p"
-        );
-
-
-    if (
-        paragraphs[0] &&
-        about.paragraph1 !== undefined
-    ) {
-
-        paragraphs[0].textContent =
-            about.paragraph1;
-
-    }
-
-
-    if (
-        paragraphs[1] &&
-        about.paragraph2 !== undefined
-    ) {
-
-        paragraphs[1].textContent =
-            about.paragraph2;
-
-    }
-
-
-    const aboutInfo =
-        document.querySelectorAll(
-            ".about-info > div"
-        );
-
-
-    if (
-        aboutInfo[0] &&
-        about.field !== undefined
-    ) {
-
-        aboutInfo[0]
-            .querySelector("strong")
-            .textContent =
-            about.field;
-
-    }
-
-
-    if (
-        aboutInfo[1] &&
-        about.tools !== undefined
-    ) {
-
-        aboutInfo[1]
-            .querySelector("strong")
-            .textContent =
-            about.tools;
-
-    }
-
-
-    if (
-        aboutInfo[2] &&
-        about.location !== undefined
-    ) {
-
-        aboutInfo[2]
-            .querySelector("strong")
-            .textContent =
-            about.location;
-
-    }
-
-}
-
-
-/* =====================================================
-   17. RENDER PROJECTS
-===================================================== */
-
-function renderProjects(
-    projects
+function updateExperience(
+    experienceElement,
+    experienceData
 ) {
 
-    if (!Array.isArray(projects)) {
+    if (
+        !experienceElement ||
+        !experienceData
+    ) {
+
         return;
+
     }
 
 
-    const projectGrid =
-        document.querySelector(
-            ".project-grid"
+    const year =
+        experienceElement.querySelector(
+            ".experience-year"
         );
 
-    if (!projectGrid) return;
+
+    const company =
+        experienceElement.querySelector(
+            ".experience-content > span"
+        );
 
 
-    projectGrid.innerHTML = "";
+    const title =
+        experienceElement.querySelector(
+            ".experience-content h3"
+        );
 
 
-    projects.forEach(
-        (project, index) => {
-
-            const projectElement =
-                document.createElement(
-                    "a"
-                );
-
-            projectElement.className =
-                index === 0
-                    ? "project project-large"
-                    : "project";
+    const description =
+        experienceElement.querySelector(
+            ".experience-content p"
+        );
 
 
-            projectElement.href =
-                project.link ||
-                "#";
+    const tags =
+        experienceElement.querySelector(
+            ".experience-tags"
+        );
 
 
-            projectElement.innerHTML = `
+    /* YEAR */
 
-                <div class="project-image">
+    if (
+        year &&
+        experienceData.year
+    ) {
 
-                    <img
-                        src="${project.image || `assets/project-${String(index + 1).padStart(2, "0")}.jpg`}"
-                        alt="${escapeHTML(project.title || "Project")}"
-                    >
+        year.innerHTML =
+            `${experienceData.year}`;
 
-                    <div class="project-overlay">
-
-                        <span>
-                            ${escapeHTML(project.number || String(index + 1).padStart(2, "0"))}
-                            /
-                            ${escapeHTML(project.category || "")}
-                        </span>
-
-                        <h3>
-                            ${escapeHTML(project.title || "")}
-                        </h3>
-
-                        <p>
-                            ${escapeHTML(project.description || "")}
-                        </p>
-
-                        <div class="project-arrow">
-                            ↗
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            projectGrid.appendChild(
-                projectElement
-            );
-
-        }
-    );
-
-
-    setupProjectEffects();
-
-}
-
-
-/* =====================================================
-   18. RENDER EXPERIENCE
-===================================================== */
-
-function renderExperience(
-    experiences
-) {
-
-    if (!Array.isArray(experiences)) {
-        return;
     }
 
 
-    const experienceList =
-        document.querySelector(
-            ".experience-list"
-        );
+    /* COMPANY */
 
-    if (!experienceList) return;
+    if (
+        company &&
+        experienceData.company
+    ) {
 
+        company.textContent =
+            experienceData.company;
 
-    experienceList.innerHTML = "";
-
-
-    experiences.forEach(
-        (experience) => {
-
-            const item =
-                document.createElement(
-                    "article"
-                );
-
-            item.className =
-                "experience-item";
-
-
-            const tags =
-                Array.isArray(
-                    experience.tags
-                )
-                    ? experience.tags
-                    : [];
-
-
-            item.innerHTML = `
-
-                <div class="experience-year">
-
-                    ${escapeHTML(
-                        experience.year || ""
-                    )}
-
-                </div>
-
-
-                <div class="experience-content">
-
-                    <span>
-                        ${escapeHTML(
-                            experience.company || ""
-                        )}
-                    </span>
-
-                    <h3>
-                        ${escapeHTML(
-                            experience.title || ""
-                        )}
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(
-                            experience.description || ""
-                        )}
-                    </p>
-
-                    <div class="experience-tags">
-
-                        ${tags.map(
-                            tag => `
-                                <span>
-                                    ${escapeHTML(tag)}
-                                </span>
-                            `
-                        ).join("")}
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            experienceList.appendChild(
-                item
-            );
-
-        }
-    );
-
-
-    /* Reveal ulang */
-
-    const newItems =
-        experienceList.querySelectorAll(
-            ".experience-item"
-        );
-
-    newItems.forEach(
-        (item) => {
-
-            item.classList.add(
-                "reveal"
-            );
-
-            revealObserver.observe(
-                item
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   19. RENDER SKILLS
-===================================================== */
-
-function renderSkills(
-    skills
-) {
-
-    if (!Array.isArray(skills)) {
-        return;
     }
 
 
-    const skillsGrid =
-        document.querySelector(
-            ".skills-grid"
-        );
+    /* TITLE */
 
-    if (!skillsGrid) return;
+    if (
+        title &&
+        experienceData.title
+    ) {
 
+        title.textContent =
+            experienceData.title;
 
-    skillsGrid.innerHTML = "";
-
-
-    skills.forEach(
-        (skill, index) => {
-
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "skill-card";
+    }
 
 
-            card.innerHTML = `
+    /* DESCRIPTION */
 
-                <span>
-                    ${escapeHTML(
-                        skill.number ||
-                        String(index + 1).padStart(2, "0")
-                    )}
-                </span>
+    if (
+        description &&
+        experienceData.description
+    ) {
 
-                <h3>
-                    ${escapeHTML(
-                        skill.title || ""
-                    )}
-                </h3>
+        description.textContent =
+            experienceData.description;
 
-                <p>
-                    ${escapeHTML(
-                        skill.description || ""
-                    )}
-                </p>
-
-            `;
+    }
 
 
-            skillsGrid.appendChild(
-                card
-            );
+    /* TAGS */
 
-        }
-    );
+    if (
+        tags &&
+        Array.isArray(experienceData.tags)
+    ) {
 
+        tags.innerHTML = "";
 
-    const newCards =
-        skillsGrid.querySelectorAll(
-            ".skill-card"
-        );
+        experienceData.tags.forEach((tag) => {
 
+            const span =
+                document.createElement("span");
 
-    newCards.forEach(
-        (card) => {
+            span.textContent =
+                tag;
 
-            card.classList.add(
-                "reveal"
-            );
+            tags.appendChild(span);
 
-            revealObserver.observe(
-                card
-            );
+        });
 
-        }
-    );
-
-
-    setupSkillEffects();
+    }
 
 }
 
 
 /* =====================================================
-   20. RENDER CONTACT
-===================================================== */
-
-function renderContact(
-    contact
-) {
-
-    if (!contact) return;
-
-
-    updateContact(
-        "contactEmail",
-        contact.email,
-        "email"
-    );
-
-
-    updateContact(
-        "contactWhatsapp",
-        contact.whatsapp,
-        "whatsapp"
-    );
-
-
-    updateContact(
-        "contactInstagram",
-        contact.instagram,
-        "link"
-    );
-
-
-    updateContact(
-        "contactLinkedin",
-        contact.linkedin,
-        "link"
-    );
-
-
-    updateContact(
-        "contactYoutube",
-        contact.youtube,
-        "link"
-    );
-
-
-    updateContact(
-        "contactTiktok",
-        contact.tiktok,
-        "link"
-    );
-
-}
-
-
-/* =====================================================
-   21. FIREBASE PORTFOLIO
+   18. LOAD PORTFOLIO DARI FIREBASE
 ===================================================== */
 
 const portfolioRef =
@@ -1292,50 +866,401 @@ onValue(
 
 
         console.log(
-            "Firebase Portfolio:",
-            data
+            "================================="
+        );
+
+        console.log(
+            "DATA PORTFOLIO DARI FIREBASE"
+        );
+
+        console.log(data);
+
+        console.log(
+            "================================="
         );
 
 
-        /* HERO */
+        /* =================================================
+           HERO
+        ================================================= */
 
-        renderHero(
-            data.hero
-        );
+        if (data.hero) {
 
-
-        /* ABOUT */
-
-        renderAbout(
-            data.about
-        );
+            const hero =
+                data.hero;
 
 
-        /* CONTACT */
+            /* STATUS */
 
-        renderContact(
-            data.contact
-        );
-
-
-        /* PROJECT */
-
-        renderProjects(
-            data.projects
-        );
+            const statusElement =
+                document.querySelector(
+                    ".status"
+                );
 
 
-        /* EXPERIENCE */
+            if (
+                statusElement &&
+                hero.status
+            ) {
 
-        renderExperience(
-            data.experience
-        );
+                statusElement.innerHTML = `
+
+                    <span class="status-dot"></span>
+
+                    ${hero.status}
+
+                `;
+
+            }
 
 
-        /* SKILLS */
+            /* DESCRIPTION */
 
-        renderSkills(
-            data.skills
+            const heroDescription =
+                document.querySelector(
+                    ".hero-desc"
+                );
+
+
+            if (
+                heroDescription &&
+                hero.description
+            ) {
+
+                heroDescription.textContent =
+                    hero.description;
+
+            }
+
+
+            /* META */
+
+            const heroMeta =
+                document.querySelectorAll(
+                    ".hero-meta > div"
+                );
+
+
+            if (
+                heroMeta[0] &&
+                hero.location
+            ) {
+
+                const strong =
+                    heroMeta[0]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        hero.location;
+
+                }
+
+            }
+
+
+            if (
+                heroMeta[1] &&
+                hero.focus
+            ) {
+
+                const strong =
+                    heroMeta[1]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        hero.focus;
+
+                }
+
+            }
+
+
+            if (
+                heroMeta[2] &&
+                hero.experience
+            ) {
+
+                const strong =
+                    heroMeta[2]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        hero.experience;
+
+                }
+
+            }
+
+        }
+
+
+        /* =================================================
+           ABOUT
+        ================================================= */
+
+        if (data.about) {
+
+            const about =
+                data.about;
+
+
+            const paragraphs =
+                document.querySelectorAll(
+                    ".about-content > p"
+                );
+
+
+            if (
+                paragraphs[0] &&
+                about.paragraph1
+            ) {
+
+                paragraphs[0].textContent =
+                    about.paragraph1;
+
+            }
+
+
+            if (
+                paragraphs[1] &&
+                about.paragraph2
+            ) {
+
+                paragraphs[1].textContent =
+                    about.paragraph2;
+
+            }
+
+
+            const aboutInfo =
+                document.querySelectorAll(
+                    ".about-info > div"
+                );
+
+
+            if (
+                aboutInfo[0] &&
+                about.field
+            ) {
+
+                const strong =
+                    aboutInfo[0]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        about.field;
+
+                }
+
+            }
+
+
+            if (
+                aboutInfo[1] &&
+                about.tools
+            ) {
+
+                const strong =
+                    aboutInfo[1]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        about.tools;
+
+                }
+
+            }
+
+
+            if (
+                aboutInfo[2] &&
+                about.location
+            ) {
+
+                const strong =
+                    aboutInfo[2]
+                        .querySelector("strong");
+
+                if (strong) {
+
+                    strong.textContent =
+                        about.location;
+
+                }
+
+            }
+
+        }
+
+
+        /* =================================================
+           PROJECT
+        ================================================= */
+
+        if (data.projects) {
+
+            const projectElements =
+                document.querySelectorAll(
+                    ".project"
+                );
+
+
+            const projectsData =
+                data.projects;
+
+
+            /*
+             Firebase bisa berbentuk:
+
+             projects:
+                 project1
+                 project2
+                 project3
+
+             atau:
+
+             projects:
+                 0
+                 1
+                 2
+            */
+
+
+            const projectList =
+                Array.isArray(projectsData)
+                    ? projectsData
+                    : Object.values(projectsData);
+
+
+            projectList.forEach(
+                (projectData, index) => {
+
+                    if (
+                        projectElements[index]
+                    ) {
+
+                        updateProject(
+                            projectElements[index],
+                            projectData,
+                            index + 1
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           EXPERIENCE
+        ================================================= */
+
+        if (data.experience) {
+
+            const experienceElements =
+                document.querySelectorAll(
+                    ".experience-item"
+                );
+
+
+            const experienceData =
+                data.experience;
+
+
+            const experienceList =
+                Array.isArray(experienceData)
+                    ? experienceData
+                    : Object.values(experienceData);
+
+
+            experienceList.forEach(
+                (experience, index) => {
+
+                    if (
+                        experienceElements[index]
+                    ) {
+
+                        updateExperience(
+                            experienceElements[index],
+                            experience
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           CONTACT
+        ================================================= */
+
+        if (data.contact) {
+
+            const contact =
+                data.contact;
+
+
+            updateContact(
+                "contactEmail",
+                contact.email,
+                "email"
+            );
+
+
+            updateContact(
+                "contactWhatsapp",
+                contact.whatsapp,
+                "whatsapp"
+            );
+
+
+            updateContact(
+                "contactInstagram",
+                contact.instagram,
+                "link"
+            );
+
+
+            updateContact(
+                "contactLinkedin",
+                contact.linkedin,
+                "link"
+            );
+
+
+            updateContact(
+                "contactYoutube",
+                contact.youtube,
+                "link"
+            );
+
+
+            updateContact(
+                "contactTiktok",
+                contact.tiktok,
+                "link"
+            );
+
+        }
+
+
+        console.log(
+            "✓ Portfolio publik berhasil diperbarui dari Firebase."
         );
 
     },
@@ -1344,90 +1269,19 @@ onValue(
     (error) => {
 
         console.error(
-            "Firebase Database Error:",
+            "✕ Firebase Database Error:",
             error
         );
 
     }
+
 );
 
 
 /* =====================================================
-   22. ESCAPE HTML
-===================================================== */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =====================================================
-   23. PAGE LOAD
-===================================================== */
-
-window.addEventListener(
-    "load",
-    () => {
-
-        document.body.classList.add(
-            "loaded"
-        );
-
-
-        setTimeout(
-            () => {
-
-                document
-                    .querySelector(".hero")
-                    ?.classList.add(
-                        "hero-loaded"
-                    );
-
-            },
-            200
-        );
-
-
-        setupProjectEffects();
-
-        setupHeroEffect();
-
-        setupSkillEffects();
-
-    }
-);
-
-
-/* =====================================================
-   SELESAI
+   19. SELESAI
 ===================================================== */
 
 console.log(
-    "SEVHA Portfolio Firebase Sync aktif."
+    "✓ SEVHA Portfolio Public Script aktif."
 );
