@@ -1,4 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
     getDatabase,
@@ -7,8 +10,10 @@ import {
     get,
     update,
     remove,
-    push
+    push,
+    onValue
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
 
 import {
     getAuth
@@ -17,7 +22,8 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDgAP5aDMWIvhJ4Y5lNk1lRNHSPkLpW5Xg",
+    apiKey:
+        "AIzaSyDgAP5aDMWIvhJ4Y5lNk1lRNHSPkLpW5Xg",
 
     authDomain:
         "portofolio-8591a.firebaseapp.com",
@@ -43,29 +49,60 @@ const firebaseConfig = {
 };
 
 
-// Firebase App
+/* =====================================================
+   FIREBASE APP
+===================================================== */
+
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
 
 
-// Realtime Database
+/* =====================================================
+   REALTIME DATABASE
+===================================================== */
+
 const database =
-    getDatabase(app);
+    getDatabase(
+        app
+    );
 
 
-// Authentication
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
+
 const auth =
-    getAuth(app);
+    getAuth(
+        app
+    );
 
+
+/* =====================================================
+   EXPORT
+===================================================== */
 
 export {
+
     app,
+
     database,
+
     auth,
+
     ref,
+
     set,
+
     get,
+
     update,
+
     remove,
-    push
+
+    push,
+
+    onValue
+
 };
