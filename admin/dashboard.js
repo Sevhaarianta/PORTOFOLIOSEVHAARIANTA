@@ -1,15 +1,20 @@
 /* =========================================================
    SEVHA PORTFOLIO
    ADMIN DASHBOARD JAVASCRIPT
+   FIREBASE REALTIME DATABASE VERSION
 ========================================================= */
+
+import {
+    database,
+    ref,
+    set,
+    get
+} from "../firebase-config.js";
 
 
 /* =========================================================
-   DATABASE LOCAL
+   DEFAULT DATA
 ========================================================= */
-
-const STORAGE_KEY = "sevhaPortfolioData";
-
 
 const defaultData = {
 
@@ -19,7 +24,8 @@ const defaultData = {
         location: "Bogor, Indonesia",
         focus: "Creative Visual & Digital Content",
         description:
-            "Saya adalah kreator visual yang berfokus pada video editing, social media, visual content, dan digital creative."
+            "Saya adalah kreator visual yang berfokus pada video editing, social media, visual content, dan digital creative.",
+        image: ""
     },
 
 
@@ -44,92 +50,157 @@ const defaultData = {
 };
 
 
-let portfolioData = loadData();
+/* =========================================================
+   DATA PORTFOLIO
+========================================================= */
+
+let portfolioData =
+    structuredClone(defaultData);
 
 
 /* =========================================================
-   LOAD DATA
+   LOAD DATA DARI FIREBASE
 ========================================================= */
 
-function loadData() {
-
-    const saved =
-        localStorage.getItem(STORAGE_KEY);
-
-
-    if (!saved) {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(defaultData)
-        );
-
-        return structuredClone(defaultData);
-    }
-
+async function loadData() {
 
     try {
 
-        const data =
-            JSON.parse(saved);
+        const snapshot =
+            await get(
+                ref(database, "portfolio")
+            );
 
 
-        return {
+        if (snapshot.exists()) {
 
-            ...defaultData,
+            const data =
+                snapshot.val();
 
-            ...data,
 
-            profile: {
-                ...defaultData.profile,
-                ...(data.profile || {})
-            },
+            return {
 
-            contact: {
-                ...defaultData.contact,
-                ...(data.contact || {})
-            },
+                ...defaultData,
 
-            projects:
-                Array.isArray(data.projects)
-                    ? data.projects
-                    : [],
+                ...data,
 
-            experience:
-                Array.isArray(data.experience)
-                    ? data.experience
-                    : [],
 
-            skills:
-                Array.isArray(data.skills)
-                    ? data.skills
-                    : []
+                profile: {
 
-        };
+                    ...defaultData.profile,
+
+                    ...(data.profile || {})
+
+                },
+
+
+                contact: {
+
+                    ...defaultData.contact,
+
+                    ...(data.contact || {})
+
+                },
+
+
+                projects:
+                    Array.isArray(data.projects)
+                        ? data.projects
+                        : [],
+
+
+                experience:
+                    Array.isArray(data.experience)
+                        ? data.experience
+                        : [],
+
+
+                skills:
+                    Array.isArray(data.skills)
+                        ? data.skills
+                        : []
+
+            };
+
+        }
+
+
+        /*
+         * Kalau database masih kosong,
+         * buat data awal.
+         */
+
+        await set(
+            ref(database, "portfolio"),
+            defaultData
+        );
+
+
+        return structuredClone(
+            defaultData
+        );
+
 
     } catch (error) {
 
         console.error(
-            "Gagal membaca data:",
+            "Gagal mengambil data Firebase:",
             error
         );
 
-        return structuredClone(defaultData);
+
+        showToast(
+            "Gagal mengambil data Firebase"
+        );
+
+
+        return structuredClone(
+            defaultData
+        );
+
     }
 
 }
 
 
 /* =========================================================
-   SAVE DATA
+   SAVE DATA KE FIREBASE
 ========================================================= */
 
-function saveData() {
+async function saveData() {
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(portfolioData)
-    );
+    try {
+
+        await set(
+            ref(database, "portfolio"),
+            portfolioData
+        );
+
+
+        console.log(
+            "Data berhasil disimpan ke Firebase"
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Gagal menyimpan data Firebase:",
+            error
+        );
+
+
+        showToast(
+            "Gagal menyimpan perubahan"
+        );
+
+
+        return false;
+
+    }
 
 }
 
@@ -140,7 +211,11 @@ function saveData() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    () => {
+    async () => {
+
+        /*
+         * Inisialisasi semua fitur
+         */
 
         initNavigation();
 
@@ -154,6 +229,21 @@ document.addEventListener(
 
         initImport();
 
+        showCurrentDate();
+
+
+        /*
+         * Ambil data dari Firebase
+         */
+
+        portfolioData =
+            await loadData();
+
+
+        /*
+         * Tampilkan data
+         */
+
         loadProfileForm();
 
         loadContactForm();
@@ -165,8 +255,6 @@ document.addEventListener(
         renderSkills();
 
         updateStatistics();
-
-        showCurrentDate();
 
     }
 );
@@ -244,8 +332,11 @@ function initNavigation() {
 
 
                     window.scrollTo({
+
                         top: 0,
+
                         behavior: "smooth"
+
                     });
 
                 }
@@ -255,7 +346,9 @@ function initNavigation() {
     );
 
 
-    /* MOBILE MENU */
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
 
     const mobileMenu =
         document.getElementById(
@@ -341,7 +434,9 @@ function initQuickActions() {
 function initForms() {
 
 
-    /* PROFILE */
+    /* =====================================================
+       PROFILE
+    ===================================================== */
 
     const profileForm =
         document.getElementById(
@@ -353,7 +448,7 @@ function initForms() {
 
         profileForm.addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
 
@@ -388,11 +483,17 @@ function initForms() {
                     );
 
 
-                saveData();
+                const success =
+                    await saveData();
 
-                showToast(
-                    "Profil berhasil disimpan"
-                );
+
+                if (success) {
+
+                    showToast(
+                        "Profil berhasil disimpan"
+                    );
+
+                }
 
             }
         );
@@ -401,7 +502,9 @@ function initForms() {
 
 
 
-    /* CONTACT */
+    /* =====================================================
+       CONTACT
+    ===================================================== */
 
     const contactForm =
         document.getElementById(
@@ -413,7 +516,7 @@ function initForms() {
 
         contactForm.addEventListener(
             "submit",
-            event => {
+            async event => {
 
                 event.preventDefault();
 
@@ -454,11 +557,17 @@ function initForms() {
                     );
 
 
-                saveData();
+                const success =
+                    await saveData();
 
-                showToast(
-                    "Kontak berhasil disimpan"
-                );
+
+                if (success) {
+
+                    showToast(
+                        "Kontak berhasil disimpan"
+                    );
+
+                }
 
             }
         );
@@ -474,6 +583,10 @@ function initForms() {
 
 function initButtons() {
 
+
+    /* =====================================================
+       ADD PROJECT
+    ===================================================== */
 
     const addProject =
         document.getElementById(
@@ -496,6 +609,10 @@ function initButtons() {
 
 
 
+    /* =====================================================
+       ADD EXPERIENCE
+    ===================================================== */
+
     const addExperience =
         document.getElementById(
             "addExperience"
@@ -516,6 +633,10 @@ function initButtons() {
     }
 
 
+
+    /* =====================================================
+       ADD SKILL
+    ===================================================== */
 
     const addSkill =
         document.getElementById(
@@ -538,7 +659,9 @@ function initButtons() {
 
 
 
-    /* PROFILE IMAGE */
+    /* =====================================================
+       PROFILE IMAGE
+    ===================================================== */
 
     const imageInput =
         document.getElementById(
@@ -603,6 +726,10 @@ function loadProfileForm() {
 }
 
 
+/* =========================================================
+   PROFILE PREVIEW
+========================================================= */
+
 function renderProfilePreview() {
 
     const preview =
@@ -619,20 +746,26 @@ function renderProfilePreview() {
     ) {
 
         preview.innerHTML = `
+
             <img
                 src="${portfolioData.profile.image}"
                 alt="Foto Profil"
             >
+
         `;
 
     } else {
 
         preview.innerHTML = `
+
             <span>
+
                 ${getInitial(
                     portfolioData.profile.name
                 )}
+
             </span>
+
         `;
 
     }
@@ -653,7 +786,11 @@ function handleProfileImage(event) {
     if (!file) return;
 
 
-    if (!file.type.startsWith("image/")) {
+    if (
+        !file.type.startsWith(
+            "image/"
+        )
+    ) {
 
         showToast(
             "File harus berupa gambar"
@@ -668,24 +805,33 @@ function handleProfileImage(event) {
         new FileReader();
 
 
-    reader.onload = function(e) {
+    reader.onload =
+        async function(e) {
 
-        portfolioData.profile.image =
-            e.target.result;
-
-
-        saveData();
-
-        renderProfilePreview();
-
-        showToast(
-            "Foto profil diperbarui"
-        );
-
-    };
+            portfolioData.profile.image =
+                e.target.result;
 
 
-    reader.readAsDataURL(file);
+            const success =
+                await saveData();
+
+
+            if (!success) return;
+
+
+            renderProfilePreview();
+
+
+            showToast(
+                "Foto profil diperbarui"
+            );
+
+        };
+
+
+    reader.readAsDataURL(
+        file
+    );
 
 }
 
@@ -758,6 +904,7 @@ function renderProjects() {
     ) {
 
         container.innerHTML = `
+
             <div class="portfolio-empty">
 
                 <div class="empty-icon">
@@ -775,6 +922,7 @@ function renderProjects() {
                 </p>
 
             </div>
+
         `;
 
         return;
@@ -798,12 +946,15 @@ function renderProjects() {
                             ${
                                 project.image
                                     ? `
+
                                         <img
                                             src="${project.image}"
                                             alt="${escapeHTML(project.title)}"
                                         >
+
                                       `
                                     : `
+
                                         <div
                                             style="
                                             width:100%;
@@ -813,8 +964,11 @@ function renderProjects() {
                                             color:#777;
                                             "
                                         >
+
                                             ▣
+
                                         </div>
+
                                       `
                             }
 
@@ -826,16 +980,21 @@ function renderProjects() {
                         >
 
                             <h3>
+
                                 ${escapeHTML(
                                     project.title
                                 )}
+
                             </h3>
 
+
                             <p>
+
                                 ${escapeHTML(
                                     project.description ||
                                     "Tidak ada deskripsi."
                                 )}
+
                             </p>
 
                         </div>
@@ -895,7 +1054,9 @@ function renderProjects() {
    PROJECT MODAL
 ========================================================= */
 
-function openProjectModal(index = null) {
+function openProjectModal(
+    index = null
+) {
 
     const isEdit =
         index !== null;
@@ -910,11 +1071,13 @@ function openProjectModal(index = null) {
     openModal(`
 
         <h2 class="modal-title">
+
             ${
                 isEdit
                     ? "Edit Project"
                     : "Tambah Project"
             }
+
         </h2>
 
 
@@ -1079,25 +1242,30 @@ function openProjectModal(index = null) {
                         "projectTitle"
                     ),
 
+
                 category:
                     getValue(
                         "projectCategory"
                     ),
+
 
                 year:
                     getValue(
                         "projectYear"
                     ),
 
+
                 description:
                     getValue(
                         "projectDescription"
                     ),
 
+
                 link:
                     getValue(
                         "projectLink"
                     ),
+
 
                 image:
                     project.image || ""
@@ -1149,7 +1317,7 @@ function openProjectModal(index = null) {
    SAVE PROJECT
 ========================================================= */
 
-function saveProject(
+async function saveProject(
     project,
     index
 ) {
@@ -1168,7 +1336,12 @@ function saveProject(
     }
 
 
-    saveData();
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
 
     closeModal();
 
@@ -1176,10 +1349,13 @@ function saveProject(
 
     updateStatistics();
 
+
     showToast(
+
         index === null
             ? "Project berhasil ditambahkan"
             : "Project berhasil diperbarui"
+
     );
 
 }
@@ -1191,7 +1367,9 @@ function saveProject(
 
 function editProject(index) {
 
-    openProjectModal(index);
+    openProjectModal(
+        index
+    );
 
 }
 
@@ -1200,7 +1378,7 @@ function editProject(index) {
    DELETE PROJECT
 ========================================================= */
 
-function deleteProject(index) {
+async function deleteProject(index) {
 
     const project =
         portfolioData.projects[index];
@@ -1212,7 +1390,8 @@ function deleteProject(index) {
         );
 
 
-    if (!confirmDelete) return;
+    if (!confirmDelete)
+        return;
 
 
     portfolioData.projects.splice(
@@ -1221,11 +1400,17 @@ function deleteProject(index) {
     );
 
 
-    saveData();
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
 
     renderProjects();
 
     updateStatistics();
+
 
     showToast(
         "Project berhasil dihapus"
@@ -1254,6 +1439,7 @@ function renderExperience() {
     ) {
 
         container.innerHTML = `
+
             <div class="portfolio-empty">
 
                 <div class="empty-icon">
@@ -1270,6 +1456,7 @@ function renderExperience() {
                 </p>
 
             </div>
+
         `;
 
         return;
@@ -1291,15 +1478,20 @@ function renderExperience() {
                         >
 
                             <h3>
+
                                 ${escapeHTML(
                                     item.position
                                 )}
+
                             </h3>
 
+
                             <p>
+
                                 ${escapeHTML(
                                     item.company
                                 )}
+
                             </p>
 
                         </div>
@@ -1367,11 +1559,13 @@ function openExperienceModal(
     openModal(`
 
         <h2 class="modal-title">
+
             ${
                 isEdit
                     ? "Edit Pengalaman"
                     : "Tambah Pengalaman"
             }
+
         </h2>
 
 
@@ -1493,15 +1687,18 @@ function openExperienceModal(
                             "experienceCompany"
                         ),
 
+
                     position:
                         getValue(
                             "experiencePosition"
                         ),
 
+
                     year:
                         getValue(
                             "experienceYear"
                         ),
+
 
                     description:
                         getValue(
@@ -1511,34 +1708,57 @@ function openExperienceModal(
                 };
 
 
-                if (index === null) {
-
-                    portfolioData.experience.push(
-                        data
-                    );
-
-                } else {
-
-                    portfolioData.experience[index] =
-                        data;
-
-                }
-
-
-                saveData();
-
-                closeModal();
-
-                renderExperience();
-
-                updateStatistics();
-
-                showToast(
-                    "Pengalaman berhasil disimpan"
+                saveExperience(
+                    data,
+                    index
                 );
 
             }
         );
+
+}
+
+
+/* =========================================================
+   SAVE EXPERIENCE
+========================================================= */
+
+async function saveExperience(
+    data,
+    index
+) {
+
+    if (index === null) {
+
+        portfolioData.experience.push(
+            data
+        );
+
+    } else {
+
+        portfolioData.experience[index] =
+            data;
+
+    }
+
+
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
+
+    closeModal();
+
+    renderExperience();
+
+    updateStatistics();
+
+
+    showToast(
+        "Pengalaman berhasil disimpan"
+    );
 
 }
 
@@ -1549,7 +1769,9 @@ function openExperienceModal(
 
 function editExperience(index) {
 
-    openExperienceModal(index);
+    openExperienceModal(
+        index
+    );
 
 }
 
@@ -1558,7 +1780,7 @@ function editExperience(index) {
    DELETE EXPERIENCE
 ========================================================= */
 
-function deleteExperience(index) {
+async function deleteExperience(index) {
 
     const item =
         portfolioData.experience[index];
@@ -1581,11 +1803,17 @@ function deleteExperience(index) {
     );
 
 
-    saveData();
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
 
     renderExperience();
 
     updateStatistics();
+
 
     showToast(
         "Pengalaman berhasil dihapus"
@@ -1614,6 +1842,7 @@ function renderSkills() {
     ) {
 
         container.innerHTML = `
+
             <div class="portfolio-empty">
 
                 <div class="empty-icon">
@@ -1629,6 +1858,7 @@ function renderSkills() {
                 </p>
 
             </div>
+
         `;
 
         return;
@@ -1646,15 +1876,20 @@ function renderSkills() {
                     >
 
                         <h3>
+
                             ${escapeHTML(
                                 skill.name
                             )}
+
                         </h3>
 
+
                         <p>
+
                             ${escapeHTML(
                                 skill.description || ""
                             )}
+
                         </p>
 
 
@@ -1709,11 +1944,13 @@ function openSkillModal(
     openModal(`
 
         <h2 class="modal-title">
+
             ${
                 isEdit
                     ? "Edit Keahlian"
                     : "Tambah Keahlian"
             }
+
         </h2>
 
 
@@ -1794,6 +2031,7 @@ function openSkillModal(
                             "skillName"
                         ),
 
+
                     description:
                         getValue(
                             "skillDescription"
@@ -1802,34 +2040,57 @@ function openSkillModal(
                 };
 
 
-                if (index === null) {
-
-                    portfolioData.skills.push(
-                        data
-                    );
-
-                } else {
-
-                    portfolioData.skills[index] =
-                        data;
-
-                }
-
-
-                saveData();
-
-                closeModal();
-
-                renderSkills();
-
-                updateStatistics();
-
-                showToast(
-                    "Keahlian berhasil disimpan"
+                saveSkill(
+                    data,
+                    index
                 );
 
             }
         );
+
+}
+
+
+/* =========================================================
+   SAVE SKILL
+========================================================= */
+
+async function saveSkill(
+    data,
+    index
+) {
+
+    if (index === null) {
+
+        portfolioData.skills.push(
+            data
+        );
+
+    } else {
+
+        portfolioData.skills[index] =
+            data;
+
+    }
+
+
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
+
+    closeModal();
+
+    renderSkills();
+
+    updateStatistics();
+
+
+    showToast(
+        "Keahlian berhasil disimpan"
+    );
 
 }
 
@@ -1840,7 +2101,9 @@ function openSkillModal(
 
 function editSkill(index) {
 
-    openSkillModal(index);
+    openSkillModal(
+        index
+    );
 
 }
 
@@ -1849,7 +2112,7 @@ function editSkill(index) {
    DELETE SKILL
 ========================================================= */
 
-function deleteSkill(index) {
+async function deleteSkill(index) {
 
     const skill =
         portfolioData.skills[index];
@@ -1872,14 +2135,20 @@ function deleteSkill(index) {
     );
 
 
-    saveData();
+    const success =
+        await saveData();
+
+
+    if (!success) return;
+
 
     renderSkills();
 
     updateStatistics();
 
+
     showToast(
-        "Keahlian berhasil dihapus"
+        "Skill berhasil dihapus"
     );
 
 }
@@ -1917,7 +2186,17 @@ function initModal() {
 
         overlay.addEventListener(
             "click",
-            closeModal
+            event => {
+
+                if (
+                    event.target === overlay
+                ) {
+
+                    closeModal();
+
+                }
+
+            }
         );
 
     }
@@ -1941,6 +2220,10 @@ function initModal() {
 }
 
 
+/* =========================================================
+   OPEN MODAL
+========================================================= */
+
 function openModal(content) {
 
     const modal =
@@ -1955,8 +2238,14 @@ function openModal(content) {
         );
 
 
-    if (!modal || !modalContent)
+    if (
+        !modal ||
+        !modalContent
+    ) {
+
         return;
+
+    }
 
 
     modalContent.innerHTML =
@@ -1973,6 +2262,10 @@ function openModal(content) {
 
 }
 
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
 
 function closeModal() {
 
@@ -2077,7 +2370,7 @@ function initImport() {
 
 
             reader.onload =
-                function(e) {
+                async function(e) {
 
                     try {
 
@@ -2093,31 +2386,45 @@ function initImport() {
 
                             ...imported,
 
+
                             profile: {
+
                                 ...defaultData.profile,
+
                                 ...(imported.profile || {})
+
                             },
+
 
                             contact: {
+
                                 ...defaultData.contact,
+
                                 ...(imported.contact || {})
+
                             },
 
+
                             projects:
+
                                 Array.isArray(
                                     imported.projects
                                 )
                                     ? imported.projects
                                     : [],
 
+
                             experience:
+
                                 Array.isArray(
                                     imported.experience
                                 )
                                     ? imported.experience
                                     : [],
 
+
                             skills:
+
                                 Array.isArray(
                                     imported.skills
                                 )
@@ -2127,7 +2434,12 @@ function initImport() {
                         };
 
 
-                        saveData();
+                        const success =
+                            await saveData();
+
+
+                        if (!success)
+                            return;
 
 
                         loadProfileForm();
@@ -2144,7 +2456,7 @@ function initImport() {
 
 
                         showToast(
-                            "Data berhasil diimport"
+                            "Data berhasil diimport ke Firebase"
                         );
 
 
@@ -2164,7 +2476,9 @@ function initImport() {
                 };
 
 
-            reader.readAsText(file);
+            reader.readAsText(
+                file
+            );
 
         }
     );
@@ -2243,7 +2557,7 @@ function exportData() {
    RESET DATA
 ========================================================= */
 
-function resetData() {
+async function resetData() {
 
     const confirmReset =
         confirm(
@@ -2255,18 +2569,18 @@ function resetData() {
         return;
 
 
-    localStorage.removeItem(
-        STORAGE_KEY
-    );
-
-
     portfolioData =
         structuredClone(
             defaultData
         );
 
 
-    saveData();
+    const success =
+        await saveData();
+
+
+    if (!success)
+        return;
 
 
     loadProfileForm();
@@ -2301,7 +2615,8 @@ function showCurrentDate() {
         );
 
 
-    if (!element) return;
+    if (!element)
+        return;
 
 
     const date =
@@ -2336,7 +2651,15 @@ function showToast(message) {
         );
 
 
-    if (!toast) return;
+    if (!toast) {
+
+        console.log(
+            message
+        );
+
+        return;
+
+    }
 
 
     const text =
@@ -2472,7 +2795,7 @@ function escapeAttribute(value) {
 
 /* =========================================================
    GLOBAL FUNCTIONS
-   Dipakai oleh tombol onclick di HTML
+   Dipakai onclick di HTML
 ========================================================= */
 
 window.editProject =
