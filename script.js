@@ -1013,3 +1013,230 @@ document.addEventListener(
 
     }
 );
+
+/* =====================================================
+   15. LOAD DATA PORTFOLIO DARI FIREBASE
+===================================================== */
+
+import { db } from "./firebase-config.js";
+
+import {
+    ref,
+    onValue
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+const portfolioRef = ref(
+    db,
+    "portfolio"
+);
+
+
+onValue(
+    portfolioRef,
+    (snapshot) => {
+
+        const data =
+            snapshot.val();
+
+
+        if (!data) {
+
+            console.log(
+                "Belum ada data portfolio di Firebase."
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "Data portfolio:",
+            data
+        );
+
+
+        /* =============================================
+           HERO
+        ============================================= */
+
+        if (data.hero) {
+
+            const hero =
+                data.hero;
+
+
+            const heroTitle =
+                document.querySelector(
+                    ".hero h1"
+                );
+
+
+            if (heroTitle && hero.name) {
+
+                heroTitle.innerHTML =
+                    hero.name;
+
+            }
+
+
+            const heroDescription =
+                document.querySelector(
+                    ".hero-desc"
+                );
+
+
+            if (
+                heroDescription &&
+                hero.description
+            ) {
+
+                heroDescription.textContent =
+                    hero.description;
+
+            }
+
+        }
+
+
+        /* =============================================
+           CONTACT
+        ============================================= */
+
+        if (data.contact) {
+
+            const contact =
+                data.contact;
+
+
+            updateContact(
+                "contactEmail",
+                contact.email,
+                "email"
+            );
+
+
+            updateContact(
+                "contactWhatsapp",
+                contact.whatsapp,
+                "whatsapp"
+            );
+
+
+            updateContact(
+                "contactInstagram",
+                contact.instagram,
+                "link"
+            );
+
+
+            updateContact(
+                "contactLinkedin",
+                contact.linkedin,
+                "link"
+            );
+
+
+            updateContact(
+                "contactYoutube",
+                contact.youtube,
+                "link"
+            );
+
+
+            updateContact(
+                "contactTiktok",
+                contact.tiktok,
+                "link"
+            );
+
+        }
+
+    },
+    (error) => {
+
+        console.error(
+            "Firebase error:",
+            error
+        );
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE CONTACT
+===================================================== */
+
+function updateContact(
+    elementId,
+    value,
+    type
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (!element) return;
+
+
+    if (!value) {
+
+        element.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    if (type === "email") {
+
+        element.href =
+            `mailto:${value}`;
+
+    }
+
+
+    else if (type === "whatsapp") {
+
+        let number =
+            value.replace(
+                /\D/g,
+                ""
+            );
+
+
+        if (
+            number.startsWith("0")
+        ) {
+
+            number =
+                "62" +
+                number.substring(1);
+
+        }
+
+
+        element.href =
+            `https://wa.me/${number}`;
+
+    }
+
+
+    else {
+
+        element.href =
+            value;
+
+    }
+
+
+    element.style.display =
+        "flex";
+
+}
