@@ -3,728 +3,407 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <title>Admin — Sevha Portfolio</title>
+<title>Admin — Sevha Portfolio</title>
 
+<style>
 
-    <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
+    min-height: 100vh;
 
-        body {
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #d9e6ff,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #e4dcff,
+            transparent 35%
+        ),
+        #eef1f6;
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    color: #111;
+}
 
-            min-height: 100vh;
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
 
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    #d9e6ff,
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 80% 80%,
-                    #e4dcff,
-                    transparent 35%
-                ),
-                #eef1f6;
+    padding: 18px 30px;
 
-            color: #111;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        }
+    background: rgba(255,255,255,.72);
 
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.9);
 
-        /* =========================================
-           NAVBAR
-        ========================================= */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
 
-        .navbar {
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+}
 
-            position: sticky;
+.logo span {
+    color: #7398ff;
+}
 
-            top: 0;
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-            z-index: 100;
+#userEmail {
+    color: #737b8a;
+    font-size: 13px;
+}
 
-            padding:
-                18px 30px;
+#logoutButton {
+    border: none;
 
-            display: flex;
+    padding: 10px 16px;
 
-            justify-content:
-                space-between;
+    border-radius: 12px;
 
-            align-items:
-                center;
+    background: #111;
 
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .78
-                );
+    color: white;
 
-            border-bottom:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .9
-                );
+    cursor: pointer;
 
-            backdrop-filter:
-                blur(20px);
+    font-weight: 600;
+}
 
-        }
+.container {
+    width: 100%;
+    max-width: 1100px;
 
+    margin: auto;
 
-        .logo {
+    padding:
+        45px 20px 80px;
+}
 
-            font-size: 23px;
+.badge {
+    display: inline-block;
 
-            font-weight: 800;
+    padding: 8px 13px;
 
-        }
+    border-radius: 30px;
 
+    background: rgba(115,152,255,.1);
 
-        .logo span {
+    color: #6489ec;
 
-            color:
-                #7398ff;
+    font-size: 11px;
 
-        }
+    font-weight: 700;
 
+    letter-spacing: 1px;
 
-        .user-area {
+    margin-bottom: 15px;
+}
 
-            display: flex;
+h1 {
+    font-size: 40px;
 
-            align-items: center;
+    letter-spacing: -2px;
 
-            gap: 15px;
+    margin-bottom: 10px;
+}
 
-        }
+.subtitle {
+    color: #737b8a;
 
+    margin-bottom: 35px;
+}
 
-        #userEmail {
+.card {
+    padding: 30px;
 
-            color:
-                #737b8a;
+    margin-bottom: 25px;
 
-            font-size: 13px;
+    border-radius: 25px;
 
-        }
+    background:
+        rgba(255,255,255,.7);
 
+    border:
+        1px solid
+        rgba(255,255,255,.9);
 
-        #logoutButton {
+    box-shadow:
+        0 20px 60px
+        rgba(70,80,110,.12);
 
-            border: none;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
 
-            padding:
-                10px 16px;
+.card h2 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
 
-            border-radius:
-                12px;
+.card-description {
+    color: #737b8a;
 
-            background:
-                #111;
+    font-size: 13px;
 
-            color:
-                white;
+    line-height: 1.6;
 
-            cursor:
-                pointer;
+    margin-bottom: 25px;
+}
 
-            font-weight:
-                600;
+.form-grid {
+    display: grid;
 
-        }
+    grid-template-columns:
+        repeat(2,1fr);
 
+    gap: 18px;
+}
 
-        /* =========================================
-           CONTAINER
-        ========================================= */
+.form-group {
+    display: flex;
 
-        .container {
+    flex-direction: column;
 
-            width: 100%;
+    gap: 8px;
+}
 
-            max-width:
-                1100px;
+.form-group.full {
+    grid-column: 1 / -1;
+}
 
-            margin:
-                auto;
+label {
+    font-size: 12px;
 
-            padding:
-                45px 20px 80px;
+    font-weight: 700;
 
-        }
+    color: #444;
+}
 
+input,
+textarea {
+    width: 100%;
 
-        .badge {
+    border:
+        1px solid
+        #dfe3eb;
 
-            display:
-                inline-block;
+    border-radius: 13px;
 
-            padding:
-                8px 13px;
+    padding: 13px 14px;
 
-            border-radius:
-                30px;
+    font-family: inherit;
 
-            background:
-                rgba(
-                    115,
-                    152,
-                    255,
-                    .1
-                );
+    font-size: 14px;
 
-            color:
-                #6489ec;
+    outline: none;
 
-            font-size:
-                11px;
+    background:
+        rgba(255,255,255,.8);
 
-            font-weight:
-                700;
+    transition: .2s;
+}
 
-            letter-spacing:
-                1px;
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
 
-            margin-bottom:
-                15px;
+input:focus,
+textarea:focus {
+    border-color: #789cff;
 
-        }
+    box-shadow:
+        0 0 0 4px
+        rgba(120,156,255,.12);
+}
 
+.button {
+    border: none;
 
-        h1 {
+    padding: 14px 20px;
 
-            font-size:
-                40px;
+    border-radius: 13px;
 
-            letter-spacing:
-                -2px;
+    background:
+        linear-gradient(
+            135deg,
+            #779aff,
+            #8e7cf5
+        );
 
-            margin-bottom:
-                10px;
+    color: white;
 
-        }
+    font-size: 13px;
 
+    font-weight: 700;
 
-        .subtitle {
+    cursor: pointer;
 
-            color:
-                #737b8a;
+    margin-top: 20px;
+}
 
-            margin-bottom:
-                35px;
+.button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
 
-        }
+.secondary-button {
+    border: none;
 
+    padding: 11px 15px;
 
-        /* =========================================
-           CARD
-        ========================================= */
+    border-radius: 11px;
 
-        .card {
+    background: #111;
 
-            padding:
-                30px;
+    color: white;
 
-            margin-bottom:
-                25px;
+    cursor: pointer;
 
-            border-radius:
-                25px;
+    font-size: 12px;
 
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .7
-                );
+    font-weight: 700;
+}
 
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .9
-                );
+.danger-button {
+    border: none;
 
-            box-shadow:
-                0 20px 60px
-                rgba(
-                    70,
-                    80,
-                    110,
-                    .12
-                );
+    padding: 10px 14px;
 
-            backdrop-filter:
-                blur(20px);
+    border-radius: 10px;
 
-        }
+    background: #ffe7e7;
 
+    color: #c33;
 
-        .card h2 {
+    cursor: pointer;
 
-            font-size:
-                21px;
+    font-size: 12px;
 
-            margin-bottom:
-                8px;
+    font-weight: 700;
+}
 
-        }
+.item-card {
+    padding: 20px;
 
+    margin-bottom: 18px;
 
-        .card-description {
+    border-radius: 18px;
 
-            color:
-                #737b8a;
+    background:
+        rgba(255,255,255,.55);
 
-            font-size:
-                13px;
+    border:
+        1px solid
+        rgba(255,255,255,.85);
+}
 
-            line-height:
-                1.6;
+.item-header {
+    display: flex;
 
-            margin-bottom:
-                25px;
+    justify-content: space-between;
 
-        }
+    align-items: center;
 
+    margin-bottom: 18px;
+}
 
-        /* =========================================
-           FORM
-        ========================================= */
+.item-header h3 {
+    font-size: 16px;
+}
 
-        .form-grid {
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
 
-            display:
-                grid;
+.tags-input {
+    min-height: 80px;
+}
 
-            grid-template-columns:
-                repeat(
-                    2,
-                    1fr
-                );
+#saveStatus {
+    display: none;
 
-            gap:
-                18px;
+    margin-top: 15px;
 
-        }
+    padding: 13px;
 
+    border-radius: 12px;
 
-        .form-group {
+    font-size: 13px;
+}
 
-            display:
-                flex;
+.status-success {
+    background: rgba(80,200,120,.1);
+    color: #328451;
+}
 
-            flex-direction:
-                column;
+.status-error {
+    background: rgba(220,70,70,.1);
+    color: #b33;
+}
 
-            gap:
-                8px;
+@media(max-width:700px) {
 
-        }
+    .navbar {
+        padding: 15px 18px;
+    }
 
+    #userEmail {
+        display: none;
+    }
 
-        .full {
+    h1 {
+        font-size: 30px;
+    }
 
-            grid-column:
-                1 / -1;
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 
-        }
+    .form-group.full {
+        grid-column: auto;
+    }
 
+    .card {
+        padding: 22px;
+    }
 
-        label {
+}
 
-            font-size:
-                12px;
-
-            font-weight:
-                700;
-
-            color:
-                #444;
-
-        }
-
-
-        input,
-        textarea {
-
-            width: 100%;
-
-            border:
-                1px solid
-                #dfe3eb;
-
-            border-radius:
-                13px;
-
-            padding:
-                13px 14px;
-
-            font-family:
-                inherit;
-
-            font-size:
-                14px;
-
-            outline:
-                none;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .85
-                );
-
-        }
-
-
-        textarea {
-
-            min-height:
-                120px;
-
-            resize:
-                vertical;
-
-        }
-
-
-        input:focus,
-        textarea:focus {
-
-            border-color:
-                #789cff;
-
-            box-shadow:
-                0 0 0 4px
-                rgba(
-                    120,
-                    156,
-                    255,
-                    .12
-                );
-
-        }
-
-
-        /* =========================================
-           BUTTON
-        ========================================= */
-
-        button {
-
-            font-family:
-                inherit;
-
-        }
-
-
-        .button {
-
-            border:
-                none;
-
-            padding:
-                13px 18px;
-
-            border-radius:
-                13px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #779aff,
-                    #8e7cf5
-                );
-
-            color:
-                white;
-
-            font-size:
-                13px;
-
-            font-weight:
-                700;
-
-            cursor:
-                pointer;
-
-        }
-
-
-        .button.dark {
-
-            background:
-                #111;
-
-        }
-
-
-        .button.danger {
-
-            background:
-                #ef5350;
-
-        }
-
-
-        .button.small {
-
-            padding:
-                9px 13px;
-
-            font-size:
-                12px;
-
-        }
-
-
-        .button:disabled {
-
-            opacity:
-                .6;
-
-            cursor:
-                not-allowed;
-
-        }
-
-
-        /* =========================================
-           LIST ITEM
-        ========================================= */
-
-        .list-item {
-
-            padding:
-                20px;
-
-            margin-bottom:
-                15px;
-
-            border-radius:
-                18px;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .55
-                );
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .8
-                );
-
-        }
-
-
-        .list-header {
-
-            display:
-                flex;
-
-            justify-content:
-                space-between;
-
-            align-items:
-                center;
-
-            gap:
-                15px;
-
-            margin-bottom:
-                18px;
-
-        }
-
-
-        .list-header h3 {
-
-            font-size:
-                16px;
-
-        }
-
-
-        .list-actions {
-
-            display:
-                flex;
-
-            gap:
-                8px;
-
-            flex-wrap:
-                wrap;
-
-        }
-
-
-        /* =========================================
-           PROJECT / EXPERIENCE / SKILL
-        ========================================= */
-
-        .dynamic-form {
-
-            margin-top:
-                20px;
-
-            padding-top:
-                20px;
-
-            border-top:
-                1px solid
-                #e4e7ee;
-
-        }
-
-
-        .add-button {
-
-            margin-top:
-                15px;
-
-        }
-
-
-        /* =========================================
-           STATUS
-        ========================================= */
-
-        #saveStatus {
-
-            display:
-                none;
-
-            margin-top:
-                15px;
-
-            padding:
-                13px;
-
-            border-radius:
-                12px;
-
-            background:
-                rgba(
-                    80,
-                    200,
-                    120,
-                    .1
-                );
-
-            color:
-                #328451;
-
-            font-size:
-                13px;
-
-        }
-
-
-        /* =========================================
-           MOBILE
-        ========================================= */
-
-        @media (max-width: 700px) {
-
-            .navbar {
-
-                padding:
-                    15px 18px;
-
-            }
-
-
-            #userEmail {
-
-                display:
-                    none;
-
-            }
-
-
-            h1 {
-
-                font-size:
-                    30px;
-
-            }
-
-
-            .form-grid {
-
-                grid-template-columns:
-                    1fr;
-
-            }
-
-
-            .full {
-
-                grid-column:
-                    auto;
-
-            }
-
-
-            .card {
-
-                padding:
-                    22px;
-
-            }
-
-
-            .list-header {
-
-                align-items:
-                    flex-start;
-
-                flex-direction:
-                    column;
-
-            }
-
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -732,1718 +411,1716 @@
 <body>
 
 
-    <!-- =========================================
-         NAVBAR
-    ========================================= -->
+<header class="navbar">
 
-    <header class="navbar">
+    <div class="logo">
+        SEVHA<span>.</span>
+    </div>
 
-        <div class="logo">
+    <div class="user-area">
 
-            SEVHA<span>.</span>
+        <span id="userEmail">
+            Memuat...
+        </span>
+
+        <button id="logoutButton">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<div class="badge">
+    ADMIN DASHBOARD
+</div>
+
+
+<h1>
+    Kelola Portfolio.
+</h1>
+
+
+<p class="subtitle">
+    Semua isi website publik bisa kamu ubah
+    melalui dashboard ini.
+</p>
+
+
+
+<!-- ==================================================
+     HERO
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Hero Section
+</h2>
+
+<p class="card-description">
+    Informasi utama yang muncul di bagian
+    paling atas website.
+</p>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Status
+</label>
+
+<input
+    id="heroStatus"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Berbasis di
+</label>
+
+<input
+    id="heroLocation"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Fokus
+</label>
+
+<input
+    id="heroFocus"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Pengalaman
+</label>
+
+<input
+    id="heroExperience"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group full">
+
+<label>
+Deskripsi Hero
+</label>
+
+<textarea
+    id="heroDescription"
+></textarea>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     ABOUT
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Tentang Saya
+</h2>
+
+<p class="card-description">
+    Informasi mengenai profil kamu.
+</p>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Bidang
+</label>
+
+<input
+    id="aboutField"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Tools
+</label>
+
+<input
+    id="aboutTools"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Domisili
+</label>
+
+<input
+    id="aboutLocation"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group full">
+
+<label>
+Paragraf 1
+</label>
+
+<textarea
+    id="aboutParagraph1"
+></textarea>
+
+</div>
+
+
+<div class="form-group full">
+
+<label>
+Paragraf 2
+</label>
+
+<textarea
+    id="aboutParagraph2"
+></textarea>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     PROJECT
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Project
+</h2>
+
+<p class="card-description">
+    Tambahkan dan ubah project yang pernah kamu kerjakan.
+</p>
+
+
+<div id="projectsContainer"></div>
+
+
+<button
+    type="button"
+    class="secondary-button"
+    id="addProjectButton"
+>
+    + Tambah Project
+</button>
+
+</section>
+
+
+
+<!-- ==================================================
+     EXPERIENCE
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Pengalaman Kerja
+</h2>
+
+<p class="card-description">
+    Kelola pengalaman profesional kamu.
+</p>
+
+
+<div id="experienceContainer"></div>
+
+
+<button
+    type="button"
+    class="secondary-button"
+    id="addExperienceButton"
+>
+    + Tambah Pengalaman
+</button>
+
+</section>
+
+
+
+<!-- ==================================================
+     SKILLS
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Keahlian
+</h2>
+
+<p class="card-description">
+    Kelola kemampuan yang tampil pada website.
+</p>
+
+
+<div id="skillsContainer"></div>
+
+
+<button
+    type="button"
+    class="secondary-button"
+    id="addSkillButton"
+>
+    + Tambah Keahlian
+</button>
+
+</section>
+
+
+
+<!-- ==================================================
+     CONTACT
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Kontak
+</h2>
+
+<p class="card-description">
+    Link kontak dan sosial media.
+</p>
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Email
+</label>
+
+<input
+    id="contactEmail"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+WhatsApp
+</label>
+
+<input
+    id="contactWhatsapp"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Instagram
+</label>
+
+<input
+    id="contactInstagram"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+LinkedIn
+</label>
+
+<input
+    id="contactLinkedin"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+YouTube
+</label>
+
+<input
+    id="contactYoutube"
+    type="text"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+TikTok
+</label>
+
+<input
+    id="contactTiktok"
+    type="text"
+>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+     SAVE
+================================================== -->
+
+<section class="card">
+
+<h2>
+    Simpan Semua Perubahan
+</h2>
+
+<p class="card-description">
+    Semua data di atas akan disimpan ke Firebase
+    dan digunakan oleh website publik.
+</p>
+
+
+<button
+    class="button"
+    id="saveButton"
+>
+    Simpan Semua Perubahan
+</button>
+
+
+<div id="saveStatus"></div>
+
+</section>
+
+
+</main>
+
+
+
+<script type="module">
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+    database,
+    ref,
+    get,
+    update
+} from "../firebase-config.js";
+
+
+import {
+    auth
+} from "../firebase-config.js";
+
+
+import {
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const userEmail =
+    document.getElementById("userEmail");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+const saveStatus =
+    document.getElementById("saveStatus");
+
+const projectsContainer =
+    document.getElementById("projectsContainer");
+
+const experienceContainer =
+    document.getElementById("experienceContainer");
+
+const skillsContainer =
+    document.getElementById("skillsContainer");
+
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+onAuthStateChanged(
+    auth,
+    (user) => {
+
+        if (!user) {
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+        userEmail.textContent =
+            user.email;
+
+    }
+);
+
+
+
+/* =====================================================
+   PROJECT TEMPLATE
+===================================================== */
+
+function createProject(data = {}) {
+
+    const id =
+        "project-" +
+        Date.now() +
+        Math.random()
+            .toString(36)
+            .substring(2,7);
+
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "item-card";
+
+
+    card.dataset.id =
+        id;
+
+
+    card.innerHTML = `
+
+        <div class="item-header">
+
+            <h3>
+                Project
+            </h3>
+
+            <div class="item-actions">
+
+                <button
+                    type="button"
+                    class="danger-button delete-project"
+                >
+                    Hapus
+                </button>
+
+            </div>
 
         </div>
 
 
-        <div class="user-area">
-
-            <span id="userEmail">
-                Memuat...
-            </span>
+        <div class="form-grid">
 
 
-            <button
-                id="logoutButton"
-            >
-                Logout
-            </button>
+            <div class="form-group">
+
+                <label>
+                    Nomor
+                </label>
+
+                <input
+                    class="project-number"
+                    type="text"
+                    value="${escapeHtml(data.number || "")}"
+                    placeholder="01"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Kategori
+                </label>
+
+                <input
+                    class="project-category"
+                    type="text"
+                    value="${escapeHtml(data.category || "")}"
+                    placeholder="VIDEO EDITING"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Nama Project
+                </label>
+
+                <input
+                    class="project-title"
+                    type="text"
+                    value="${escapeHtml(data.title || "")}"
+                    placeholder="Konten Konstruksi"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Deskripsi
+                </label>
+
+                <textarea
+                    class="project-description"
+                    placeholder="Deskripsi project..."
+                >${escapeHtml(data.description || "")}</textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    URL Gambar
+                </label>
+
+                <input
+                    class="project-image"
+                    type="text"
+                    value="${escapeHtml(data.image || "")}"
+                    placeholder="assets/project-01.jpg"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Link Project
+                </label>
+
+                <input
+                    class="project-link"
+                    type="text"
+                    value="${escapeHtml(data.link || "")}"
+                    placeholder="https://..."
+                >
+
+            </div>
+
 
         </div>
 
-    </header>
+    `;
 
 
+    projectsContainer.appendChild(card);
 
-    <main class="container">
 
-
-        <div class="badge">
-            ADMIN DASHBOARD
-        </div>
-
-
-        <h1>
-            Kelola Portfolio.
-        </h1>
-
-
-        <p class="subtitle">
-            Semua konten website publik bisa
-            dikelola dari halaman ini.
-        </p>
-
-
-
-        <!-- =========================================
-             HERO
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                01 — Hero
-            </h2>
-
-            <p class="card-description">
-                Informasi utama yang tampil pada
-                bagian paling atas website.
-            </p>
-
-
-            <div class="form-grid">
-
-
-                <div class="form-group">
-
-                    <label>
-                        Status
-                    </label>
-
-                    <input
-                        id="heroStatus"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Berbasis di
-                    </label>
-
-                    <input
-                        id="heroLocation"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Fokus
-                    </label>
-
-                    <input
-                        id="heroFocus"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Pengalaman
-                    </label>
-
-                    <input
-                        id="heroExperience"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Deskripsi
-                    </label>
-
-                    <textarea
-                        id="heroDescription"
-                    ></textarea>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             ABOUT
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                02 — Tentang Saya
-            </h2>
-
-            <p class="card-description">
-                Informasi pribadi yang muncul
-                pada bagian Tentang Saya.
-            </p>
-
-
-            <div class="form-grid">
-
-
-                <div class="form-group">
-
-                    <label>
-                        Bidang
-                    </label>
-
-                    <input
-                        id="aboutField"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Tools
-                    </label>
-
-                    <input
-                        id="aboutTools"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Domisili
-                    </label>
-
-                    <input
-                        id="aboutLocation"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Paragraf 1
-                    </label>
-
-                    <textarea
-                        id="aboutParagraph1"
-                    ></textarea>
-
-                </div>
-
-
-                <div class="form-group full">
-
-                    <label>
-                        Paragraf 2
-                    </label>
-
-                    <textarea
-                        id="aboutParagraph2"
-                    ></textarea>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             PROJECT
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                03 — Project
-            </h2>
-
-            <p class="card-description">
-                Tambahkan atau ubah project yang
-                pernah kamu kerjakan.
-            </p>
-
-
-            <div id="projectsContainer"></div>
-
-
-            <button
-                class="button add-button"
-                id="addProjectButton"
-            >
-                + Tambah Project
-            </button>
-
-        </section>
-
-
-
-        <!-- =========================================
-             EXPERIENCE
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                04 — Pengalaman Kerja
-            </h2>
-
-            <p class="card-description">
-                Kelola pengalaman profesional,
-                freelance, organisasi, dan lainnya.
-            </p>
-
-
-            <div id="experiencesContainer"></div>
-
-
-            <button
-                class="button add-button"
-                id="addExperienceButton"
-            >
-                + Tambah Pengalaman
-            </button>
-
-        </section>
-
-
-
-        <!-- =========================================
-             SKILLS
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                05 — Keahlian
-            </h2>
-
-            <p class="card-description">
-                Kelola kemampuan yang ingin
-                ditampilkan pada website.
-            </p>
-
-
-            <div id="skillsContainer"></div>
-
-
-            <button
-                class="button add-button"
-                id="addSkillButton"
-            >
-                + Tambah Keahlian
-            </button>
-
-        </section>
-
-
-
-        <!-- =========================================
-             CONTACT
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                06 — Kontak
-            </h2>
-
-            <p class="card-description">
-                Semua link kontak yang tampil
-                pada bagian bawah website.
-            </p>
-
-
-            <div class="form-grid">
-
-
-                <div class="form-group">
-
-                    <label>
-                        Email
-                    </label>
-
-                    <input
-                        id="contactEmail"
-                        type="email"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        WhatsApp
-                    </label>
-
-                    <input
-                        id="contactWhatsapp"
-                        type="text"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Instagram
-                    </label>
-
-                    <input
-                        id="contactInstagram"
-                        type="url"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        LinkedIn
-                    </label>
-
-                    <input
-                        id="contactLinkedin"
-                        type="url"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        YouTube
-                    </label>
-
-                    <input
-                        id="contactYoutube"
-                        type="url"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        TikTok
-                    </label>
-
-                    <input
-                        id="contactTiktok"
-                        type="url"
-                    >
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================================
-             SAVE
-        ========================================= -->
-
-        <section class="card">
-
-            <h2>
-                07 — Simpan
-            </h2>
-
-            <p class="card-description">
-                Simpan seluruh perubahan ke Firebase.
-            </p>
-
-
-            <button
-                class="button"
-                id="saveButton"
-            >
-                Simpan Semua Perubahan
-            </button>
-
-
-            <div id="saveStatus"></div>
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================= -->
-
-    <script type="module">
-
-        import {
-            database,
-            ref,
-            get,
-            update
-        } from "../firebase-config.js";
-
-
-        import {
-            auth
-        } from "../firebase-config.js";
-
-
-        import {
-            onAuthStateChanged,
-            signOut
-        } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-        /* =========================================
-           ELEMENT
-        ========================================= */
-
-        const userEmail =
-            document.getElementById("userEmail");
-
-        const logoutButton =
-            document.getElementById("logoutButton");
-
-        const saveButton =
-            document.getElementById("saveButton");
-
-        const saveStatus =
-            document.getElementById("saveStatus");
-
-        const projectsContainer =
-            document.getElementById("projectsContainer");
-
-        const experiencesContainer =
-            document.getElementById("experiencesContainer");
-
-        const skillsContainer =
-            document.getElementById("skillsContainer");
-
-
-        /* =========================================
-           LOGIN
-        ========================================= */
-
-        onAuthStateChanged(
-            auth,
-            (user) => {
-
-                if (!user) {
-
-                    window.location.href =
-                        "login.html";
-
-                    return;
-
-                }
-
-                userEmail.textContent =
-                    user.email;
-
-            }
-        );
-
-
-        /* =========================================
-           HELPER
-        ========================================= */
-
-        function escapeHTML(value) {
-
-            return String(value ?? "")
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-
-        }
-
-
-        /* =========================================
-           PROJECT FORM
-        ========================================= */
-
-        function createProjectForm(
-            key,
-            project = {}
-        ) {
-
-            const wrapper =
-                document.createElement("div");
-
-            wrapper.className =
-                "list-item";
-
-            wrapper.dataset.key =
-                key;
-
-
-            wrapper.innerHTML = `
-
-                <div class="list-header">
-
-                    <h3>
-                        Project
-                    </h3>
-
-                    <div class="list-actions">
-
-                        <button
-                            type="button"
-                            class="button small danger delete-project"
-                        >
-                            Hapus
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Nomor
-                        </label>
-
-                        <input
-                            class="project-number"
-                            value="${escapeHTML(project.number || "")}"
-                            placeholder="01"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Kategori
-                        </label>
-
-                        <input
-                            class="project-category"
-                            value="${escapeHTML(project.category || "")}"
-                            placeholder="VIDEO EDITING"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label>
-                            Judul Project
-                        </label>
-
-                        <input
-                            class="project-title"
-                            value="${escapeHTML(project.title || "")}"
-                            placeholder="Konten Konstruksi"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label>
-                            Deskripsi
-                        </label>
-
-                        <textarea
-                            class="project-description"
-                            placeholder="Deskripsi project..."
-                        >${escapeHTML(project.description || "")}</textarea>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            URL Gambar
-                        </label>
-
-                        <input
-                            class="project-image"
-                            value="${escapeHTML(project.image || "")}"
-                            placeholder="assets/project-01.jpg"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Link Project
-                        </label>
-
-                        <input
-                            class="project-link"
-                            value="${escapeHTML(project.link || "#")}"
-                            placeholder="https://..."
-                        >
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-
-            wrapper
-                .querySelector(".delete-project")
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        wrapper.remove();
-
-                    }
-                );
-
-
-            projectsContainer.appendChild(wrapper);
-
-        }
-
-
-        /* =========================================
-           EXPERIENCE FORM
-        ========================================= */
-
-        function createExperienceForm(
-            key,
-            experience = {}
-        ) {
-
-            const wrapper =
-                document.createElement("div");
-
-            wrapper.className =
-                "list-item";
-
-            wrapper.dataset.key =
-                key;
-
-
-            wrapper.innerHTML = `
-
-                <div class="list-header">
-
-                    <h3>
-                        Pengalaman
-                    </h3>
-
-                    <div class="list-actions">
-
-                        <button
-                            type="button"
-                            class="button small danger delete-experience"
-                        >
-                            Hapus
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Tahun
-                        </label>
-
-                        <input
-                            class="experience-year"
-                            value="${escapeHTML(experience.year || "")}"
-                            placeholder="2025 —"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Status
-                        </label>
-
-                        <input
-                            class="experience-status"
-                            value="${escapeHTML(experience.status || "")}"
-                            placeholder="SEKARANG"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Perusahaan
-                        </label>
-
-                        <input
-                            class="experience-company"
-                            value="${escapeHTML(experience.company || "")}"
-                            placeholder="DIBIKININ INTERIOR"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Posisi
-                        </label>
-
-                        <input
-                            class="experience-position"
-                            value="${escapeHTML(experience.position || "")}"
-                            placeholder="Video Editor"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label>
-                            Deskripsi
-                        </label>
-
-                        <textarea
-                            class="experience-description"
-                            placeholder="Deskripsi pengalaman..."
-                        >${escapeHTML(experience.description || "")}</textarea>
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label>
-                            Tags
-                        </label>
-
-                        <input
-                            class="experience-tags"
-                            value="${escapeHTML(
-                                Array.isArray(experience.tags)
-                                    ? experience.tags.join(", ")
-                                    : experience.tags || ""
-                            )}"
-                            placeholder="Video Editing, Content, Social Media"
-                        >
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-
-            wrapper
-                .querySelector(".delete-experience")
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        wrapper.remove();
-
-                    }
-                );
-
-
-            experiencesContainer.appendChild(wrapper);
-
-        }
-
-
-        /* =========================================
-           SKILL FORM
-        ========================================= */
-
-        function createSkillForm(
-            key,
-            skill = {}
-        ) {
-
-            const wrapper =
-                document.createElement("div");
-
-            wrapper.className =
-                "list-item";
-
-            wrapper.dataset.key =
-                key;
-
-
-            wrapper.innerHTML = `
-
-                <div class="list-header">
-
-                    <h3>
-                        Keahlian
-                    </h3>
-
-                    <div class="list-actions">
-
-                        <button
-                            type="button"
-                            class="button small danger delete-skill"
-                        >
-                            Hapus
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Nomor
-                        </label>
-
-                        <input
-                            class="skill-number"
-                            value="${escapeHTML(skill.number || "")}"
-                            placeholder="01"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Nama Keahlian
-                        </label>
-
-                        <input
-                            class="skill-title"
-                            value="${escapeHTML(skill.title || "")}"
-                            placeholder="Video Editing"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label>
-                            Deskripsi
-                        </label>
-
-                        <textarea
-                            class="skill-description"
-                            placeholder="Deskripsi keahlian..."
-                        >${escapeHTML(skill.description || "")}</textarea>
-
-                    </div>
-
-
-                </div>
-
-            `;
-
-
-            wrapper
-                .querySelector(".delete-skill")
-                .addEventListener(
-                    "click",
-                    () => {
-
-                        wrapper.remove();
-
-                    }
-                );
-
-
-            skillsContainer.appendChild(wrapper);
-
-        }
-
-
-        /* =========================================
-           LOAD FIREBASE
-        ========================================= */
-
-        async function loadPortfolio() {
-
-            try {
-
-                const snapshot =
-                    await get(
-                        ref(
-                            database,
-                            "portfolio"
-                        )
-                    );
-
-
-                if (!snapshot.exists()) {
-
-                    return;
-
-                }
-
-
-                const data =
-                    snapshot.val();
-
-
-                /* =====================================
-                   HERO
-                ===================================== */
-
-                if (data.hero) {
-
-                    document.getElementById(
-                        "heroStatus"
-                    ).value =
-                        data.hero.status || "";
-
-                    document.getElementById(
-                        "heroLocation"
-                    ).value =
-                        data.hero.location || "";
-
-                    document.getElementById(
-                        "heroFocus"
-                    ).value =
-                        data.hero.focus || "";
-
-                    document.getElementById(
-                        "heroExperience"
-                    ).value =
-                        data.hero.experience || "";
-
-                    document.getElementById(
-                        "heroDescription"
-                    ).value =
-                        data.hero.description || "";
-
-                }
-
-
-                /* =====================================
-                   ABOUT
-                ===================================== */
-
-                if (data.about) {
-
-                    document.getElementById(
-                        "aboutField"
-                    ).value =
-                        data.about.field || "";
-
-                    document.getElementById(
-                        "aboutTools"
-                    ).value =
-                        data.about.tools || "";
-
-                    document.getElementById(
-                        "aboutLocation"
-                    ).value =
-                        data.about.location || "";
-
-                    document.getElementById(
-                        "aboutParagraph1"
-                    ).value =
-                        data.about.paragraph1 || "";
-
-                    document.getElementById(
-                        "aboutParagraph2"
-                    ).value =
-                        data.about.paragraph2 || "";
-
-                }
-
-
-                /* =====================================
-                   PROJECTS
-                ===================================== */
-
-                projectsContainer.innerHTML = "";
-
-
-                if (data.projects) {
-
-                    Object.entries(
-                        data.projects
-                    ).forEach(
-                        ([key, project]) => {
-
-                            createProjectForm(
-                                key,
-                                project
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                /* =====================================
-                   EXPERIENCES
-                ===================================== */
-
-                experiencesContainer.innerHTML = "";
-
-
-                if (data.experiences) {
-
-                    Object.entries(
-                        data.experiences
-                    ).forEach(
-                        ([key, experience]) => {
-
-                            createExperienceForm(
-                                key,
-                                experience
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                /* =====================================
-                   SKILLS
-                ===================================== */
-
-                skillsContainer.innerHTML = "";
-
-
-                if (data.skills) {
-
-                    Object.entries(
-                        data.skills
-                    ).forEach(
-                        ([key, skill]) => {
-
-                            createSkillForm(
-                                key,
-                                skill
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                /* =====================================
-                   CONTACT
-                ===================================== */
-
-                if (data.contact) {
-
-                    document.getElementById(
-                        "contactEmail"
-                    ).value =
-                        data.contact.email || "";
-
-                    document.getElementById(
-                        "contactWhatsapp"
-                    ).value =
-                        data.contact.whatsapp || "";
-
-                    document.getElementById(
-                        "contactInstagram"
-                    ).value =
-                        data.contact.instagram || "";
-
-                    document.getElementById(
-                        "contactLinkedin"
-                    ).value =
-                        data.contact.linkedin || "";
-
-                    document.getElementById(
-                        "contactYoutube"
-                    ).value =
-                        data.contact.youtube || "";
-
-                    document.getElementById(
-                        "contactTiktok"
-                    ).value =
-                        data.contact.tiktok || "";
-
-                }
-
-
-                console.log(
-                    "✅ Portfolio berhasil dimuat."
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Gagal mengambil data:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        loadPortfolio();
-
-
-        /* =========================================
-           ADD PROJECT
-        ========================================= */
-
-        document
-            .getElementById("addProjectButton")
-            .addEventListener(
-                "click",
-                () => {
-
-                    createProjectForm(
-                        "new-" +
-                        Date.now(),
-                        {}
-                    );
-
-                }
-            );
-
-
-        /* =========================================
-           ADD EXPERIENCE
-        ========================================= */
-
-        document
-            .getElementById("addExperienceButton")
-            .addEventListener(
-                "click",
-                () => {
-
-                    createExperienceForm(
-                        "new-" +
-                        Date.now(),
-                        {}
-                    );
-
-                }
-            );
-
-
-        /* =========================================
-           ADD SKILL
-        ========================================= */
-
-        document
-            .getElementById("addSkillButton")
-            .addEventListener(
-                "click",
-                () => {
-
-                    createSkillForm(
-                        "new-" +
-                        Date.now(),
-                        {}
-                    );
-
-                }
-            );
-
-
-        /* =========================================
-           SAVE
-        ========================================= */
-
-        saveButton.addEventListener(
+    card
+        .querySelector(".delete-project")
+        .addEventListener(
             "click",
-            async () => {
+            () => {
 
-                saveButton.disabled =
-                    true;
-
-                saveButton.textContent =
-                    "Menyimpan...";
-
-
-                saveStatus.style.display =
-                    "none";
-
-
-                try {
-
-
-                    /* =================================
-                       HERO
-                    ================================= */
-
-                    const portfolioData = {
-
-                        hero: {
-
-                            status:
-                                document.getElementById(
-                                    "heroStatus"
-                                ).value.trim(),
-
-                            location:
-                                document.getElementById(
-                                    "heroLocation"
-                                ).value.trim(),
-
-                            focus:
-                                document.getElementById(
-                                    "heroFocus"
-                                ).value.trim(),
-
-                            experience:
-                                document.getElementById(
-                                    "heroExperience"
-                                ).value.trim(),
-
-                            description:
-                                document.getElementById(
-                                    "heroDescription"
-                                ).value.trim()
-
-                        },
-
-
-                        /* =================================
-                           ABOUT
-                        ================================= */
-
-                        about: {
-
-                            field:
-                                document.getElementById(
-                                    "aboutField"
-                                ).value.trim(),
-
-                            tools:
-                                document.getElementById(
-                                    "aboutTools"
-                                ).value.trim(),
-
-                            location:
-                                document.getElementById(
-                                    "aboutLocation"
-                                ).value.trim(),
-
-                            paragraph1:
-                                document.getElementById(
-                                    "aboutParagraph1"
-                                ).value.trim(),
-
-                            paragraph2:
-                                document.getElementById(
-                                    "aboutParagraph2"
-                                ).value.trim()
-
-                        },
-
-
-                        /* =================================
-                           PROJECTS
-                        ================================= */
-
-                        projects: {},
-
-
-                        /* =================================
-                           EXPERIENCES
-                        ================================= */
-
-                        experiences: {},
-
-
-                        /* =================================
-                           SKILLS
-                        ================================= */
-
-                        skills: {},
-
-
-                        /* =================================
-                           CONTACT
-                        ================================= */
-
-                        contact: {
-
-                            email:
-                                document.getElementById(
-                                    "contactEmail"
-                                ).value.trim(),
-
-                            whatsapp:
-                                document.getElementById(
-                                    "contactWhatsapp"
-                                ).value.trim(),
-
-                            instagram:
-                                document.getElementById(
-                                    "contactInstagram"
-                                ).value.trim(),
-
-                            linkedin:
-                                document.getElementById(
-                                    "contactLinkedin"
-                                ).value.trim(),
-
-                            youtube:
-                                document.getElementById(
-                                    "contactYoutube"
-                                ).value.trim(),
-
-                            tiktok:
-                                document.getElementById(
-                                    "contactTiktok"
-                                ).value.trim()
-
-                        }
-
-                    };
-
-
-                    /* =================================
-                       COLLECT PROJECT
-                    ================================= */
-
-                    document
-                        .querySelectorAll(
-                            "#projectsContainer .list-item"
-                        )
-                        .forEach(
-                            (item, index) => {
-
-                                const key =
-                                    "project" +
-                                    (index + 1);
-
-
-                                portfolioData.projects[key] = {
-
-                                    number:
-                                        item
-                                            .querySelector(
-                                                ".project-number"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    category:
-                                        item
-                                            .querySelector(
-                                                ".project-category"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    title:
-                                        item
-                                            .querySelector(
-                                                ".project-title"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    description:
-                                        item
-                                            .querySelector(
-                                                ".project-description"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    image:
-                                        item
-                                            .querySelector(
-                                                ".project-image"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    link:
-                                        item
-                                            .querySelector(
-                                                ".project-link"
-                                            )
-                                            .value
-                                            .trim()
-
-                                };
-
-                            }
-                        );
-
-
-                    /* =================================
-                       COLLECT EXPERIENCE
-                    ================================= */
-
-                    document
-                        .querySelectorAll(
-                            "#experiencesContainer .list-item"
-                        )
-                        .forEach(
-                            (item, index) => {
-
-                                const tags =
-                                    item
-                                        .querySelector(
-                                            ".experience-tags"
-                                        )
-                                        .value
-                                        .split(",")
-                                        .map(
-                                            tag =>
-                                                tag.trim()
-                                        )
-                                        .filter(Boolean);
-
-
-                                const key =
-                                    "experience" +
-                                    (index + 1);
-
-
-                                portfolioData
-                                    .experiences[key] = {
-
-                                        year:
-                                            item
-                                                .querySelector(
-                                                    ".experience-year"
-                                                )
-                                                .value
-                                                .trim(),
-
-                                        status:
-                                            item
-                                                .querySelector(
-                                                    ".experience-status"
-                                                )
-                                                .value
-                                                .trim(),
-
-                                        company:
-                                            item
-                                                .querySelector(
-                                                    ".experience-company"
-                                                )
-                                                .value
-                                                .trim(),
-
-                                        position:
-                                            item
-                                                .querySelector(
-                                                    ".experience-position"
-                                                )
-                                                .value
-                                                .trim(),
-
-                                        description:
-                                            item
-                                                .querySelector(
-                                                    ".experience-description"
-                                                )
-                                                .value
-                                                .trim(),
-
-                                        tags:
-                                            tags
-
-                                    };
-
-                            }
-                        );
-
-
-                    /* =================================
-                       COLLECT SKILLS
-                    ================================= */
-
-                    document
-                        .querySelectorAll(
-                            "#skillsContainer .list-item"
-                        )
-                        .forEach(
-                            (item, index) => {
-
-                                const key =
-                                    "skill" +
-                                    (index + 1);
-
-
-                                portfolioData.skills[key] = {
-
-                                    number:
-                                        item
-                                            .querySelector(
-                                                ".skill-number"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    title:
-                                        item
-                                            .querySelector(
-                                                ".skill-title"
-                                            )
-                                            .value
-                                            .trim(),
-
-                                    description:
-                                        item
-                                            .querySelector(
-                                                ".skill-description"
-                                            )
-                                            .value
-                                            .trim()
-
-                                };
-
-                            }
-                        );
-
-
-                    /* =================================
-                       SAVE FIREBASE
-                    ================================= */
-
-                    await update(
-                        ref(
-                            database,
-                            "portfolio"
-                        ),
-                        portfolioData
-                    );
-
-
-                    saveStatus.textContent =
-                        "✓ Semua perubahan berhasil disimpan ke Firebase.";
-
-                    saveStatus.style.display =
-                        "block";
-
-
-                    console.log(
-                        "✅ DATA TERSIMPAN:",
-                        portfolioData
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Gagal menyimpan:",
-                        error
-                    );
-
-
-                    saveStatus.textContent =
-                        "✕ Gagal menyimpan perubahan. Cek Console.";
-
-                    saveStatus.style.display =
-                        "block";
-
-                }
-
-
-                saveButton.disabled =
-                    false;
-
-                saveButton.textContent =
-                    "Simpan Semua Perubahan";
+                card.remove();
 
             }
         );
 
+}
 
-        /* =========================================
-           LOGOUT
-        ========================================= */
 
-        logoutButton.addEventListener(
+
+/* =====================================================
+   EXPERIENCE TEMPLATE
+===================================================== */
+
+function createExperience(data = {}) {
+
+    const id =
+        "experience-" +
+        Date.now() +
+        Math.random()
+            .toString(36)
+            .substring(2,7);
+
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "item-card";
+
+
+    card.dataset.id =
+        id;
+
+
+    card.innerHTML = `
+
+        <div class="item-header">
+
+            <h3>
+                Pengalaman
+            </h3>
+
+            <div class="item-actions">
+
+                <button
+                    type="button"
+                    class="danger-button delete-experience"
+                >
+                    Hapus
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Tahun
+                </label>
+
+                <input
+                    class="experience-year"
+                    type="text"
+                    value="${escapeHtml(data.year || "")}"
+                    placeholder="2025 —"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                </label>
+
+                <input
+                    class="experience-status"
+                    type="text"
+                    value="${escapeHtml(data.status || "")}"
+                    placeholder="SEKARANG"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Perusahaan
+                </label>
+
+                <input
+                    class="experience-company"
+                    type="text"
+                    value="${escapeHtml(data.company || "")}"
+                    placeholder="DIBIKININ INTERIOR"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Posisi
+                </label>
+
+                <input
+                    class="experience-position"
+                    type="text"
+                    value="${escapeHtml(data.position || "")}"
+                    placeholder="Video Editor"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Deskripsi
+                </label>
+
+                <textarea
+                    class="experience-description"
+                    placeholder="Deskripsi pekerjaan..."
+                >${escapeHtml(data.description || "")}</textarea>
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Tags
+                </label>
+
+                <textarea
+                    class="experience-tags tags-input"
+                    placeholder="Video Editing, Content, Social Media"
+                >${escapeHtml(
+                    Array.isArray(data.tags)
+                        ? data.tags.join(", ")
+                        : data.tags || ""
+                )}</textarea>
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    experienceContainer.appendChild(card);
+
+
+    card
+        .querySelector(".delete-experience")
+        .addEventListener(
             "click",
-            async () => {
+            () => {
 
-                try {
-
-                    await signOut(auth);
-
-                    window.location.href =
-                        "login.html";
-
-                } catch (error) {
-
-                    console.error(
-                        "Logout error:",
-                        error
-                    );
-
-                }
+                card.remove();
 
             }
         );
 
-    </script>
+}
+
+
+
+/* =====================================================
+   SKILL TEMPLATE
+===================================================== */
+
+function createSkill(data = {}) {
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "item-card";
+
+
+    card.innerHTML = `
+
+        <div class="item-header">
+
+            <h3>
+                Keahlian
+            </h3>
+
+            <button
+                type="button"
+                class="danger-button delete-skill"
+            >
+                Hapus
+            </button>
+
+        </div>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group">
+
+                <label>
+                    Nomor
+                </label>
+
+                <input
+                    class="skill-number"
+                    type="text"
+                    value="${escapeHtml(data.number || "")}"
+                    placeholder="01"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Nama Keahlian
+                </label>
+
+                <input
+                    class="skill-title"
+                    type="text"
+                    value="${escapeHtml(data.title || "")}"
+                    placeholder="Video Editing"
+                >
+
+            </div>
+
+
+            <div class="form-group full">
+
+                <label>
+                    Deskripsi
+                </label>
+
+                <textarea
+                    class="skill-description"
+                    placeholder="Deskripsi keahlian..."
+                >${escapeHtml(data.description || "")}</textarea>
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    skillsContainer.appendChild(card);
+
+
+    card
+        .querySelector(".delete-skill")
+        .addEventListener(
+            "click",
+            () => {
+
+                card.remove();
+
+            }
+        );
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+
+/* =====================================================
+   ADD BUTTON
+===================================================== */
+
+document
+    .getElementById("addProjectButton")
+    .addEventListener(
+        "click",
+        () => createProject()
+    );
+
+
+document
+    .getElementById("addExperienceButton")
+    .addEventListener(
+        "click",
+        () => createExperience()
+    );
+
+
+document
+    .getElementById("addSkillButton")
+    .addEventListener(
+        "click",
+        () => createSkill()
+    );
+
+
+
+/* =====================================================
+   LOAD FIREBASE
+===================================================== */
+
+async function loadPortfolio() {
+
+    try {
+
+        const snapshot =
+            await get(
+                ref(
+                    database,
+                    "portfolio"
+                )
+            );
+
+
+        if (!snapshot.exists()) {
+
+            console.log(
+                "Belum ada portfolio."
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.val();
+
+
+        /* ===============================
+           HERO
+        =============================== */
+
+        const hero =
+            data.hero || {};
+
+
+        document.getElementById(
+            "heroStatus"
+        ).value =
+            hero.status || "";
+
+
+        document.getElementById(
+            "heroLocation"
+        ).value =
+            hero.location || "";
+
+
+        document.getElementById(
+            "heroFocus"
+        ).value =
+            hero.focus || "";
+
+
+        document.getElementById(
+            "heroExperience"
+        ).value =
+            hero.experience || "";
+
+
+        document.getElementById(
+            "heroDescription"
+        ).value =
+            hero.description || "";
+
+
+
+        /* ===============================
+           ABOUT
+        =============================== */
+
+        const about =
+            data.about || {};
+
+
+        document.getElementById(
+            "aboutField"
+        ).value =
+            about.field || "";
+
+
+        document.getElementById(
+            "aboutTools"
+        ).value =
+            about.tools || "";
+
+
+        document.getElementById(
+            "aboutLocation"
+        ).value =
+            about.location || "";
+
+
+        document.getElementById(
+            "aboutParagraph1"
+        ).value =
+            about.paragraph1 || "";
+
+
+        document.getElementById(
+            "aboutParagraph2"
+        ).value =
+            about.paragraph2 || "";
+
+
+
+        /* ===============================
+           CONTACT
+        =============================== */
+
+        const contact =
+            data.contact || {};
+
+
+        document.getElementById(
+            "contactEmail"
+        ).value =
+            contact.email || "";
+
+
+        document.getElementById(
+            "contactWhatsapp"
+        ).value =
+            contact.whatsapp || "";
+
+
+        document.getElementById(
+            "contactInstagram"
+        ).value =
+            contact.instagram || "";
+
+
+        document.getElementById(
+            "contactLinkedin"
+        ).value =
+            contact.linkedin || "";
+
+
+        document.getElementById(
+            "contactYoutube"
+        ).value =
+            contact.youtube || "";
+
+
+        document.getElementById(
+            "contactTiktok"
+        ).value =
+            contact.tiktok || "";
+
+
+
+        /* ===============================
+           PROJECTS
+        =============================== */
+
+        projectsContainer.innerHTML = "";
+
+
+        const projects =
+            data.projects || {};
+
+
+        Object.values(projects)
+            .forEach(
+                (project) => {
+
+                    createProject(
+                        project
+                    );
+
+                }
+            );
+
+
+
+        /* ===============================
+           EXPERIENCE
+        =============================== */
+
+        experienceContainer.innerHTML = "";
+
+
+        const experiences =
+            data.experience || {};
+
+
+        Object.values(experiences)
+            .forEach(
+                (experience) => {
+
+                    createExperience(
+                        experience
+                    );
+
+                }
+            );
+
+
+
+        /* ===============================
+           SKILLS
+        =============================== */
+
+        skillsContainer.innerHTML = "";
+
+
+        const skills =
+            data.skills || {};
+
+
+        Object.values(skills)
+            .forEach(
+                (skill) => {
+
+                    createSkill(
+                        skill
+                    );
+
+                }
+            );
+
+
+    } catch(error) {
+
+        console.error(
+            "Gagal load portfolio:",
+            error
+        );
+
+    }
+
+}
+
+
+loadPortfolio();
+
+
+
+/* =====================================================
+   COLLECT PROJECT
+===================================================== */
+
+function collectProjects() {
+
+    const result = {};
+
+
+    const cards =
+        projectsContainer
+            .querySelectorAll(".item-card");
+
+
+    cards.forEach(
+        (card, index) => {
+
+            const id =
+                "project" +
+                (index + 1);
+
+
+            result[id] = {
+
+                number:
+                    card
+                        .querySelector(".project-number")
+                        .value
+                        .trim(),
+
+                category:
+                    card
+                        .querySelector(".project-category")
+                        .value
+                        .trim(),
+
+                title:
+                    card
+                        .querySelector(".project-title")
+                        .value
+                        .trim(),
+
+                description:
+                    card
+                        .querySelector(".project-description")
+                        .value
+                        .trim(),
+
+                image:
+                    card
+                        .querySelector(".project-image")
+                        .value
+                        .trim(),
+
+                link:
+                    card
+                        .querySelector(".project-link")
+                        .value
+                        .trim()
+
+            };
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+
+/* =====================================================
+   COLLECT EXPERIENCE
+===================================================== */
+
+function collectExperience() {
+
+    const result = {};
+
+
+    const cards =
+        experienceContainer
+            .querySelectorAll(".item-card");
+
+
+    cards.forEach(
+        (card, index) => {
+
+            const tags =
+                card
+                    .querySelector(".experience-tags")
+                    .value
+                    .split(",")
+                    .map(
+                        tag =>
+                            tag.trim()
+                    )
+                    .filter(
+                        tag => tag
+                    );
+
+
+            const id =
+                "experience" +
+                (index + 1);
+
+
+            result[id] = {
+
+                year:
+                    card
+                        .querySelector(".experience-year")
+                        .value
+                        .trim(),
+
+                status:
+                    card
+                        .querySelector(".experience-status")
+                        .value
+                        .trim(),
+
+                company:
+                    card
+                        .querySelector(".experience-company")
+                        .value
+                        .trim(),
+
+                position:
+                    card
+                        .querySelector(".experience-position")
+                        .value
+                        .trim(),
+
+                description:
+                    card
+                        .querySelector(".experience-description")
+                        .value
+                        .trim(),
+
+                tags
+
+            };
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+
+/* =====================================================
+   COLLECT SKILLS
+===================================================== */
+
+function collectSkills() {
+
+    const result = {};
+
+
+    const cards =
+        skillsContainer
+            .querySelectorAll(".item-card");
+
+
+    cards.forEach(
+        (card, index) => {
+
+            const id =
+                "skill" +
+                (index + 1);
+
+
+            result[id] = {
+
+                number:
+                    card
+                        .querySelector(".skill-number")
+                        .value
+                        .trim(),
+
+                title:
+                    card
+                        .querySelector(".skill-title")
+                        .value
+                        .trim(),
+
+                description:
+                    card
+                        .querySelector(".skill-description")
+                        .value
+                        .trim()
+
+            };
+
+        }
+    );
+
+
+    return result;
+
+}
+
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+saveButton.addEventListener(
+    "click",
+    async () => {
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            "Menyimpan...";
+
+
+        saveStatus.style.display =
+            "none";
+
+
+        try {
+
+            const portfolioData = {
+
+                hero: {
+
+                    status:
+                        document
+                            .getElementById("heroStatus")
+                            .value
+                            .trim(),
+
+                    location:
+                        document
+                            .getElementById("heroLocation")
+                            .value
+                            .trim(),
+
+                    focus:
+                        document
+                            .getElementById("heroFocus")
+                            .value
+                            .trim(),
+
+                    experience:
+                        document
+                            .getElementById("heroExperience")
+                            .value
+                            .trim(),
+
+                    description:
+                        document
+                            .getElementById("heroDescription")
+                            .value
+                            .trim()
+
+                },
+
+
+                about: {
+
+                    field:
+                        document
+                            .getElementById("aboutField")
+                            .value
+                            .trim(),
+
+                    tools:
+                        document
+                            .getElementById("aboutTools")
+                            .value
+                            .trim(),
+
+                    location:
+                        document
+                            .getElementById("aboutLocation")
+                            .value
+                            .trim(),
+
+                    paragraph1:
+                        document
+                            .getElementById("aboutParagraph1")
+                            .value
+                            .trim(),
+
+                    paragraph2:
+                        document
+                            .getElementById("aboutParagraph2")
+                            .value
+                            .trim()
+
+                },
+
+
+                projects:
+                    collectProjects(),
+
+
+                experience:
+                    collectExperience(),
+
+
+                skills:
+                    collectSkills(),
+
+
+                contact: {
+
+                    email:
+                        document
+                            .getElementById("contactEmail")
+                            .value
+                            .trim(),
+
+                    whatsapp:
+                        document
+                            .getElementById("contactWhatsapp")
+                            .value
+                            .trim(),
+
+                    instagram:
+                        document
+                            .getElementById("contactInstagram")
+                            .value
+                            .trim(),
+
+                    linkedin:
+                        document
+                            .getElementById("contactLinkedin")
+                            .value
+                            .trim(),
+
+                    youtube:
+                        document
+                            .getElementById("contactYoutube")
+                            .value
+                            .trim(),
+
+                    tiktok:
+                        document
+                            .getElementById("contactTiktok")
+                            .value
+                            .trim()
+
+                }
+
+            };
+
+
+            await update(
+                ref(
+                    database,
+                    "portfolio"
+                ),
+                portfolioData
+            );
+
+
+            saveStatus
+                .className =
+                "status-success";
+
+
+            saveStatus.textContent =
+                "✓ Semua perubahan berhasil disimpan ke Firebase.";
+
+
+            saveStatus.style.display =
+                "block";
+
+
+        } catch(error) {
+
+            console.error(
+                "Gagal menyimpan:",
+                error
+            );
+
+
+            saveStatus
+                .className =
+                "status-error";
+
+
+            saveStatus.textContent =
+                "✕ Gagal menyimpan perubahan. Cek Console.";
+
+
+            saveStatus.style.display =
+                "block";
+
+        }
+
+
+        saveButton.disabled =
+            false;
+
+        saveButton.textContent =
+            "Simpan Semua Perubahan";
+
+    }
+);
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            await signOut(auth);
+
+            window.location.href =
+                "login.html";
+
+        } catch(error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+console.log(
+    "Admin Dashboard berhasil dijalankan."
+);
+
+</script>
 
 
 </body>
